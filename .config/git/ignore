@@ -1,4 +1,9 @@
-# Text editor backup files
+# Api/Keys
+api.json
+credentials
+.pam-gnupg
+
+# Backup files
 *~
 *.swp
 
@@ -6,14 +11,11 @@
 *.o
 *.out
 
+# History
+*history*
+
 # IDE directories
 .idea/
 
-# Files
-api.json
-credentials
-.pam-gnupg
+# Private
 *personal*
-
-# Folders
-.config/tmux/plugins
