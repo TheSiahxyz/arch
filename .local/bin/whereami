@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# Determine OS platform using uname
+os="$(uname)"
+
+case $os in
+Linux)
+	if [ -f /etc/os-release ]; then
+		. /etc/os-release
+		echo "$PRETTY_NAME" | sed 's/Linux//g; s/^[[:space:]]*//; s/[[:space:]]*$//' | tr '[:upper:]' '[:lower:]'
+	fi
+	;;
+Darwin)
+	echo "mac"
+	;;
+CYGWIN* | MINGW32* | MSYS* | MINGW*)
+	echo "windows"
+	;;
+*)
+	echo "Unknown"
+	;;
+esac

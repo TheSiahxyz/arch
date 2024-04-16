@@ -1,0 +1,36 @@
+#!/bin/sh
+
+MOUNT_PATH="$HOME/Media"
+SUB_MOUNT_PATH="${MOUNT_PATH#$HOME/}"
+
+if mount | grep -q " $MOUNT_PATH "; then
+	sudo umount "$MOUNT_PATH"
+	if [ $? -eq 0 ]; then
+		notify-send "🔒 Locked: $SUB_MOUNT_PATH"
+	else
+		lsblkoutput="$(lsblk -nrpo "name,type,size,mountpoint")"
+		mounteddrives="$(echo "$lsblkoutput" | awk '($2=="part"||$2="crypt")&&$4!~/\/boot|\/home$|SWAP/&&length($4)>1{printf "💾%s (%s)\n",$4,$3}')"
+		allunmountable="$(echo "$mounteddrives" | sed "/^$/d;s/ *$//")"
+		path="$(echo "$allunmountable" | sed "s/\/home\/$USER\///g")"
+		notify-send "❗ Unable to lock" "Mounted: $path"
+	fi
+else
+	ECRYPTFS_SIG=$(sudo cat /root/.ecryptfs/sig-cache.txt)
+	FNEK_SIG=$ECRYPTFS_SIG
+	PASSPHRASE=$(pass show encryption/ecryptfs)
+
+	if [ -z "$PASSPHRASE" ]; then
+		notify-send "❌ Failed to retrieve passphrase." -u critical
+		exit 1
+	fi
+
+	echo $PASSPHRASE | sudo mount -t ecryptfs "$MOUNT_PATH" "$MOUNT_PATH" \
+		-o ecryptfs_cipher=aes,ecryptfs_key_bytes=32,ecryptfs_passthrough=no,ecryptfs_enable_filename_crypto=yes,ecryptfs_sig=$ECRYPTFS_SIG,ecryptfs_fnek_sig=$FNEK_SIG,passwd=$(printf '%s' "$PASSPHRASE")
+	if [ $? -eq 0 ]; then
+		notify-send "🔑 Unlocked: $SUB_MOUNT_PATH"
+	else
+		notify-send "❌ Failed to unlock:" "$SUB_MOUNT_PATH" -u critical
+	fi
+fi
+
+pkill -RTMIN+19 "${STATUSBAR:-dwmblocks}"

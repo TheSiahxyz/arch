@@ -1,0 +1,45 @@
+#!/bin/sh
+
+# Define a function to use dmenu for prompts
+dmenu_prompt() {
+	echo -e "No\nYes" | dmenu -i -p "$1"
+}
+
+# Function to open a URL in the default web browser
+open_url() {
+	xdg-open "$1" &>/dev/null &
+}
+
+# Check for upgradable packages
+echo "Checking for upgradable packages..."
+upgradable=$(pacman -Qu)
+if [ -z "$upgradable" ]; then
+	notify-send "✅ Your system is up-to-date."
+	exit 0
+fi
+
+# Add an 'Upgrade' option to the list
+options="Upgrade\n$upgradable"
+
+# Show the options using dmenu
+selection=$(echo -e "$options" | dmenu -i -l 10 -p "Select an action:")
+
+# If 'Upgrade' is selected, ask for confirmation to proceed
+if [ "$selection" == "Upgrade" ]; then
+	if [ "$(dmenu_prompt 'Proceed with upgrade?')" == "Yes" ]; then
+		# Proceed with the upgrade
+		notify-send "📦 Upgrading packages..."
+		echo "$upgradable" | awk '{print $1}' | xargs sudo pacman -S --noconfirm
+		pkill -RTMIN+8 "${STATUSBAR:-dwmblocks}"
+		notify-send "✅ Upgrade packages completed."
+	else
+		# Exit if the user selects "No"
+		notify-send "❌ Upgrade cancelled."
+		exit 0
+	fi
+else
+	# Open the URL for the selected package
+	package_name=$(echo "$selection" | awk '{print $1}')
+	package_url="https://archlinux.org/packages/?q=$package_name"
+	open_url "$package_url"
+fi

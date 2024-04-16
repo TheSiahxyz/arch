@@ -1,0 +1,70 @@
+#!/bin/sh
+
+# Directory where your stow packages are located, adjust as necessary
+STOW_DIR="${XDG_DOTFILES_DIR:-$HOME/.dotfiles}"
+
+# Function to ask user for resolution strategy using dmenu
+ask_resolution_strategy() {
+	echo -e "delete\nmove" | dmenu -i -p "Choose resolution strategy: "
+}
+
+# Function to stow a package and resolve conflicts
+stow_package() {
+	local resolve_strategy=$1
+	local output
+	local status
+
+	# Attempt to stow the package
+	output=$(stow . 2>&1)
+	status=$?
+
+	# Handle conflicts based on resolution strategy
+	if [ $status -ne 0 ]; then
+		echo "$output" | grep "over existing target is stowed to a different package" | while IFS= read -r line; do
+			local conflict_path=$(echo "$line" | sed -E 's/.*\: (.*) =>.*/\1/')
+			local full_path="$HOME/$conflict_path"
+			if [ "$resolve_strategy" = "delete" ]; then
+				rm -rf "$full_path"
+			elif [ "$resolve_strategy" = "move" ]; then
+				mv "$full_path" "${full_path}.bak"
+			fi
+		done
+		echo "$output" | grep "over existing target" | while IFS= read -r line; do
+			local conflict_path=$(echo "$line" | sed -E 's/.* (.*) since.*/\1/')
+			local full_path="$HOME/$conflict_path"
+			if [ "$resolve_strategy" = "delete" ]; then
+				rm -rf "$full_path"
+			elif [ "$resolve_strategy" = "move" ]; then
+				mv "$full_path" "${full_path}.bak"
+			fi
+		done
+
+		# Retry stowing after conflict resolution
+		output=$(stow . 2>&1)
+		status=$?
+	fi
+
+	# Final notification based on status
+	if [ $status -eq 0 ]; then
+		notify-send "🔗 Successfully stowed: $package"
+	else
+		notify-send "❌ Failed to stow: $package"
+		exit 1
+	fi
+}
+
+# Ensure running from the correct directory
+cd "$STOW_DIR" || exit 1
+
+# Ask the user for the resolution strategy
+RESOLVE_STRATEGY=$(ask_resolution_strategy)
+
+# Attempt to stow the package and resolve any conflicts
+stow_package "$RESOLVE_STRATEGY"
+ln -sf "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile" "$HOME/.zprofile"
+
+# Reload shortcuts (assumes this functionality is defined elsewhere and works as expected)
+shortcuts >/dev/null
+source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc"
+source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc"
+notify-send "✅ Updated shortcuts"

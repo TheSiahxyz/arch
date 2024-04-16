@@ -1,0 +1,32 @@
+#!/bin/sh
+
+samba_conf="/etc/samba/smb.conf"
+base_path="/home/$USER"
+
+if [ "$#" -eq 1 ]; then
+	folder_path="$1"
+	folder_name=$(basename "$folder_path" | tr '[:upper:]' '[:lower:]')
+else
+	folder_name=$(echo | dmenu -p "Enter the name of the folder to share:" | tr '[:upper:]' '[:lower:]') || exit 1
+	[ -z "$folder_name" ] && echo "No folder name provided." && exit 1
+
+	folder_path=$(find "$base_path" -type d -iname "$folder_name" -print | dmenu -l 10 -p "Select the folder to share:")
+	[ -z "$folder_path" ] && echo "Folder not found." && exit 1
+fi
+
+[ -d "$folder_path" ] || {
+	echo "Invalid folder path provided."
+	exit 1
+}
+
+echo | sudo tee -a "$samba_conf" >/dev/null
+sudo tee -a "$samba_conf" >/dev/null <<EOF || exit 1
+[Arch-$folder_name]
+   path = $folder_path
+   writable = yes
+   browsable = yes
+   guest ok = yes
+   create mask = 0755
+EOF
+
+echo "$folder_name starts sharing."

@@ -1,0 +1,106 @@
+#!/bin/sh
+
+# Define paths and phrases
+path="/home/si/.local/src/suckless/dwm/thesiah"
+readme_file="/home/si/.local/share/thesiah/thesiah.mom"
+output_file="$path.mom"
+temp_file_before="$path.tmp.before"
+temp_file_after="$path.tmp.after"
+start_phrase=".HEADING 2 \"Programs\""
+end_phrase=".HEADING 2 \"Other buttons\""
+
+# Extract the section before the end marker
+sed "/$end_phrase/,\$d" "$output_file" >"$temp_file_before"
+# Extract the section from the end marker to the end of the file
+sed -n "/$end_phrase/,\$p" "$output_file" >"$temp_file_after"
+
+# Remove the contents between the start and end phrases, including the markers themselves
+sed -i "/$start_phrase/,/$end_phrase/d" "$temp_file_before"
+
+# Verify that the section has been removed
+echo "Section between markers removed. Check $temp_file_before for correctness."
+
+# Re-append the start marker since it was deleted
+echo "$start_phrase" >>"$temp_file_before"
+
+# Define your configuration files
+mapfile -t config_files <<EOF
+$HOME/.local/src/suckless/dwm/config.h
+$HOME/.local/src/suckless/st/config.h
+EOF
+
+# Process each configuration file and append content
+for file_path in "${config_files[@]}"; do
+	project_name=$(basename "$(dirname "$file_path")")
+
+	echo ".HEADING 3 \"$project_name\"" >>"$temp_file_before"
+	echo ".LI" >>"$temp_file_before"
+
+	awk 'BEGIN {flag=0} /static[[:space:]]+(const[[:space:]]+)?(Key|Shortcut|Command)[[:space:]]+(keys|cmdkeys|shortcuts|commands)[[:space:]]*\[\][[:space:]]*=[[:space:]]*{/ {flag=1} /\};/ {flag=0} flag' "$file_path" | while read -r line; do
+		if [[ "$line" =~ \/\*.*\*\/ || "$line" =~ .*\"\\.* || "$line" =~ ^$ || "$line" =~ STACKKEYS || "$line" =~ TAGKEYS ]]; then
+			continue
+		fi
+
+		if [[ "$line" =~ static\ const ]]; then
+			echo ".LIST OFF" >>"$temp_file_before"
+			output_line=".HEADING 4 \"Insert Mode\""
+			echo "$output_line" >>"$temp_file_before"
+			echo ".LI" >>"$temp_file_before"
+			continue
+		fi
+
+		if [[ "$line" =~ static\ Command ]]; then
+			echo ".LIST OFF" >>"$temp_file_before"
+			output_line=".HEADING 4 \"Command Mode\""
+			echo "$output_line" >>"$temp_file_before"
+			echo ".LI" >>"$temp_file_before"
+			continue
+		fi
+
+		line=$(
+			echo "$line" | sed -e "
+                                  s/\s*{\s*\(.*\)\s*}\,\s*/\1/g;
+                                  s/[[:space:]]//g;
+                                  s/MODKEY/MOD/g;
+                                  s/MODKEY2/MOD2/g;
+                                  s/ShiftMask/Shift/g;
+                                  s/ControlMask/Ctrl/g;
+                                  s/|/+/g;
+                                  s/XK_//g;
+                                  s/{0,/{/g;
+                                  s/,0//g;
+                                  s/{\(\w\+\),\(\w\+\)}/{\1+\2}/g;
+                                  s/{\(\w\+\),\(\w\+\),\(\w\+\)}/{\1+\2+\3}/g;
+                                  s/{\(\w\+\),\(\w\+\),\(\w\+\),\(\w\+\)}/{\1+\2+\3+\4}/g
+                                  "
+		)
+
+		modkey=$(echo "$line" | awk -F',' '{print $1}' | sed -e "s/^{\(.*\)}$/\1/g;s/^0//g")
+		key=$(echo "$line" | awk -F',' '{print $2}' | sed -e "s/^{\(.*\)}$/\1/g;s/+//g")
+		func=$(echo "$line" | awk -F',' '{print $3}')
+		args=$(echo "$line" | cut -d',' -f4-)
+
+		if [[ -z "$modkey" ]]; then
+			output_line="\\f(CW${key}\\fP \\(en ${func} ${args}"
+		else
+			output_line="\\f(CW${modkey}+${key}\\fP \\(en ${func} ${args}"
+		fi
+
+		echo ".ITEM" >>"$temp_file_before"
+		echo "$output_line" >>"$temp_file_before"
+	done
+
+	echo ".LIST OFF" >>"$temp_file_before"
+done
+
+# Append the latter part of the document that follows the end marker
+cat "$temp_file_after" >>"$temp_file_before"
+
+# Replace the original file with the updated content
+mv "$temp_file_before" "$output_file"
+cp "$output_file" "$readme_file"
+
+# Clean up the temporary after-section file
+rm -f "$temp_file_after"
+
+notify-send "👍 Operation completed successfully."

@@ -1,0 +1,66 @@
+#!/bin/sh
+
+filter() {
+	if ps -C mpd >/dev/null; then
+		local status=$(mpc status)
+		local artist=$(mpc current -f %artist%)
+		local track=$(mpc current -f %title%)
+		local pos_dur=$(echo "$status" | grep -oP '\d+:\d+/\d+:\d+')
+		local state=$(echo "$status" | grep -oP '(?<=\[).+?(?=\])')
+		local indicators=""
+
+		[[ $(echo "$status" | grep 'random: on') ]] && indicators+="🔀"
+		[[ $(echo "$status" | grep 'repeat: on') ]] && indicators+="🔁"
+		[[ $(echo "$status" | grep 'single: on') ]] && indicators+="🔂"
+
+		local prefix=""
+		if [[ "$state" == "playing" ]]; then
+			prefix="🎵"
+		elif [[ "$state" == "paused" ]]; then
+			prefix="⏸"
+		else
+			exit
+		fi
+
+		if [[ -z "$indicators" ]]; then
+			echo "$prefix$artist - $track $pos_dur"
+		else
+			echo "$indicators$artist - $track $pos_dur"
+		fi
+	fi
+}
+
+# Handling interaction based on button press
+case $BLOCK_BUTTON in
+1)
+	mpc status | filter
+	setsid -f "$TERMINAL" -e ncmpcpp
+	;; # left click, opens ncmpcpp
+2)
+	mpc toggle | filter
+	;; # right click, pause/unpause
+3)
+	mpc status | filter
+	notify-send "🎵 Music module" "\- Shows mpd song playing and status
+- 🎵 if playing
+- ⏸️ if paused
+- 🔂 if single on
+- 🔁 if repeat on
+- 🔀 if random on
+- Left click opens ncmpcpp
+- Middle click pauses\n- Scroll changes track"
+	;;
+4)
+	mpc prev | filter
+	;; # scroll up, previous
+5)
+	mpc next | filter
+	;; # scroll down, next
+6)
+	mpc status | filter
+	setsid -f "$TERMINAL" -e "$EDITOR" "$0"
+	;;
+*)
+	mpc status | filter
+	;; # default, show current status
+esac
