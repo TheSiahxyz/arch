@@ -70,6 +70,7 @@ source_packages() {
   done
 }
 
+
 ###########################################################################################
 ###########################################################################################
 ### --- Change Names --- ###
@@ -270,6 +271,14 @@ help() {
 
 ###########################################################################################
 ###########################################################################################
+### --- Last Command Output --- ###
+insert-last-command-output() {
+  LBUFFER+="$(eval $history[$((HISTCMD-1))])"
+}
+
+
+###########################################################################################
+###########################################################################################
 ### --- lf --- ###
 lfcd () {
     tmp="$(mktemp -uq)"
@@ -367,15 +376,14 @@ umt() {
 ### --- neovim --- ###
 # folder
 cnf() {
-  local os="$(${XDG_SCRIPTS_HOME:-$HOME/.local/bin}/whereami)"
-  local base_dir="${XDG_DOTFILES_DIR:-$HOME/.dotfiles}/$os/.config"     # Base directory for Neovim configs
+  local base_dir="${XDG_DOTFILES_DIR:-$HOME/.dotfiles}/.config"     # Base directory for Neovim configs
   local target_dir="${XDG_CONFIG_HOME:-$HOME/.config}/nvim"             # Target directory for active Neovim config
   local target_share="${XDG_DATA_HOME:-$HOME/.local/share}/nvim"        # Neovim"s share directory
   local target_state="${XDG_STATE_HOME:-$HOME/.local/state}/nvim"       # Neovim"s state directory
   local target_cache="${XDG_CACHE_HOME:-$HOME/.cache}/nvim"             # Neovim"s cache directory
 
   # Explicitly list your configuration options
-  local configs=("Default" "Starter" "NvChad" "LazyVim")
+  local configs=("Default" "TheSiahxyz" "NvChad" "LazyVim")
   local selected_dir=$(printf "%s\n" "${configs[@]}" | fzf --prompt=" Neovim Config  " --height 50% --layout=reverse --border --exit-0)
 
   # Check if a configuration was selected
@@ -391,6 +399,7 @@ cnf() {
 
   # Construct the full path of the selected configuration
   local config_path="$base_dir/$selected_dir"
+  echo "$config_path"
 
   # Clear existing configurations if confirmed by the user
   echo -n "This will overwrite existing configurations. Continue? (y/n) "
@@ -408,6 +417,7 @@ cnf() {
   if [[ -d "$config_path" ]]; then
     cp -r "$config_path/." "$target_dir" > /dev/null 2>&1
     echo "Successfully applied $selected_dir configuration."
+    shortcuts >/dev/null
   else
     echo "Configuration directory for $selected_dir does not exist."
     return 3
@@ -416,7 +426,7 @@ cnf() {
 
 # switch
 nvs() {
-  items=("Default" "Starter" "LazyVim" "NvChad")
+  items=("Default" "TheSiahxyz" "LazyVim" "NvChad")
   config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
   [[ -z $config ]] && return 0
   NVIM_APPNAME=$config nvim $@

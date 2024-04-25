@@ -1,32 +1,25 @@
 #!/bin/sh
 
 filter() {
-	if ps -C mpd >/dev/null; then
-		local status=$(mpc status)
-		local artist=$(mpc current -f %artist%)
-		local track=$(mpc current -f %title%)
-		local pos_dur=$(echo "$status" | grep -oP '\d+:\d+/\d+:\d+')
-		local state=$(echo "$status" | grep -oP '(?<=\[).+?(?=\])')
-		local indicators=""
+	if ps -C mpd >/dev/null 2>&1; then
+		status=$(mpc status)
+		artist=$(mpc current -f %artist%)
+		track=$(mpc current -f %title%)
+		pos_dur=$(echo "$status" | grep -o '[0-9]\+:[0-9]\+/[0-9]\+:[0-9]\+')
 
-		[[ $(echo "$status" | grep 'random: on') ]] && indicators+="🔀"
-		[[ $(echo "$status" | grep 'repeat: on') ]] && indicators+="🔁"
-		[[ $(echo "$status" | grep 'single: on') ]] && indicators+="🔂"
+		indicators=""
+		echo "$status" | grep -q 'random: on' && indicators="${indicators}🔀"
+		echo "$status" | grep -q 'repeat: on' && indicators="${indicators}🔁"
+		echo "$status" | grep -q 'single: on' && indicators="${indicators}🔂"
 
-		local prefix=""
-		if [[ "$state" == "playing" ]]; then
-			prefix="🎵"
-		elif [[ "$state" == "paused" ]]; then
-			prefix="⏸"
-		else
-			exit
-		fi
+		prefix=""
+		echo "$status" | grep -q 'playing' && prefix="🎵"
+		echo "$status" | grep -q 'paused' && prefix="⏸"
+		[ -z "$prefix" ] && return
 
-		if [[ -z "$indicators" ]]; then
-			echo "$prefix$artist - $track $pos_dur"
-		else
-			echo "$indicators$artist - $track $pos_dur"
-		fi
+		output_prefix=$([ -n "$indicators" ] && echo "$indicators" || echo "$prefix")
+
+		echo "$output_prefix$artist - $track $pos_dur"
 	fi
 }
 
@@ -34,21 +27,23 @@ filter() {
 case $BLOCK_BUTTON in
 1)
 	mpc status | filter
-	setsid -f "$TERMINAL" -e ncmpcpp
+	setsid "$TERMINAL" -e ncmpcpp &
 	;; # left click, opens ncmpcpp
 2)
 	mpc toggle | filter
 	;; # right click, pause/unpause
 3)
 	mpc status | filter
-	notify-send "🎵 Music module" "\- Shows mpd song playing and status
+	notify-send "🎵 Music module" "\
+- Shows mpd song playing and status
 - 🎵 if playing
-- ⏸️ if paused
+- ⏸ if paused
 - 🔂 if single on
 - 🔁 if repeat on
 - 🔀 if random on
 - Left click opens ncmpcpp
-- Middle click pauses\n- Scroll changes track"
+- Middle click pauses
+- Scroll changes track"
 	;;
 4)
 	mpc prev | filter
@@ -58,7 +53,7 @@ case $BLOCK_BUTTON in
 	;; # scroll down, next
 6)
 	mpc status | filter
-	setsid -f "$TERMINAL" -e "$EDITOR" "$0"
+	setsid "$TERMINAL" -e "$EDITOR" "$0" &
 	;;
 *)
 	mpc status | filter

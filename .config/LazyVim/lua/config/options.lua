@@ -3,7 +3,7 @@
 -- Add any additional options here
 
 -- vim.g.mapleader = " "
-vim.g.maplocalleader = ","
+vim.g.maplocalleader = "\\"
 -- vim.g.autoformat = true
 -- vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
 -- vim.g.netrw_banner = 0

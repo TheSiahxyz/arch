@@ -17,5 +17,8 @@ credentials
 # IDE directories
 .idea/
 
+# Lock
+*lock*.json
+
 # Private
 *personal*

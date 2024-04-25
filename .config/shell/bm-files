@@ -21,6 +21,7 @@ vst     ${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship.toml                
 vsu     ${XDG_CONFIG_HOME:-$HOME/.config}/newsboat/urls                         # newsboat url (RSS reader)
 vsx     ${XDG_CONFIG_HOME:-$HOME/.config}/nsxiv/exec/key-handler                # nsxiv (image viewer) key/script handler
 vtm     ${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf                        # tmux config
+vtt     ${XDG_CONFIG_HOME:-$HOME/.config}/transmission-daemon/settings.json     # transmission-daemon config
 vvc     ${XDG_CONFIG_HOME:-$HOME/.config}/vim/vimrc                             # vim config
 vvi     ${XDG_CONFIG_HOME:-$HOME/.config}/vim/init.vim                          # vim init
 vvp     ${XDG_CONFIG_HOME:-$HOME/.config}/vim/plugins.vim                       # vim plugins
@@ -30,5 +31,6 @@ vxp     ${XDG_CONFIG_HOME:-$HOME/.config}/x11/xprofile                          
 vxr     ${XDG_CONFIG_HOME:-$HOME/.config}/x11/xresources                        # Colors, themes and variables for X11
 vza     ${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc                         # aliases used by zsh (and potentially other shells)
 vzc     $ZDOTDIR/.zshrc                                                         # zsh (shell) config
-vzf     ${XDG_CONFIG_HOME:-$HOME/.config}/shell/scriptrc                        # shell functions
+vzk     $ZDOTDIR/keymaps.zsh                                                    # zsh keymaps
 vzp     ${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile                         # zprofile
+vzs     ${XDG_CONFIG_HOME:-$HOME/.config}/shell/scriptrc                        # shell functions

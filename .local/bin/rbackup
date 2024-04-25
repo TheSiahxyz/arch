@@ -8,13 +8,18 @@ obsidian_path="$HOME/Obsidian"
 pass_path="${PASSWORD_STORE_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/.password-store}"
 suck_path="${XDG_SOURCES_HOME:-$HOME/.local/src}/suckless"
 web_path="${WEBDIR:-$HOME/THESIAH}"
+USER_HOME=$(eval echo ~$USER)
 
-[ -d $backup_path ] || mkdir -p $backup_path
+echo "Backup files..."
 
-sources=("$dot_path" "$music_path" "$obsidian_path" "$pass_path" "$suck_path" "$web_path")
+[ -d "$backup_path" ] || mkdir -p "$backup_path"
 
-for source in "${sources[@]}"; do
-    rsync -vrazPlu --delete "$source" "$backup_path/" &>/dev/null || { echo "Failed to sync $(basename ${source})"; exit 1; }
+# Using a loop over space-separated strings instead of an array
+for source in "$dot_path" "$music_path" "$obsidian_path" "$pass_path" "$suck_path" "$web_path"; do
+	rsync -vrazPlu --delete "$source" "$backup_path/" >/dev/null 2>&1 || {
+		echo "Failed to sync $(basename "$source")"
+		exit 1
+	}
 done
 
 # targets
@@ -26,40 +31,53 @@ lf_path="${XDG_DOTFILES_DIR:-$HOME/.dotfiles}/.config/lf"
 
 # clean targets
 ssh $THESIAH "rm -rf /root/.config /var/www/thesiah"
-ssh $THESIAH "mkdir -p /root/.config/{bash,shell,vim} /root/.local/{bin,share,state} /var/www/thesiah"
+ssh $THESIAH "mkdir -p /root/.config/bash /root/.config/shell /root/.config/vim /root/.local/bin /root/.local/share /root/.local/state /var/www/thesiah"
 sudo rm -rf /root/.config
-sudo mkdir -p /root/.config/{bash,lf,shell,vim}
-sudo mkdir -p /root/.local/{bin,share,state}
+sudo mkdir -p /root/.config/bash /root/.config/lf /root/.config/shell /root/.config/vim
+sudo mkdir -p /root/.local/bin /root/.local/share /root/.local/state
+
+# Root configuration synchronization on local system
+sudo rsync -vrazPlu --delete "$vim_path/vimrc" "/root/.config/vim/" >/dev/null 2>&1 || exit 1
+sudo rsync -vrazPlu --delete "$lf_path" "/root/.config/" >/dev/null 2>&1 || exit 1
+sudo mv -f "/root/.config/lf/icons1" "/root/.config/lf/icons" >/dev/null 2>&1 || exit 1
+sudo rsync -vrazPlu --delete "$bash_path" "/root/.config/" >/dev/null 2>&1 || exit 1
+sudo rsync -vrazPlu --delete "$shell_path/inputrc" "/root/.config/shell/" >/dev/null 2>&1 || exit 1
 
 # load shortcuts
-shortcuts >/dev/null
+shortcuts >/dev/null 2>&1
 
-# ssh sync
-rsync -vrazPlu --delete "$thesiah_path/" "$THESIAH:/var/www/thesiah/" &>/dev/null || { echo "Failed to sync $(basename ${thesiah_path})"; exit 1; }
-rsync -vrazPlu --delete "$vim_path/vimrc" "$THESIAH:/root/.config/vim/" &>/dev/null || { echo "Failed to sync $(basename ${vim_path})"; exit 1; }
-rsync -vrazPlu --delete "$shell_path/inputrc" "$THESIAH:/root/.config/shell/" &>/dev/null || { echo "Failed to sync inputrc"; exit 1; }
-sudo cp /root/.config/shell/rootshortcutrc ~/.cache/tmp/ &>/dev/null
-sudo chown -R $USER:wheel ~/.cache/tmp/rootshortcutrc &>/dev/null
-rsync -vrazPlu --remove-source-files "$HOME/.cache/tmp/rootshortcutrc" "$THESIAH:/root/.config/shell/" &>/dev/null
-ssh $THESIAH "echo 'web=\"cd /var/www && ls -A\" \' >> /root/.config/shell/rootshortcutrc" &>/dev/null || { echo "Failed to process shortcuts1"; exit 2; }
-ssh $THESIAH "echo 'wen=\"cd /var/www/nextcloud && ls -A\" \' >> /root/.config/shell/rootshortcutrc" &>/dev/null || { echo "Failed to process shortcuts2"; exit 2; }
-ssh $THESIAH "echo 'wep=\"cd /var/www/prosody && ls -A\" \' >> /root/.config/shell/rootshortcutrc" &>/dev/null || { echo "Failed to process shortcuts3"; exit 2; }
-ssh $THESIAH "echo 'wet=\"cd /var/www/thesiah && ls -A\" \' >> /root/.config/shell/rootshortcutrc" &>/dev/null || { echo "Failed to process shortcuts4"; exit 2; }
-rsync -vrazPlu --delete "$bash_path" "$THESIAH:/root/.config/" &>/dev/null || { echo "Failed to sync $(basename ${bash_path})"; exit 1; }
-ssh $THESIAH "ln -sf /root/.config/bash/bash_profile /root/.profile" &>/dev/null || { echo "Failed to symlink bash profile"; exit 1; }
-ssh $THESIAH "chown -R root:root /var/www/thesiah" &>/dev/null || { echo "Failed to change permission for /var/www/thesiah"; exit 1; }
-ssh $THESIAH "chown -R root:root /root/.config/" &>/dev/null || { echo "Failed to change permission for .config"; exit 1; }
-ssh $THESIAH "source /root/.profile" &>/dev/null || { echo "Failed to change permission for .config"; exit 1; }
+# Modify root's Bash and LF configuration to include user-specific settings
+echo "[ -f \"$USER_HOME/.config/shell/shortcutrc\" ] && source \"$USER_HOME/.config/shell/shortcutrc\"" | sudo tee -a /root/.config/bash/bashrc >/dev/null 2>&1 || exit 1
+echo "[ -f \"$USER_HOME/.config/shell/zshnameddirrc\" ] && source \"$USER_HOME/.config/shell/zshnameddirrc\"" | sudo tee -a /root/.config/bash/bashrc >/dev/null 2>&1 || exit 1
+sudo sed -i "s|source \"~/.config/lf/shortcutrc\"|source \"$USER_HOME/.config/lf/shortcutrc\"|" /root/.config/lf/lfrc >/dev/null 2>&1 || exit 1
+echo 'source "/root/.config/lf/rootshortcutrc"' | sudo tee -a /root/.config/lf/lfrc >/dev/null 2>&1 || exit 1
 
-# root sync
-sudo rsync -vrazPlu --delete "$vim_path/vimrc" "/root/.config/vim/" &>/dev/null || { echo "Failed to sync $(basename ${vim_path})"; exit 1; }
-sudo rsync -vrazPlu --delete "$lf_path" "/root/.config/" &>/dev/null || { echo "Failed to sync $(basename ${lf_path})"; exit 1; }
-sudo mv -f "/root/.config/lf/icons1" "/root/.config/lf/icons" &>/dev/null || { echo "Failed to change icons"; exit 1; }
-sudo rsync -vrazPlu --delete "$bash_path" "/root/.config/" &>/dev/null || { echo "Failed to sync $(basename ${bash_path})"; exit 1; }
-sudo rsync -vrazPlu --delete "$shell_path/inputrc" "/root/.config/shell/" &>/dev/null || { echo "Failed to sync inputrc"; exit 1; }
-echo 'source "~/.config/lf/rootshortcutrc"' | sudo tee -a /root/.config/lf/lfrc > /dev/null || { echo "Failed to add rootshortcutrc for lf"; exit 1; }
-sudo chown -R root:root /root/.config/ &>/dev/null || { echo "Failed to change permission for .config"; exit 1; }
-sudo ln -sf /root/.config/bash/bashrc /root/.bashrc &>/dev/null || { echo "Failed to symlink bashrc"; exit 1; }
-sudo ln -sf /root/.config/bash/bash_profile /root/.bash_profile &>/dev/null || { echo "Failed to symlink bash profile"; exit 1; }
-sudo ln -sf /root/.config/shell/inputrc /root/.inputrc &>/dev/null || { echo "Failed to symlink inputrc"; exit 1; }
-sudo ln -sf /root/.config/vim/vimrc /root/.vimrc &>/dev/null || { echo "Failed to symlink vimrc"; exit 1; }
+# Final ownership and link adjustments
+sudo chown -R root:root /root/.config/ >/dev/null 2>&1 || exit 1
+sudo ln -sf /root/.config/bash/bashrc /root/.bashrc >/dev/null 2>&1 || exit 1
+sudo ln -sf /root/.config/bash/bash_profile /root/.bash_profile >/dev/null 2>&1 || exit 1
+sudo ln -sf /root/.config/shell/inputrc /root/.inputrc >/dev/null 2>&1 || exit 1
+sudo ln -sf /root/.config/vim/vimrc /root/.vimrc >/dev/null 2>&1 || exit 1
+
+# Sync operations with explicit error checking
+rsync -vrazPlu --delete "$thesiah_path/" "$THESIAH:/var/www/thesiah/" >/dev/null 2>&1 || exit 1
+rsync -vrazPlu --delete "$vim_path/vimrc" "$THESIAH:/root/.config/vim/" >/dev/null 2>&1 || exit 1
+rsync -vrazPlu --delete "$shell_path/inputrc" "$THESIAH:/root/.config/shell/" >/dev/null 2>&1 || exit 1
+sudo cp /root/.config/shell/rootshortcutrc ~/.cache/tmp/ >/dev/null 2>&1 || exit 1
+sudo chown -R $USER:wheel ~/.cache/tmp/rootshortcutrc >/dev/null 2>&1 || exit 1
+rsync -vrazPlu --remove-source-files "$HOME/.cache/tmp/rootshortcutrc" "$THESIAH:/root/.config/shell/" >/dev/null 2>&1 || exit 1
+
+# Adding custom shortcuts to root's shell configuration on the remote system
+ssh $THESIAH "echo 'web=\"cd /var/www && ls -A\" ' >> /root/.config/shell/rootshortcutrc" >/dev/null 2>&1 || exit 2
+ssh $THESIAH "echo 'wen=\"cd /var/www/nextcloud && ls -A\" ' >> /root/.config/shell/rootshortcutrc" >/dev/null 2>&1 || exit 2
+ssh $THESIAH "echo 'wep=\"cd /var/www/prosody && ls -A\" ' >> /root/.config/shell/rootshortcutrc" >/dev/null 2>&1 || exit 2
+ssh $THESIAH "echo 'wet=\"cd /var/www/thesiah && ls -A\" ' >> /root/.config/shell/rootshortcutrc" >/dev/null 2>&1 || exit 2
+
+# Sync Bash configuration
+rsync -vrazPlu --delete "$bash_path" "$THESIAH:/root/.config/" >/dev/null 2>&1 || exit 1
+ssh $THESIAH "ln -sf /root/.config/bash/bash_profile /root/.profile" >/dev/null 2>&1 || exit 1
+ssh $THESIAH "chown -R root:root /var/www/thesiah" >/dev/null 2>&1 || exit 1
+ssh $THESIAH "chown -R root:root /root/.config/" >/dev/null 2>&1 || exit 1
+ssh $THESIAH "source /root/.profile" >/dev/null 2>&1 || exit 1
+
+echo "Done!"

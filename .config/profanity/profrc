@@ -2,8 +2,8 @@
 afk=/status set away
 unafk=/status set online
 consi=/connect si@thesiah.xyz
-jts=/join conference.thesiah.xyz
-yejin=/msg yejin@thesiah.xyz hey wassup?
+jts=/join conference.chat.thesiah.xyz
+yj=/msg yejin@thesiah.xyz hey wassup?
 
 [chatstates]
 enabled=true

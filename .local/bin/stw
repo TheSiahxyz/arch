@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Directory where your stow packages are located, adjust as necessary
 STOW_DIR="${XDG_DOTFILES_DIR:-$HOME/.dotfiles}"

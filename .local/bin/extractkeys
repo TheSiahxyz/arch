@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Define paths and phrases
 path="/home/si/.local/src/suckless/dwm/thesiah"
@@ -6,13 +6,20 @@ readme_file="/home/si/.local/share/thesiah/thesiah.mom"
 output_file="$path.mom"
 temp_file_before="$path.tmp.before"
 temp_file_after="$path.tmp.after"
-start_phrase=".HEADING 2 \"Programs\""
+start_phrase=".HEADING 2 \"Suckless\""
 end_phrase=".HEADING 2 \"Other buttons\""
 
+if [ -f "$path.mom" ]; then
+	source_file="$path.mom"
+else
+	source_file="$path-default.mom"
+fi
+
 # Extract the section before the end marker
-sed "/$end_phrase/,\$d" "$output_file" >"$temp_file_before"
+sed "/$end_phrase/,\$d" "$source_file" >"$temp_file_before"
+
 # Extract the section from the end marker to the end of the file
-sed -n "/$end_phrase/,\$p" "$output_file" >"$temp_file_after"
+sed -n "/$end_phrase/,\$p" "$source_file" >"$temp_file_after"
 
 # Remove the contents between the start and end phrases, including the markers themselves
 sed -i "/$start_phrase/,/$end_phrase/d" "$temp_file_before"
@@ -32,18 +39,28 @@ EOF
 # Process each configuration file and append content
 for file_path in "${config_files[@]}"; do
 	project_name=$(basename "$(dirname "$file_path")")
+	project_name=${project_name^^}
 
 	echo ".HEADING 3 \"$project_name\"" >>"$temp_file_before"
 	echo ".LI" >>"$temp_file_before"
 
-	awk 'BEGIN {flag=0} /static[[:space:]]+(const[[:space:]]+)?(Key|Shortcut|Command)[[:space:]]+(keys|cmdkeys|shortcuts|commands)[[:space:]]*\[\][[:space:]]*=[[:space:]]*{/ {flag=1} /\};/ {flag=0} flag' "$file_path" | while read -r line; do
-		if [[ "$line" =~ \/\*.*\*\/ || "$line" =~ .*\"\\.* || "$line" =~ ^$ || "$line" =~ STACKKEYS || "$line" =~ TAGKEYS ]]; then
+	awk 'BEGIN {flag=0} /static[[:space:]]+(const[[:space:]]+)?(Key|Shortcut|Command|Button)[[:space:]]+(keys|cmdkeys|shortcuts|commands|buttons)[[:space:]]*\[\][[:space:]]*=[[:space:]]*{/ {flag=1} /\};/ {flag=0} flag' "$file_path" | while read -r line; do
+		if [[ "$line" =~ \/\*.*\*\/ || "$line" =~ .*\"\\.* || "$line" =~ ^$ || "$line" =~ STACKKEYS || "$line" =~ TAGKEYS || "$line" =~ \#.* ]]; then
 			continue
 		fi
 
-		if [[ "$line" =~ static\ const ]]; then
+		if [[ "$line" =~ ^\/\/.* ]]; then
 			echo ".LIST OFF" >>"$temp_file_before"
-			output_line=".HEADING 4 \"Insert Mode\""
+			line=$(echo "$line" | sed -e 's/\/\/\s*//g' | awk '{for (i=1; i<=NF; i++) $i=toupper(substr($i,1,1)) tolower(substr($i,2)); print}')
+			output_line=".HEADING 9 \"$line\""
+			echo "$output_line" >>"$temp_file_before"
+			echo ".LI" >>"$temp_file_before"
+			continue
+		fi
+
+		if [[ "$line" =~ static\ const|static\ Shortcut ]]; then
+			echo ".LIST OFF" >>"$temp_file_before"
+			output_line=".HEADING 8 \"INSERT MODE\""
 			echo "$output_line" >>"$temp_file_before"
 			echo ".LI" >>"$temp_file_before"
 			continue
@@ -51,7 +68,7 @@ for file_path in "${config_files[@]}"; do
 
 		if [[ "$line" =~ static\ Command ]]; then
 			echo ".LIST OFF" >>"$temp_file_before"
-			output_line=".HEADING 4 \"Command Mode\""
+			output_line=".HEADING 8 \"COMMAND MODE\""
 			echo "$output_line" >>"$temp_file_before"
 			echo ".LI" >>"$temp_file_before"
 			continue
@@ -61,12 +78,13 @@ for file_path in "${config_files[@]}"; do
 			echo "$line" | sed -e "
                                   s/\s*{\s*\(.*\)\s*}\,\s*/\1/g;
                                   s/[[:space:]]//g;
+                                  s/XK_//g;
                                   s/MODKEY/MOD/g;
                                   s/MODKEY2/MOD2/g;
                                   s/ShiftMask/Shift/g;
                                   s/ControlMask/Ctrl/g;
+                                  s/Escape/Esc/g;
                                   s/|/+/g;
-                                  s/XK_//g;
                                   s/{0,/{/g;
                                   s/,0//g;
                                   s/{\(\w\+\),\(\w\+\)}/{\1+\2}/g;
@@ -97,8 +115,8 @@ done
 cat "$temp_file_after" >>"$temp_file_before"
 
 # Replace the original file with the updated content
-mv "$temp_file_before" "$output_file"
-cp "$output_file" "$readme_file"
+mv -f "$temp_file_before" "$output_file"
+cp -f "$output_file" "$readme_file"
 
 # Clean up the temporary after-section file
 rm -f "$temp_file_after"

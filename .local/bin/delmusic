@@ -3,24 +3,28 @@
 music_dir="${XDG_MUSIC_DIR:-$HOME/Music}"
 music_txt="${music_dir}/.music.txt"
 
-selected_filename=$(find "$music_dir" -type f -printf "%f\n" | dmenu -i -l 20 -p "Select a file to delete:") || exit 1
+# Using POSIX-compliant methods for file selection
+selected_filename=$(find "$music_dir" -type f | awk -F/ '{print $NF}' | dmenu -i -l 20 -p "Select a file to delete:") || exit 1
 
 selected_file="$music_dir/$selected_filename"
 
-video_id=$(strings "$selected_file" | grep -oP 'watch\?v=\K[\w-]+' | head -1) || {
+# Extracting YouTube video ID without using -P in grep
+video_id=$(strings "$selected_file" | grep 'watch?v=' | sed 's/.*watch?v=\([a-zA-Z0-9_-]*\).*/\1/' | head -1) || {
 	notify-send "❌ No YouTube video ID found in file: $selected_filename"
 	exit 1
 }
 
-confirm=$(echo -e "Yes\nNo" | dmenu -i -p "Delete $selected_filename and update mpc?")
+# Confirmation dialog without using echo -e
+confirm=$(printf "Yes\nNo" | dmenu -i -p "Delete $selected_filename and update mpc?")
 
-[ "$confirm" == "Yes" ] || {
+[ "$confirm" = "Yes" ] || {
 	notify-send "❌ Operation cancelled."
 	exit 0
 }
 
-rm "$selected_file" && sed -i "/$video_id/d" "$music_txt" && mpc update >/dev/null && {
+# More portable sed command without -i and updating mpc
+if rm "$selected_file" && grep -v "$video_id" "$music_txt" >"${music_txt}.tmp" && mv "${music_txt}.tmp" "$music_txt" && mpc update >/dev/null; then
 	notify-send "🎵 Success to delete:" "$selected_filename"
-} || {
+else
 	notify-send "❌ An error occurred."
-}
+fi

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 all_name='[ALL]'
 mode=library
@@ -23,6 +23,11 @@ d_album() {
 		# We only have one album, so just use that.
 		printf '%s\n' "${albums[0]}"
 	fi
+}
+
+d_title() {
+	local titles=$(mpc list title | sort -f)
+	echo "$titles" | dmenu -p "Select title:" "${dmenu_args[@]}"
 }
 
 d_playlist() {
@@ -69,18 +74,30 @@ done
 # Mode Handling
 case "$mode" in
 "library")
-	artist=$(d_artist)
-	[[ $artist ]] || exit 1
+	search_type=$(echo -e "artist\ntitle" | dmenu -p "Search by:" "${dmenu_args[@]}")
+	case "$search_type" in
+	"artist")
+		artist=$(d_artist)
+		[[ $artist ]] || exit 1
 
-	album=$(d_album "$artist")
-	[[ $album ]] || exit 2
+		album=$(d_album "$artist")
+		[[ $album ]] || exit 2
 
-	mpc clear
-	if [[ $album == "$all_name" ]]; then
-		mpc find artist "$artist" | sort | mpc add
-	else
-		mpc find artist "$artist" album "$album" | sort | mpc add
-	fi
+		mpc clear
+		if [[ $album == "$all_name" ]]; then
+			mpc find artist "$artist" | sort | mpc add
+		else
+			mpc find artist "$artist" album "$album" | sort | mpc add
+		fi
+		;;
+	"title")
+		title=$(d_title)
+		[[ $title ]] || exit 1
+
+		mpc clear
+		mpc find title "$title" | sort | mpc add
+		;;
+	esac
 	mpc play >/dev/null
 	;;
 "playlist")

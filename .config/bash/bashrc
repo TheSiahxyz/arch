@@ -210,6 +210,12 @@ alias \
 	rscd="rsync -vrazPlu --delete" \
 	rscr="rsync -vrazPlu --remove-source-files"
 
+# tor
+alias torh="cat /var/lib/tor/hidden_service/hostname"
+
+# nginx
+alias ngx="cd /etc/nginx"
+
 #######################################################
 # SPECIAL FUNCTIONS
 #######################################################

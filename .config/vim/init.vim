@@ -52,7 +52,7 @@ autocmd BufWritePost ~/.local/src/dwmblocks/config.h !cd ~/.local/src/dwmblocks/
 " BACKUP ----------------------------------------------------------------- {{{
 
 if version >= 703
-    set undodir=~/.config/vim/backup
+    set undodir=~/.config/vim/undodir
     set undofile
     set undoreload=10000
 endif

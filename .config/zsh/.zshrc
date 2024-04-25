@@ -10,6 +10,7 @@ else
     PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 fi
 
+
 ### --- ZSH --- ###
 # GnuPG
 export GPG_TTY="$(tty)"
@@ -46,6 +47,7 @@ autoload -Uz compinit       # Autoload compinit
 _comp_options+=(globdots)   # Include hidden files in completion
 compinit                    # Initialize completion system
 zmodload zsh/complist       # Load completion list module
+zmodload -i zsh/parameter   # Load last command output
 
 # _dotbare_completion_cmd
 zstyle ':completion:*' menu select  # selectable menu
@@ -76,8 +78,7 @@ for config_file (${ZDOTDIR:-$HOME/.config/zsh}/*.zsh) source $config_file
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc"
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc"
 # [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/git-aliasrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/git-aliasrc"
-[ -f "/root/.config}/shell/rootshortcutrc" ] && source "/root/.config}/shell/rootshortcutrc"
-[ -f "/root/.config}/shell/rootzshnameddirrc" ] && source "/root/.config}/shell/rootzshnameddirrc"
+
 
 ### --- Source --- ###
 zsh_add_plugins "${plugins[@]}"

@@ -1,14 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
 MOUNT_SCRIPT="${XDG_SCRIPTS_HOME:-$HOME/.local/bin}/fecrypt"
 
 play_media() {
-    mpv "$@"
-    after_playback
-}
-
-after_playback() {
-    $MOUNT_SCRIPT
+	mpv "$@" && $MOUNT_SCRIPT
 }
 
 play_playlist() {
@@ -19,100 +14,81 @@ play_playlist() {
 list_and_play() {
 	local directory=$1
 	CHOICE=$(echo -e "List files\nEnter filenames" | dmenu -i -p "Choose an option:")
-
 	case "$CHOICE" in
-    "Enter filenames")
-        local search_term=$(echo | dmenu -i -p "File names:")
-        [[ -z "$search_term" ]] && return 1
-
-        local files=$(find "$directory" -type f \( -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.webm" -o -iname "*.avi" -o -iname "*.flv" -o -iname "*.wmv" -o -iname "*.wav" -o -iname "*.aac" -o -iname "*.flac" -o -iname "*.m4a" -o -iname "*.ogg" \) -iname "*$search_term*" | sort)
-        [[ -z "$files" ]] && {
-            notify-send "No files found matching '$search_term'"
-            return 1
-        }
-        TMP_PLAYLIST=$(mktemp /tmp/mpv_playlist.XXXXXX)
-        echo "$files" > "$TMP_PLAYLIST"
-        play_media --playlist="$TMP_PLAYLIST"
-        rm -f "$TMP_PLAYLIST"
-        ;;
-    "List files")
-        local files_with_paths=$(find "$directory" -type f \( -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.webm" -o -iname "*.avi" -o -iname "*.flv" -o -iname "*.wmv" \) | sort)
-
-        SELECTED_FILE=$(echo -e "All files\n$files_with_paths" | sed 's!.*/!!' | dmenu -i -l 21 -p "Select a file:")
-        [[ "$SELECTED_FILE" == "All files" ]] && {
-            play_media "$directory/"
-        }
-
-        FULL_PATH=$(grep -F "$SELECTED_FILE" <<< "$files_with_paths")
-        if [[ -n "$FULL_PATH" && -f "$FULL_PATH" ]]; then
-            play_media "$FULL_PATH"
-        fi
-        ;;
-	*)
-		exit 1
+	"Enter filenames")
+		local search_term=$(echo | dmenu -i -p "File names:")
+		[[ -z "$search_term" ]] && return
+		local files=$(find "$directory" -type f \( -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.webm" -o -iname "*.avi" -o -iname "*.flv" -o -iname "*.wmv" -o -iname "*.wav" -o -iname "*.aac" -o -iname "*.flac" -o -iname "*.m4a" -o -iname "*.ogg" \) -iname "*$search_term*")
+		[[ -z "$files" ]] && return
+		TMP_PLAYLIST=$(mktemp /tmp/mpv_playlist.XXXXXX)
+		echo "$files" | while read -r file; do
+			echo "$file"
+		done >"$TMP_PLAYLIST"
+		cat "$TMP_PLAYLIST" # For debugging: output the contents of the playlist to verify.
+		play_media --playlist="$TMP_PLAYLIST"
+		rm -f "$TMP_PLAYLIST"
 		;;
+	"List files")
+		local files_with_paths=$(find "$directory" -type f \( -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.webm" -o -iname "*.avi" -o -iname "*.flv" -o -iname "*.wmv" \) -print0 | sort -z | xargs -0 -I{} basename {})
+		SELECTED_FILE=$(echo -e "All files\n$files_with_paths" | dmenu -i -l 21 -p "Select a file:")
+		[[ "$SELECTED_FILE" == "All files" ]] && {
+			play_media "$directory/"
+			return
+		}
+		FULL_PATH="$directory/$(echo "$files_with_paths" | grep -F "$SELECTED_FILE")"
+		[[ -f "$FULL_PATH" ]] && play_media "$FULL_PATH"
+		;;
+	*) return ;;
 	esac
 }
 
-check_and_mount() {
+check_mount() {
 	if ! mount | grep -q " $HOME/Media "; then
 		$MOUNT_SCRIPT
 	fi
 }
 
-check_and_unmount() {
+check_unmount() {
 	if mount | grep -q " $HOME/Media "; then
 		$MOUNT_SCRIPT
 	fi
 }
 
 play_url() {
-    local url=$1
-    notify-send "📽️ Playing video from URL:" "$url"
-    play_media "$url"
+	local url=$(xclip -selection clipboard -o)
+	[[ "$url" =~ ^https?:// ]] || return 1
+	notify-send "📽️ Playing video from URL:" "$url"
+	play_media "$url"
 }
 
-URL=$(xclip -selection clipboard -o)
-if [[ "$URL" =~ ^https?:// ]]; then
-	CHOICE_OPTIONS="URL\nLocal Files"
-	SELECTED_SOURCE=$(echo -e "$CHOICE_OPTIONS" | dmenu -i -p "Choose an option:")
-	case "$SELECTED_SOURCE" in
-	URL)
-		play_url "$URL"
-		exit 0
-		;;
-	Local\ Files)
-		;;
-	*)
-		exit 1
-		;;
-	esac
-fi
-
-CONTENT_CHOICE=$(echo -e "Files\nPlaylist" | dmenu -i -p "Choose an option:")
+CONTENT_CHOICE=$(echo -e "URL\nLocal Files\nPlaylist" | dmenu -i -p "Choose media source:")
 case "$CONTENT_CHOICE" in
-Playlist)
+"URL") play_url ;;
+"Playlist")
 	PLAYLISTS=$(ls $HOME/.config/mpv/playlists | sed 's/\.m3u$//' | dmenu -i -p "Select a playlist:")
-	[[ -z "$PLAYLISTS" ]] && exit 1
+	[[ -z "$PLAYLISTS" ]] && exit
 	play_playlist "$PLAYLISTS"
 	;;
-Files)
-	check_and_mount
-	FOLDER_OPTIONS=""
-	for base in Media/Share/Media Videos Downloads; do
-		FOLDER_OPTIONS+="$base\n$(find "$HOME/$base" -mindepth 1 -maxdepth 2 -type d ! -name ".*" -exec basename {} \; | sort | sed "s!^!$base/!")\n"
+"Local Files")
+	check_mount
+	SELECTED_FOLDER="$HOME"
+	while true; do
+		SUBFOLDER_OPTIONS=$(find "$SELECTED_FOLDER" -mindepth 1 -maxdepth 1 -type d ! -name ".*" -printf "%P\n" | sort)
+		[[ -z "$SUBFOLDER_OPTIONS" ]] && {
+			list_and_play "$SELECTED_FOLDER"
+			break
+		}
+		OPTIONS="All files\n$SUBFOLDER_OPTIONS"
+		SELECTED_RELATIVE_FOLDER=$(echo -e "$OPTIONS" | dmenu -i -p "Select a folder or 'All files':")
+		[[ "$SELECTED_RELATIVE_FOLDER" == "All files" ]] && {
+			list_and_play "$SELECTED_FOLDER"
+			break
+		}
+		[[ -z "$SELECTED_RELATIVE_FOLDER" ]] && exit
+		SELECTED_FOLDER="$SELECTED_FOLDER/$SELECTED_RELATIVE_FOLDER"
 	done
-	FOLDER_OPTIONS=$(echo -e "$FOLDER_OPTIONS" | sed '$d')
-	SELECTED_FOLDER=$(echo -e "$FOLDER_OPTIONS" | dmenu -i -p "Select a folder:")
-	[[ -z "$SELECTED_FOLDER" ]] && exit 1
-    if [[ ! "$SELECTED_FOLDER" =~ ^Media(/|$) ]]; then
-        $MOUNT_SCRIPT
-    fi
-	list_and_play "$HOME/$SELECTED_FOLDER"
 	;;
-*)
-	exit 1
-	;;
+*) exit ;;
 esac
 
-trap 'check_and_unmount; exit' EXIT SIGINT
+trap 'check_unmount; exit' EXIT SIGINT

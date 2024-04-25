@@ -1,1 +1,3 @@
 [MIME Cache]
+application/x-ipynb+json=jupyter-notebook.desktop;jupyterlab.desktop;
+x-scheme-handler/kakaotalk=wine-protocol-kakaotalk.desktop;

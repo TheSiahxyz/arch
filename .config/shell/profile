@@ -118,6 +118,7 @@ export _JAVA_AWT_WM_NONREPARENTING=1      # Fix for Java applications in dwm
 export KODI_DATA="$XDG_DATA_HOME/kodi"
 
 ### --- MANPAGER --- ###
+export MANPAGER='less -s'
 export LESS="R"
 export LESS_TERMCAP_mb="$(printf '%b' '[1;31m')"
 export LESS_TERMCAP_md="$(printf '%b' '[1;36m')"
@@ -181,8 +182,8 @@ export TMUXINATOR_CONFIG="$XDG_CONFIG_HOME/tmuxinator/"
 export UNISON="$XDG_DATA_HOME/unison"
 
 ### --- VIM --- ###
-export GVIMINIT='let $MYGVIMRC = !has("nvim") ? "$XDG_CONFIG_HOME/vim/gvimrc" : "$XDG_CONFIG_HOME/nvim/init.lua" | so $MYGVIMRC'
-export VIMINIT='let $MYVIMRC = !has("nvim") ? "$XDG_CONFIG_HOME/vim/vimrc" : "$XDG_CONFIG_HOME/nvim/init.lua" | so $MYVIMRC'
+# export GVIMINIT='let $MYGVIMRC = !has("nvim") ? "$XDG_CONFIG_HOME/vim/gvimrc" : "$XDG_CONFIG_HOME/nvim/init.lua" | so $MYGVIMRC'
+# export VIMINIT='let $MYVIMRC = !has("nvim") ? "$XDG_CONFIG_HOME/vim/vimrc" : "$XDG_CONFIG_HOME/nvim/init.lua" | so $MYVIMRC'
 
 ### --- VISUAL STUDIO CODE --- ###
 export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode

@@ -78,7 +78,7 @@ alias \
 	dgst="dotbare status"
 
 # disk usage
-alias du='du -h -d 2'
+alias du='du -sh'
 
 # eza
 [ -x "$(command -v eza)" ] && alias \
@@ -177,15 +177,12 @@ alias mv="mv -iv"
 # mysql
 alias msr="mysql -u si -p"
 
-# nextcloud
-alias occ="sudo -u www-data php /var/www/nextcloud/occ"
-
 # nvim
 alias \
 	e="$EDITOR" \
 	v="$EDITOR" \
 	nv="nvim" \
-	nvk="NVIM_APPNAME=Starter nvim" \
+	nts="NVIM_APPNAME=TheSiahxyz nvim" \
 	nlv="NVIM_APPNAME=LazyVim nvim" \
 	nvc="NVIM_APPNAME=NvChad nvim" \
 	snv="sudo nvim"
@@ -232,9 +229,6 @@ alias scim="sc-im"
 # scp
 alias scp="scp -r"
 
-# sudo
-alias smi="sudo make clean install"
-
 # sha1
 alias sha1="openssl sha1"
 
@@ -256,6 +250,11 @@ alias \
 
 # stow
 alias stw="$XDG_DOTFILES_DIR/.local/bin/stw"
+
+# sudo
+alias \
+	su="sudo su -l root" \
+	smi="sudo make clean install"
 
 # systemctl
 alias s="systemctl"
@@ -292,16 +291,16 @@ alias trem="transmission-remote"
 # trash
 alias \
 	tp="trash-put" \
-	tpr="trash-restore"
+	te="trash-empty" \
+	tl="trash-list" \
+	trs="trash-restore" \
+	trm="trash-rm"
 
 # vim
 alias vi="vim"
 
 # weather
 alias weath="less -S ${XDG_CACHE_HOME:-$HOME/.cache}/weatherreport"
-
-# web
-alias web='cd /var/www/thesiah'
 
 # wget
 alias wget=wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"
@@ -316,4 +315,6 @@ alias ytv="youtube-viewer"
 alias za="zathura"
 
 # zsh
-alias szs="source ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.zshrc"
+alias \
+	sps="source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile" \
+	szs="source ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.zshrc"

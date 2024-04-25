@@ -6,25 +6,24 @@
 
 pidof transmission-daemon >/dev/null || (transmission-daemon && notify-send "💡 Starting transmission daemon..." && sleep 3 && pkill -RTMIN+7 "${STATUSBAR:-dwmblocks}")
 
-directory="$HOME/Downloads"
+directory="$HOME/Torrents"
 
-if [ "$1" = "-l" ]; then
-    URL=$(xclip -selection clipboard -o)
-    if [[ -n "$URL" && ("$URL" =~ ^https?:// || "$URL" =~ ^magnet:\?) ]]; then
-        transmission-remote -a "$URL" && notify-send "🔽 Torrent added."
-        exit 0
-    else
-        added_torrents=$(transmission-remote -l | grep -vE '^ID|Sum' | awk '{print $NF}' | sed 's/\.torrent$//')
-        filtered_files=$(ls "$directory"/*.torrent 2>/dev/null | sed "s|^$directory/||" | sed 's/\.torrent$//' | grep -vF "$added_torrents")
-        if [ -n "$filtered_files" ]; then
-            choice=$(echo "$filtered_files" | dmenu -i -l 20 -p "Select Torrent:")
-            if [ -n "$choice" ]; then
-                transmission-remote -a "$directory/$choice.torrent" && notify-send "🔽 Torrent added."
-            fi
-        else
-            notify-send "🤷 No new torrent found."
-        fi
-    fi
-else
-    transmission-remote -a "$@" && notify-send "🔽 Torrent added."
-fi
+[ "$1" = "-l" ] && {
+	URL=$(xclip -selection clipboard -o)
+	case "$URL" in
+	http://* | https://* | magnet:?*)
+		transmission-remote -a "$URL" && notify-send "🔽 Torrent added."
+		exit 0
+		;;
+	*)
+		added_torrents=$(transmission-remote -l | grep -vE '^ID|Sum' | awk '{print $NF}' | sed 's/\.torrent$//')
+		filtered_files=$(ls "$directory"/*.torrent 2>/dev/null | sed "s|^$directory/||" | sed 's/\.torrent$//' | grep -vF "$added_torrents")
+		[ -n "$filtered_files" ] && {
+			choice=$(echo "$filtered_files" | dmenu -i -l 20 -p "Select Torrent:")
+			[ -n "$choice" ] && transmission-remote -a "$directory/$choice.torrent" && notify-send "🔽 Torrent added."
+		} || notify-send "🤷 No new torrent found."
+		;;
+	esac
+} || {
+	transmission-remote -a "$@" && notify-send "🔽 Torrent added." "$TR_TORRENT_NAME"
+}

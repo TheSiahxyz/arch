@@ -21,8 +21,8 @@ set shellopts '-eu'
 ### --- Custom Functions --- ###
 # Chmod
 cmd chmods ${{
-    options="a+x\n000\n644\n666\n755\n777"
-    choice=$(echo -e $options | fzf)
+    options=$(printf "a+x\n000\n644\n666\n755\n777")
+    choice=$(printf "%s" "$options" | fzf)
     case "$choice" in
         "a+x") mod="a+x";;
         "000") mod="000";;
@@ -34,7 +34,7 @@ cmd chmods ${{
     for file in $fx; do
         chmod -R $mod "$file"
     done
-    echo "Permissions set to $mod for selected files/directories."
+    printf "Permissions set to $mod for selected files/directories."
     lf -remote "send $id reload"
 }}
 
@@ -78,7 +78,7 @@ cmd mkdir ${{ clear; tput cup $(($(tput lines)/3)); tput bold
     read ans
     mkdir $ans
 }}
-cmd mkfile ${{
+cmd touch ${{
     clear; tput cup $(($(tput lines)/3)); tput bold
     printf "File Name: "
     read ans
@@ -104,26 +104,21 @@ cmd link %{{
 
 # Cut
 cmd cut-add %{{
-    newline=$'\n'
-    sed -i '1s/.*/move/' "$XDG_DATA_HOME/lf/files"
+    sed '1s/.*/move/' "$XDG_DATA_HOME/lf/files" > "$XDG_DATA_HOME/lf/files.tmp"
+    mv "$XDG_DATA_HOME/lf/files.tmp" "$XDG_DATA_HOME/lf/files"
     echo "$fx" >> "$XDG_DATA_HOME/lf/files"
-    lf -remote "send $id unselect${newline}send $id sync"
+    lf -remote "send $id unselect"
+    lf -remote "send $id sync"
 }}
 cmd cut-remove %{{
-    newline=$'\n'
-    sed -i '1s/.*/move/' "$XDG_DATA_HOME/lf/files"
-    while read -r file; do
-        sed -i "\|$file|d" "$XDG_DATA_HOME/lf/files"
-    done <<< "$fx"
-    lf -remote "send $id unselect${newline}send $id sync"
-}}
-cmd cut-toggle %{{
-    newline=$'\n'
-    files=$(comm --output-delimiter="" -3 \
-        <(tail -n +2 "$XDG_DATA_HOME/lf/files" | sort) \
-        <(echo "$fx" | sort) | tr -d '\0')
-    printf "move\n$files" > "$XDG_DATA_HOME/lf/files"
-    lf -remote "send $id unselect${newline}send $id sync"
+    sed '1s/.*/move/' "$XDG_DATA_HOME/lf/files" > "$XDG_DATA_HOME/lf/files.tmp"
+    mv "$XDG_DATA_HOME/lf/files.tmp" "$XDG_DATA_HOME/lf/files"
+    echo "$fx" | while read -r file; do
+        sed "\|$file|d" "$XDG_DATA_HOME/lf/files" > "$XDG_DATA_HOME/lf/files.tmp"
+        mv "$XDG_DATA_HOME/lf/files.tmp" "$XDG_DATA_HOME/lf/files"
+    done
+    lf -remote "send $id unselect"
+    lf -remote "send $id sync"
 }}
 
 # Delete
@@ -316,13 +311,13 @@ map c
 map d
 map g
 map M
-map n
 map p
 map s
 map v
 map w
 map y
 map z
+map ,
 
 # Chmod
 map zc chmods
@@ -331,7 +326,8 @@ map zc chmods
 map <c-l> clear
 
 # Copy
-map yy %cp -ri -- $fs .; clear
+# map yy %cp -ri -- $fs .; clear
+map yy copy
 map yt copyto; clear
 map Y $printf "%s" "$fx" | xclip -selection clipboard; clear
 map yd yank-dirname
@@ -340,14 +336,13 @@ map yb yank-basename
 map yn yank-basename-without-extension
 
 # Create
-map nd mkdir
-map nf mkfile
-map nl :link
+map Md mkdir
+map Mf touch
+map Ml :link
 
 # Cut
 map dd cut-add
 map dr cut-remove
-map dt cut-toggle
 
 # Delete
 map D trash; clear
@@ -391,7 +386,7 @@ map <c-c> quit
 # Rename
 map a :rename; cmd-right # after extension
 map A :rename; cmd-end # at the very end
-map br bulkrename
+map B bulkrename
 map r :rename; cmd-delete-home # filename
 map R :rename; cmd-end; cmd-delete-home # entire filename
 map i :rename # before extension
