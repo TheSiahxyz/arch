@@ -2,11 +2,11 @@
     defaultBranch = main
 
 [core]
-	excludesFile = /home/si/.config/git/ignore
+    excludesFile = /home/si/.config/git/ignore
     pager = delta
 
 [credential]
-	helper = store
+    helper = store
 
 [delta]
     features = Catppuccin-mocha

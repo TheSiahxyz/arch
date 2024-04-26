@@ -24,4 +24,4 @@ credentials
 *personal*
 
 # Tmux
-tmux/plugins/
+.config/tmux/plugins/
