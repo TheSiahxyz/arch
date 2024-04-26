@@ -6,9 +6,7 @@ function ColorMyPencils(color)
 end
 
 return {
-    {
-        "junegunn/seoul256.vim",
-    },
+    { "junegunn/seoul256.vim", },
     {
         "catppuccin/nvim",
         name = "catppuccin",
