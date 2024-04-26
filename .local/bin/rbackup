@@ -8,7 +8,6 @@ obsidian_path="$HOME/Obsidian"
 pass_path="${PASSWORD_STORE_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/.password-store}"
 suck_path="${XDG_SOURCES_HOME:-$HOME/.local/src}/suckless"
 web_path="${WEBDIR:-$HOME/THESIAH}"
-mozilla_path="$HOME/.mozilla"
 USER_HOME=$(eval echo ~$USER)
 
 echo "Backup files..."
@@ -16,7 +15,7 @@ echo "Backup files..."
 [ -d "$backup_path" ] || mkdir -p "$backup_path"
 
 # Using a loop over space-separated strings instead of an array
-for source in "$dot_path" "$music_path" "$obsidian_path" "$pass_path" "$suck_path" "$web_path" "$mozilla_path"; do
+for source in "$dot_path" "$music_path" "$obsidian_path" "$pass_path" "$suck_path" "$web_path"; do
 	rsync -vrazPlu --delete "$source" "$backup_path/" >/dev/null 2>&1 || {
 		echo "Failed to sync $(basename "$source")"
 		exit 1
