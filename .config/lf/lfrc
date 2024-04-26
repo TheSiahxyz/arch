@@ -359,7 +359,7 @@ map E extract; clear
 map Mt moveto; clear
 
 # MPV
-map Ms mpvdir
+map Mpv mpvdir
 
 # Open
 map o open
