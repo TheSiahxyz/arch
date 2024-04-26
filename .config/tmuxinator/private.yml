@@ -1,7 +1,7 @@
 # /Users/si/.config/tmuxinator/private.yml
 
 name: private
-root: ~/
+root: ~
 
 # Optional tmux socket
 # socket_name: foo

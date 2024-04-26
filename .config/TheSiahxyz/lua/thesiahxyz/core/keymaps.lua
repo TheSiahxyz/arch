@@ -2,10 +2,13 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+-- Disable
+vim.keymap.set("n", "Q", "<nop>")
+
 -- Expolore
 vim.keymap.set("n", "<leader>e", vim.cmd.Ex)
 
--- Remap default
+-- Remap Default
 vim.keymap.set("i", "jk", "<Esc>")
 vim.keymap.set("i", "<C-c>", "<Esc>")
 vim.keymap.set("i", "<C-i>", "<ESC>I")
@@ -36,11 +39,11 @@ vim.keymap.set("v", ">", ">gv")
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
--- Disable
-vim.keymap.set("n", "Q", "<nop>")
-
 -- Check Health
 vim.keymap.set("n", "<leader>ch", ":checkhealth<cr>")
+
+-- Compiler
+vim.api.nvim_set_keymap("n", "<leader>rr", ':w!<CR>:!compiler "%:p"<CR>', { noremap = true, silent = true })
 
 -- Cut, Yank & Paste
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
@@ -56,13 +59,12 @@ local diagnostic_goto = function(next, severity)
         go({ severity = severity })
     end
 end
-vim.keymap.set("n", "]d", diagnostic_goto(true))
 vim.keymap.set("n", "[d", diagnostic_goto(false))
-vim.keymap.set("n", "]e", diagnostic_goto(true, "ERROR"))
+vim.keymap.set("n", "]d", diagnostic_goto(true))
 vim.keymap.set("n", "[e", diagnostic_goto(false, "ERROR"))
-vim.keymap.set("n", "]w", diagnostic_goto(true, "WARN"))
+vim.keymap.set("n", "]e", diagnostic_goto(true, "ERROR"))
 vim.keymap.set("n", "[w", diagnostic_goto(false, "WARN"))
-vim.keymap.set("n", "<leader>lf", vim.diagnostic.open_float)
+vim.keymap.set("n", "]w", diagnostic_goto(true, "WARN"))
 vim.keymap.set("n", "<leader>de", vim.diagnostic.open_float)
 vim.keymap.set("n", "<leader>dq", vim.diagnostic.setloclist)
 
@@ -70,10 +72,10 @@ vim.keymap.set("n", "<leader>dq", vim.diagnostic.setloclist)
 vim.keymap.set("n", "<leader>fn", "<cmd>enew<cr>")
 
 -- Fix List & Trouble
-vim.keymap.set("n", "<C-]>", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<C-[>", "<cmd>cprev<CR>zz")
-vim.keymap.set("n", "<leader>]", "<cmd>lnext<CR>zz")
+vim.keymap.set("n", "<C-]>", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<leader>[", "<cmd>lprev<CR>zz")
+vim.keymap.set("n", "<leader>]", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>/", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set("n", "<leader>xl", "<cmd>lopen<cr>")
 vim.keymap.set("n", "<leader>xq", "<cmd>copen<cr>")
@@ -88,16 +90,15 @@ vim.keymap.set("n", "<leader>ch", ":checkhealth<cr>")
 vim.keymap.set("n", "<leader>K", "<cmd>norm! K<cr>")
 
 -- Lines
-vim.keymap.set("n", "<A-.>", "<cmd>m .+1<cr>==")
 vim.keymap.set("n", "<A-,>", "<cmd>m .-2<cr>==")
-vim.keymap.set("i", "<A-.>", "<esc><cmd>m .+1<cr>==gi")
+vim.keymap.set("n", "<A-.>", "<cmd>m .+1<cr>==")
 vim.keymap.set("i", "<A-,>", "<esc><cmd>m .-2<cr>==gi")
-vim.keymap.set("v", "<A-.>", ":m '>+1<cr>gv=gv")
+vim.keymap.set("i", "<A-.>", "<esc><cmd>m .+1<cr>==gi")
 vim.keymap.set("v", "<A-,>", ":m '<-2<cr>gv=gv")
+vim.keymap.set("v", "<A-.>", ":m '>+1<cr>gv=gv")
 
 -- Ownerships
-vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
-vim.keymap.set("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
+vim.keymap.set("n", "<leader>cx", "<cmd>!chmod +x %<CR>", { silent = true })
 
 -- Source
 vim.keymap.set("n", "<leader><leader>", function()
@@ -115,16 +116,16 @@ vim.keymap.set("t", "<c-_>", "<cmd>close<cr>")
 
 -- Tmux
 vim.keymap.set("n", "<C-h>", "<C-w><C-h>")
-vim.keymap.set("n", "<C-l>", "<C-w><C-l>")
 vim.keymap.set("n", "<C-j>", "<C-w><C-j>")
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>")
-vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+vim.keymap.set("n", "<C-l>", "<C-w><C-l>")
+vim.keymap.set("n", "<C-f>", "<cmd>silent !~/.config/tmux/plugins/tmux-fzf/scripts/session.sh<CR>")
 
 -- Lazy
 vim.keymap.set("n", "<leader>l", "<cmd>Lazy<cr>")
 
--- Compiler
-vim.api.nvim_set_keymap("n", "<leader>c", ':w!<CR>:!compiler "%:p"<CR>', { noremap = true, silent = true })
+-- Mason
+vim.keymap.set("n", "<leader>m", "<cmd>Mason<cr>")
 
 -- Word Definition
 vim.api.nvim_set_keymap(

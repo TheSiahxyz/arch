@@ -1,7 +1,7 @@
 # /Users/si/.config/tmuxinator/obsidian.yml
 
 name: obsidian
-root: ~/Obsidian/SI/
+root: ~/Obsidian/SI
 
 # Optional tmux socket
 # socket_name: foo

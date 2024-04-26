@@ -274,16 +274,16 @@ alias \
 
 # tmuxinator
 alias \
-	txd="tmuxinator delete" \
-	txl="tmuxinator list" \
-	txs="tmuxinator start" \
-	txc="tmuxinator config" \
-	txo="tmuxinator obsidian" \
-	txp="tmuxinator private" \
-	txw="tmuxinator work" \
-	txn="tmuxinator new" \
-	tx="tmuxinator" \
-	txr="txo && txp && txw"
+	tid="tmuxinator delete" \
+	til="tmuxinator list" \
+	tis="tmuxinator start" \
+	tic="tmuxinator config" \
+	tio="tmuxinator obsidian" \
+	tip="tmuxinator private" \
+	tiw="tmuxinator work" \
+	tin="tmuxinator new" \
+	ti="tmuxinator" \
+	tir="txo && txp && txw"
 
 # transmission-remote
 alias trem="transmission-remote"

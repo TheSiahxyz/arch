@@ -1,7 +1,7 @@
 # /Users/si/.config/tmuxinator/config.yml
 
 name: config
-root: ~/.dotfiles/nvim/.config/
+root: ~/.dotfiles/.config
 
 # Optional tmux socket
 # socket_name: foo
@@ -48,17 +48,17 @@ windows:
   - dotfiles:
       root: ~/.dotfiles
   - Kickstart:
-      root: ~/.dotfiles/nvim/.config/Kickstart/
+      root: ~/.dotfiles/.config/TheSiahxyz/
       panes:
-        - nks
+        - nts
   - NvChad:
-      root: ~/.dotfiles/nvim/.config/NvChad/
+      root: ~/.dotfiles/.config/NvChad/
       panes:
         - nvc
   - LazyVim:
-      root: ~/.dotfiles/nvim/.config/LazyVim/
+      root: ~/.dotfiles/.config/LazyVim/
       panes:
-        - nvl
+        - nlv
   - nvim:
       layout: main-vertical
       root: ~/.config
