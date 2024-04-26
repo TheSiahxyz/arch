@@ -129,13 +129,7 @@ vim.api.nvim_set_keymap("n", "<leader>c", ':w!<CR>:!compiler "%:p"<CR>', { norem
 -- Word Definition
 vim.api.nvim_set_keymap(
     "n",
-    "<leader>fd",
+    "<leader>gd",
     ":lua WordDefinition(vim.fn.expand('<cword>'))<CR>",
-    { noremap = true, silent = true }
-)
-vim.api.nvim_set_keymap(
-    "x",
-    "<leader>fd",
-    ":lua WordDefinition(vim.fn.getreg('v', 1, 1))<CR>",
     { noremap = true, silent = true }
 )

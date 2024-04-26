@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 ### --- Prompt --- ###
 if [[ -f "$POWERLEVEL9K_INSTALLATION_DIR/powerlevel10k.zsh-theme" ]]; then
     source "$POWERLEVEL9K_INSTALLATION_DIR/powerlevel10k.zsh-theme"

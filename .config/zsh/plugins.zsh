@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 plugins=(
   "Aloxaf/fzf-tab"
   "kazhala/dotbare"

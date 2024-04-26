@@ -45,8 +45,9 @@ pah             ${PASSWORD_STORE_DIR:-$XDG_DATA_HOME/.password-store}/ssh
 pas             ${PASSWORD_STORE_DIR:-$XDG_DATA_HOME/.password-store}
 shm             ${XDG_DATA_HOME:-$HOME/.local/share}/mail
 shr             ${XDG_DATA_HOME:-$HOME/.local/share}
-sht             ${XDG_DATA_HOME:-$HOME/.local/share}/Trash/files
-shzp            ${XDG_DATA_HOME:-$HOME/.local/share}/zsh
+shts            ${XDG_DATA_HOME:-$HOME/.local/share}/thesiah
+shtr            ${XDG_DATA_HOME:-$HOME/.local/share}/Trash/files
+shz             ${XDG_DATA_HOME:-$HOME/.local/share}/zsh
 stt             ${XDG_STATE_HOME:-$HOME/.local/state}
 sl              ${XDG_SOURCES_HOME:-$HOME/.local/src}/suckless
 sr              ${XDG_SOURCES_HOME:-$HOME/.local/src}

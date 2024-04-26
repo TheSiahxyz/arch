@@ -15,22 +15,12 @@ end
 
 -- Word Definition
 function WordDefinition(input)
-    -- Use visual selection if input is empty
-    if input == "" then
-        input = vim.fn.getreg(vim.fn.visualmode(), 1, 1)
-    end
-
     local escaped_input = vim.fn.shellescape({input})
-
-    -- Run dict command and store output
     local output = vim.fn.system("dict " .. escaped_input)
+    local bufnr = vim.api.nvim_create_buf(false, true)
 
-    -- Open a new buffer for output or use an existing buffer
-    local bufnr = vim.api.nvim_create_buf(false, true)  -- create a new buffer
-    vim.api.nvim_set_current_buf(bufnr)  -- switch to the new buffer
-    vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, vim.split(output, "\n"))  -- set buffer lines
-
-    -- Set buffer to be non-editable and mark it as unmodified
+    vim.api.nvim_set_current_buf(bufnr)
+    vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, vim.split(output, "\n"))
     vim.api.nvim_buf_set_option(bufnr, 'modifiable', false)
     vim.api.nvim_buf_set_option(bufnr, 'modified', false)
 end
@@ -39,6 +29,7 @@ end
 local shortcuts_file = vim.fn.expand("~/.config/nvim/shortcuts.lua")
 local file = io.open(shortcuts_file, "r")
 if file then
-    file:close() -- It's important to close the file after opening it.
+    file:close()
     vim.cmd("silent! source " .. shortcuts_file)
 end
+
