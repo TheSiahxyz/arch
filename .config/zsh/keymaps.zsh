@@ -20,6 +20,7 @@ bindkey -M visual '^[[P' vi-delete      # delete
 bindkey -M viins 'jk' vi-cmd-mode       # normal mode
 
 # programs
+bindkey -s '^a' '^ulf\n'
 bindkey -s '^b' '^ubc -lq\n'
 bindkey -s '^d' '^ufD\n'
 bindkey -s '^e' '^use\n'

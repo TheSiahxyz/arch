@@ -1,14 +1,5 @@
 #!/bin/sh
 
-num_displays=$(xrandr --query | grep " connected" | wc -l)
-if [ "$num_displays" -ge 2 ]; then
-	xrandr --output eDP-1 --off --output DP-2 --auto --primary
-elif [ "$num_displays" -ge 3 ]; then
-	xrandr --output eDP-1 --off --output DP-2 --auto --primary --output HDMI-1-0 --auto --right-of DP-2
-else
-	xrandr --output eDP-1 --auto --primary
-fi
-
 xrandr --dpi 96 # Set DPI. User may want to use a larger number for larger screens.
 setbg &         # set the background with the `setbg` script
 
