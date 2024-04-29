@@ -1,5 +1,6 @@
 # keys          filename
 bb              ${XDG_SCRIPTS_HOME:-$HOME/.local/bin}
+cab             ${XDG_CONFIG_HOME:-$HOME/.config}/abook
 cac             ${XDG_CACHE_HOME:-$HOME/.cache}
 cbc             ${XDG_CONFIG_HOME:-$HOME/.config}/bash
 cf              ${XDG_CONFIG_HOME:-$HOME/.config}
@@ -21,7 +22,6 @@ cvc             ${XDG_CONFIG_HOME:-$HOME/.config}/vim
 cxc             ${XDG_CONFIG_HOME:-$HOME/.config}/x11
 czc             ${XDG_CONFIG_HOME:-$HOME/.config}/zsh
 dot             ${XDG_DOTFILES_DIR:-$HOME/.dotfiles}
-gab             $HOME/.abook
 gbk             $HOME/.backup
 gdc             ${XDG_DOCUMENTS_DIR:-$HOME/Documents}
 gdn             ${XDG_DOWNLOAD_DIR:-$HOME/Downloads}

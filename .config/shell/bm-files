@@ -1,5 +1,5 @@
 # keys                  filename                                                description
-vab     $HOME/.abook/addressbook                                                # address book config
+vab     ${XDG_CONFIG_HOME:-$HOME/.config}/abook/addressbook                                                # address book config
 vbc     ${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc                           # bash (shell) config
 vbd     ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs                         # A list of bookmarked directories similar to this file
 vbf     ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-files                        # This file, a list of bookmarked files
