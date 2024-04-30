@@ -30,7 +30,7 @@ cookie
 */tmux/plugins/
 
 # Vim
-vim/*/
+*/vim/*/
 
 # thesiah.mom
 */thesiah/thesiah.mom
