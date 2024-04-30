@@ -57,6 +57,8 @@ root_vim_shortcuts="/root/.config/vim/rootshortcuts.vim"
 
 sudo rm -f "$root_zsh_named_dirs" "$root_lf_shortcuts" "$root_vim_shortcuts" 2>/dev/null
 printf "# vim: filetype=sh\\nalias " | sudo tee "$root_shell_shortcuts" 2>/dev/null
+sudo mkdir -p /root/.config/shell/ /root/.config/lf/ /root/.config/vim/
+sudo touch "$root_shell_shortcuts" "$root_zsh_named_dirs" "$root_lf_shortcuts" "$root_vim_shortcuts"
 
 eval "echo \"$(cat "$bmdirs")\"" |
 	sudo awk "!/^\s*#/ && !/^\s*\$/ && /cache|config($|\/bash|\/lf|\/shell|\/vim)|local\/(bin|share|state)$/ {gsub(\"\\\s*#.*$\",\"\"); gsub(\"home/si\", \"root\");

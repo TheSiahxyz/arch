@@ -13,6 +13,7 @@ credentials
 
 # History
 *history*
+*/.zcompdump
 
 # IDE directories
 .idea/
@@ -25,3 +26,6 @@ credentials
 
 # Tmux
 */tmux/plugins/
+
+# thesiah.mom
+*/thesiah/thesiah.mom

@@ -2,7 +2,7 @@
 
 # local backup
 backup_path="$HOME/.backup"
-dot_path="${XDG_DITFILES_DIR:-$HOME/.dotfiles}"
+dot_path="${XDG_DOTFILES_DIR:-$HOME/.dotfiles}"
 music_path="${XDG_MUSIC_DIR:-$HOME/Music}"
 obsidian_path="$HOME/Obsidian"
 pass_path="${PASSWORD_STORE_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/.password-store}"
@@ -63,9 +63,9 @@ sudo ln -sf /root/.config/vim/vimrc /root/.vimrc >/dev/null 2>&1 || exit 1
 rsync -vrazPlu --delete "$thesiah_path/" "$THESIAH:/var/www/thesiah/" >/dev/null 2>&1 || exit 1
 rsync -vrazPlu --delete "$vim_path/vimrc" "$THESIAH:/root/.config/vim/" >/dev/null 2>&1 || exit 1
 rsync -vrazPlu --delete "$shell_path/inputrc" "$THESIAH:/root/.config/shell/" >/dev/null 2>&1 || exit 1
-sudo cp /root/.config/shell/rootshortcutrc ~/.cache/tmp/ >/dev/null 2>&1 || exit 1
-sudo chown -R $USER:wheel ~/.cache/tmp/rootshortcutrc >/dev/null 2>&1 || exit 1
-rsync -vrazPlu --remove-source-files "$HOME/.cache/tmp/rootshortcutrc" "$THESIAH:/root/.config/shell/" >/dev/null 2>&1 || exit 1
+sudo cp /root/.config/shell/rootshortcutrc ~/.cache/ >/dev/null 2>&1 || exit 1
+sudo chown -R $USER:wheel ~/.cache/rootshortcutrc >/dev/null 2>&1 || exit 1
+rsync -vrazPlu --remove-source-files "$HOME/.cache/rootshortcutrc" "$THESIAH:/root/.config/shell/" >/dev/null 2>&1 || exit 1
 
 # Adding custom shortcuts to root's shell configuration on the remote system
 ssh $THESIAH "echo 'web=\"cd /var/www && ls -A\" ' >> /root/.config/shell/rootshortcutrc" >/dev/null 2>&1 || exit 2
