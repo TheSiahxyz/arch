@@ -1,7 +1,6 @@
 # Api/Keys
 api.json
 credentials
-.pam-gnupg
 
 # Backup files
 *~
@@ -10,6 +9,9 @@ credentials
 # Compiled files
 *.o
 *.out
+
+# Cookie
+cookie
 
 # History
 *history*
@@ -26,6 +28,9 @@ credentials
 
 # Tmux
 */tmux/plugins/
+
+# Vim
+vim/*/
 
 # thesiah.mom
 */thesiah/thesiah.mom
