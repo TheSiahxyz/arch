@@ -39,7 +39,7 @@ sudo mkdir -p /root/.local/bin /root/.local/share /root/.local/state
 # Root configuration synchronization on local system
 sudo rsync -vrazPlu --delete "$vim_path/vimrc" "/root/.config/vim/" >/dev/null 2>&1 || exit 1
 sudo rsync -vrazPlu --delete "$lf_path" "/root/.config/" >/dev/null 2>&1 || exit 1
-sudo mv -f "/root/.config/lf/icons1" "/root/.config/lf/icons" >/dev/null 2>&1 || exit 1
+sudo mv -f "/root/.config/lf/rooticons" "/root/.config/lf/icons" >/dev/null 2>&1 || exit 1
 sudo rsync -vrazPlu --delete "$bash_path" "/root/.config/" >/dev/null 2>&1 || exit 1
 sudo rsync -vrazPlu --delete "$shell_path/inputrc" "/root/.config/shell/" >/dev/null 2>&1 || exit 1
 

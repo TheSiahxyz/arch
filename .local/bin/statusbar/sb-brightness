@@ -1,0 +1,11 @@
+#!/bin/sh
+
+case $BLOCK_BUTTON in
+3) notify-send "🔆 Backlight module
+- Scroll up & down changes backlight" ;;
+6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac
+
+current_brightness=$(brillo -G)
+brightness_percentage=$(printf "%.0f" "$current_brightness")
+echo "🔆${brightness_percentage}%"

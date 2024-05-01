@@ -15,7 +15,7 @@ cookie
 
 # History
 *history*
-*/.zcompdump
+*/zsh/.zcompdump
 
 # IDE directories
 .idea/
@@ -28,6 +28,9 @@ cookie
 
 # Tmux
 */tmux/plugins/
+
+# Transmission
+*/transmission-daemon/bandwidth-groups.json
 
 # Vim
 */vim/*/

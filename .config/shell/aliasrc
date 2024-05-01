@@ -252,7 +252,7 @@ alias \
 	gts="ssh $THESIAH"
 
 # stow
-alias stw="$XDG_DOTFILES_DIR/.local/bin/stw"
+alias stw="${XDG_DOTFILES_DIR:-$HOME/.dotfiles}/.local/bin/stw"
 
 # sudo
 alias \

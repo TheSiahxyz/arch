@@ -9,10 +9,7 @@ case $BLOCK_BUTTON in
 ♻: stagnant charge
 🔌: charging
 ⚡: charged
-❗: battery very low!
-- Scroll to change adjust backlight" ;;
-4) brillo -A 5 -p ;;
-5) brillo -U 5 -p ;;
+❗: battery very low!" ;;
 6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 

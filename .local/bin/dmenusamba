@@ -2,6 +2,7 @@
 
 samba_conf="/etc/samba/smb.conf"
 base_path="/home/$USER"
+os="$(whereami)"
 
 if [ "$#" -eq 1 ]; then
 	folder_path="$1"
@@ -21,7 +22,7 @@ fi
 
 echo | sudo tee -a "$samba_conf" >/dev/null
 sudo tee -a "$samba_conf" >/dev/null <<EOF || exit 1
-[Arch-$folder_name]
+[$os-$folder_name]
    path = $folder_path
    writable = yes
    browsable = yes
