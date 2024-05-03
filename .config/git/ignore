@@ -15,7 +15,7 @@ cookie
 
 # History
 *history*
-*/zsh/.zcompdump
+.zcompdump
 
 # IDE directories
 .idea/
