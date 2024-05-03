@@ -2,79 +2,8 @@
 
 ###########################################################################################
 ###########################################################################################
-### --- Source Plugins --- ###
-# Add Files
-zsh_source_plugin() {
-  for file in "$@"; do
-    [ -f "$ZPLUGINDIR/$file" ] && source "$ZPLUGINDIR/$file"
-  done
-}
-
-# Add Plugins
-zsh_add_plugins() {
-  for plugin in "$@"; do
-    local PLUGIN_NAME=$(echo $plugin | cut -d "/" -f 2)
-    local PLUGIN_PATH="$ZPLUGINDIR/$PLUGIN_NAME"
-
-    if [ -d "$PLUGIN_PATH" ]; then
-      zsh_source_plugin "$PLUGIN_NAME/$PLUGIN_NAME.plugin.zsh"
-      zsh_source_plugin "$PLUGIN_NAME/$PLUGIN_NAME.zsh"
-    else
-      if [ "$(echo $plugin | cut -d "/" -f 1)" = "ohmyzsh" ]; then
-        if [ ! -d "$ZPLUGINDIR/oh-my-zsh" ]; then
-          git clone --depth=1 https://github.com/ohmyzsh/ohmyzsh.git "$ZPLUGINDIR/oh-my-zsh" &>/dev/null
-        fi
-
-        local OHMYZSH_PLUGIN_PATH="$ZPLUGINDIR/oh-my-zsh/plugins/$PLUGIN_NAME"
-        cp -r "$OHMYZSH_PLUGIN_PATH" "$ZPLUGINDIR/" &>/dev/null
-        rm -rf "$ZPLUGINDIR/oh-my-zsh" &>/dev/null
-      else
-        git clone "https://github.com/$plugin.git" "$PLUGIN_PATH" &>/dev/null
-      fi
-      chmod +x "$PLUGIN_PATH"
-    fi
-  done
-}
-
-# Update Plugins
-zsh_update_plugins() {
-  # Define the plugin directory
-  local ZPLUGINDIR="$HOME/.local/share/zsh"
-
-  # Read and parse the list of active plugins from the configuration file
-  # This time, extracting only the repository name (the part after the last '/')
-  local ACTIVE_PLUGINS=($(grep '^[[:space:]]*"[^"]\+"' ~/.config/zsh/plugins.zsh | sed 's|.*/\([^/"]*\)".*|\1|'))
-
-  # Loop over each directory in the plugin directory
-  local PLUGIN_NAME
-  for PLUGIN_DIR in "$ZPLUGINDIR"/*; do
-    if [ -d "$PLUGIN_DIR" ]; then  # Check if it is a directory
-      PLUGIN_NAME=$(basename "$PLUGIN_DIR")
-
-      # Check if the plugin directory is not in the list of active plugins
-      if [[ ! " ${ACTIVE_PLUGINS[*]} " =~ " $PLUGIN_NAME " ]]; then
-        echo "Removing unused plugin: $PLUGIN_NAME"
-        rm -rf "$PLUGIN_DIR"
-      fi
-    fi
-  done
-}
-
-
-source_packages() {
-  for package in ${(k)source_packages}; do
-    if command -v $package >/dev/null; then
-      args=(${(s: :)source_packages[$package]})
-      eval "$($package init zsh $args)"
-    fi
-  done
-}
-
-
-###########################################################################################
-###########################################################################################
-### --- Change Names --- ###
-cnt() {
+### --- Change Target Nvim --- ###
+ctn() {
   if [ $# -ne 2 ]; then
     echo "Usage: cnt <old_suffix> <new_suffix>"
     return 1
@@ -110,7 +39,7 @@ cnt() {
 ###########################################################################################
 ###########################################################################################
 ### --- Color --- ###
-ccolor() {
+pcol() {
   awk 'BEGIN{
     s="/\\/\\/\\/\\/\\"; s=s s s s s s s s;
     for (colnum = 0; colnum<77; colnum++) {
@@ -130,7 +59,7 @@ ccolor() {
 ###########################################################################################
 ###########################################################################################
 ### --- Config --- ###
-ncf() {
+fcf() {
   [ $# -gt 0 ] && zoxide query -i "$1" | xargs "${EDITOR}" && return
   local file
   file="$(zoxide query -l | fzf -1 -0 --no-sort +m)" && nvim "${file}" || return 1
@@ -271,14 +200,6 @@ help() {
 
 ###########################################################################################
 ###########################################################################################
-### --- Last Command Output --- ###
-insert-last-command-output() {
-  LBUFFER+="$(eval $history[$((HISTCMD-1))])"
-}
-
-
-###########################################################################################
-###########################################################################################
 ### --- lf --- ###
 lfcd () {
     tmp="$(mktemp -uq)"
@@ -295,80 +216,6 @@ lfcd () {
 ###########################################################################################
 ### --- mkcd --- ###
 mkcd() { mkdir -p "$@" && cd "$_"; }
-
-
-###########################################################################################
-###########################################################################################
-### --- Mount --- ###
-mtl() {
-  if [ $# -lt 1 ]; then
-    echo "Usage: mtl <ip_address>"
-    return 1
-  fi
-
-  ip_address="$1"
-
-  # List available shares on the specified IP address.
-  smbclient -L "$ip_address"
-}
-
-cmt() {
-  local target_dir=~/Media/share/
-
-  if [ $# -gt 0 ]; then
-    # Construct the full target directory path.
-    target_dir+=${@// /\\ }
-  fi
-
-  if [ ! -d "$target_dir" ]; then
-    mkdir -p "$target_dir"
-  fi
-
-  cd "$target_dir" || return
-}
-
-mt() {
-  if [ $# -lt 2 ]; then
-    echo "Usage: mtw <ip_address> <share_name1> [<share_name2> ...]"
-    return 1
-  fi
-
-  ip_address="$1"
-  shift
-
-  # Iterate over each share name provided.
-  for share_name in "$@"; do
-    # Check if the mount directory exists; create it if it doesn't.
-    if [ ! -d ~/Media/share/"$share_name" ]; then
-      echo "Creating mount point ~/Media/share/$share_name."
-      mkdir -p ~/Media/share/"$share_name"
-    fi
-
-    # Attempt to mount the shared folder.
-    echo "Mounting //$ip_address/$share_name to ~/Media/share/$share_name."
-    sudo mount -t cifs //$ip_address/$share_name ~/Media/share/"$share_name" -o user=anonymous,password= || {
-      echo "Failed to mount //$ip_address/$share_name."
-      return 1
-    }
-  done
-}
-
-umt() {
-  if [ $# -lt 1 ]; then
-    echo "Usage: umtw <share_name1> [<share_name2> ...]"
-    return 1
-  fi
-
-  # Iterate over each share name provided.
-  for share_name in "$@"; do
-    # Attempt to unmount the shared folder.
-    echo "Unmounting ~/Media/share/$share_name."
-    sudo umount -l ~/Media/share/"$share_name" || {
-      echo "Failed to unmount ~/Media/share/$share_name."
-      return 1
-    }
-  done
-}
 
 
 ###########################################################################################
@@ -430,15 +277,6 @@ nvs() {
   config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
   [[ -z $config ]] && return 0
   NVIM_APPNAME=$config nvim $@
-}
-
-###########################################################################################
-###########################################################################################
-### --- Paste --- ###
-# init
-pasteinit() {
-  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
-  zle -N self-insert url-quote-magic
 }
 
 ###########################################################################################
@@ -546,23 +384,6 @@ tms() {
               | fzf --query="$1" --select-1 --exit-0) &&
   tmux switch-client -t "$session"
 }
-
-
-###########################################################################################
-###########################################################################################
-### --- Vi Mode --- ###
-# Change cursor shape for different vi modes.
-zle-keymap-select () {
-    case $KEYMAP in
-        vicmd) echo -ne '\e[1 q';;      # block
-        viins|main) echo -ne '\e[5 q';; # beam
-    esac
-}
-zle-line-init() {
-    zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
-    echo -ne "\e[5 q"
-}
-preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
 
 ###########################################################################################

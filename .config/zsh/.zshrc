@@ -1,16 +1,8 @@
 #!/bin/zsh
 
 ### --- Prompt --- ###
-if [[ -f "$POWERLEVEL9K_INSTALLATION_DIR/powerlevel10k.zsh-theme" ]]; then
-    source "$POWERLEVEL9K_INSTALLATION_DIR/powerlevel10k.zsh-theme"
-    if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-        source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-    fi
-    [[ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/p10k" ]] || source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/p10k"
-else
-    autoload -U colors && colors
-    PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
-fi
+autoload -U colors && colors
+PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 
 
 ### --- ZSH --- ###
@@ -80,8 +72,3 @@ for config_file (${ZDOTDIR:-$HOME/.config/zsh}/*.zsh) source $config_file
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc"
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc"
 # [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/git-aliasrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/git-aliasrc"
-
-
-### --- Source --- ###
-zsh_add_plugins "${plugins[@]}"
-source_packages
