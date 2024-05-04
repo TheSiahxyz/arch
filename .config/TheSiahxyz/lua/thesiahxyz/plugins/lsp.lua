@@ -66,6 +66,8 @@ return {
 				"black", -- python formatter
 				"pylint",
 				"eslint_d",
+                "shfmt", -- sh formatter
+                "beautysh", -- zsh formatter
 			},
 		})
 

@@ -20,6 +20,8 @@ return {
 				liquid = { "prettier" },
 				lua = { "stylua" },
 				python = { "isort", "black" },
+                sh = { "shfmt" },
+                zsh = { "beautysh" },
 			},
 		})
 
