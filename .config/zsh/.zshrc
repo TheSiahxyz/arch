@@ -70,8 +70,8 @@ zle -N zle-line-init
 echo -ne '\e[5 q'   # Use beam shape cursor on startup.
 
 
-### --- Load Aliases, Functions, and Shortcuts --- ###
-for config_file (${ZDOTDIR:-$HOME/.config/zsh}/*.zsh) source $config_file
+### --- Load ZSH Configs, Aliases, Functions, and Shortcuts --- ###
+for zsh_config (${ZDOTDIR:-$HOME/.config/zsh}/*.zsh) source $zsh_config
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc"
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/scriptrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/scriptrc"
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc"
