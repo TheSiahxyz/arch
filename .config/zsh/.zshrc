@@ -10,7 +10,7 @@ zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' unstagedstr '*'
 zstyle ':vcs_info:*' stagedstr '+'
 zstyle ':vcs_info:git:*' formats       "%{$fg[blue]%}(%b%{$fg[yellow]%}%m%u%c%{$fg[blue]%})"
-zstyle ':vcs_info:git:*' actionformats "%{$fg[blue]%}(%b|%{$fg[red]%}%a%u%c%{$fg[blue]%})"
+zstyle ':vcs_info:git:*' actionformats "%{$fg[blue]%}(%b%{$reset_color%}|%{$fg[red]%}%a%u%c%{$fg[blue]%})"
 
 ### --- ZSH --- ###
 # GnuPG
