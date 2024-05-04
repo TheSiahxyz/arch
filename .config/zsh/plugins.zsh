@@ -9,7 +9,7 @@ plugins=(
     # "marlonrichert/zsh-autocomplete"
     "ohmyzsh/command-not-found"
     "ohmyzsh/sudo"
-    "romkatv/powerlevel10k"
+    # "romkatv/powerlevel10k"
     "wfxr/forgit"
     "zdharma-continuum/fast-syntax-highlighting"
     "zsh-users/zsh-autosuggestions"

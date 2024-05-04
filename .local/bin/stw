@@ -63,6 +63,10 @@ RESOLVE_STRATEGY=$(ask_resolution_strategy)
 stow_package "$RESOLVE_STRATEGY"
 ln -sf "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile" "$HOME/.zprofile"
 
+# Link for bash
+ln -sf "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bash_profile" "$HOME/.bash_profile"
+ln -sf "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc" "$HOME/.bashrc"
+
 # Reload shortcuts (assumes this functionality is defined elsewhere and works as expected)
 shortcuts >/dev/null
 source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc"
