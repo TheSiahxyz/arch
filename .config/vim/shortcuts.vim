@@ -24,8 +24,9 @@ nmap <localleader>dot :Explore /home/si/.dotfiles<cr>
 nmap <localleader>gbk :Explore /home/si/.backup<cr>
 nmap <localleader>gdc :Explore /home/si/Documents<cr>
 nmap <localleader>gdn :Explore /home/si/Downloads<cr>
-nmap <localleader>gme :Explore /home/si/Media<cr>
-nmap <localleader>gmn :Explore /mnt<cr>
+nmap <localleader>gmd :Explore /home/si/Media<cr>
+nmap <localleader>gme :Explore /mnt/extra<cr>
+nmap <localleader>gmt :Explore /mnt<cr>
 nmap <localleader>gmu :Explore /home/si/Music<cr>
 nmap <localleader>gMw :Explore /usr/share/mutt-wizard/<cr>
 nmap <localleader>gmx :Explore /home/si/.mozilla/firefox/si.default<cr>

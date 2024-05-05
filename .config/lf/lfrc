@@ -309,6 +309,7 @@ cmd setbg "$1"
 map b
 map c
 map d
+map f
 map g
 map M
 map p
@@ -411,8 +412,10 @@ map sv :invert; save-select
 load-select
 
 # Traversal
-map f $lf -remote "send $id select \"$(fzf)\""
-map F $lf -remote "send $id cd $(sed -e 's/\s*#.*//' -e '/^$/d' -e 's/^\S*\s*//' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf)"
+map fa $lf -remote "send $id select \"$(fzf)\""
+map fb $lf -remote "send $id cd $(sed -e 's/\s*#.*//' -e '/^$/d' -e 's/^\S*\s*//' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf)"
+map fd $lf -remote "send $id select \"$(find . -type d | fzf)\""
+map ff $lf -remote "send $id select \"$(find . -type f | fzf)\""
 map J zi
 map gf :fzf_search
 map gl follow_link

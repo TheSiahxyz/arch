@@ -25,8 +25,9 @@ dot             ${XDG_DOTFILES_DIR:-$HOME/.dotfiles}
 gbk             $HOME/.backup
 gdc             ${XDG_DOCUMENTS_DIR:-$HOME/Documents}
 gdn             ${XDG_DOWNLOAD_DIR:-$HOME/Downloads}
-gme             $HOME/Media
-gmn             /mnt
+gmd             $HOME/Media
+gme             /mnt/extra
+gmt             /mnt
 gmu             ${XDG_MUSIC_DIR:-$HOME/Music}
 gMw             /usr/share/mutt-wizard/
 gmx             $HOME/.mozilla/firefox/si.default
