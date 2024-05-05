@@ -26,6 +26,10 @@ cookie
 # Private
 *personal*
 
+# Shortcuts
+shortcutrc
+zshnameddirrc
+
 # Tmux
 */tmux/plugins/
 
