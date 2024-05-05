@@ -94,6 +94,7 @@ alias \
 	ps="ps auxf" \
 	rm="rm -iv" \
 	svi="sudo vi" \
+	v="vim" \
 	vi="vim" \
 	vis="vim '+set si'"
 

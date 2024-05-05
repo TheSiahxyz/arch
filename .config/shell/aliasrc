@@ -150,7 +150,6 @@ alias \
     hss="hugo server --noHTTPCache" \
     hcl="hugo --cleanDestinationDir"
 
-
 # ip
 alias ip="ip -color=auto"
 
