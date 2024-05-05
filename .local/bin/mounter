@@ -24,7 +24,7 @@ mountedphones="$(grep "simple-mtpfs" /etc/mtab)"
 done)"
 
 # Check for drives.
-lsblkoutput="$(lsblk -rpo "uuid,name,type,size,label,mountpoint,fstype")"
+lsblkoutput="$(sudo lsblk -rpo "uuid,name,type,size,label,mountpoint,fstype")"
 # Get all LUKS drives
 allluks="$(echo "$lsblkoutput" | grep crypto_LUKS)"
 # Get a list of the LUKS drive UUIDs already decrypted.
@@ -63,7 +63,7 @@ getmount() {
 	if ! mount | grep -q " $HOME/Media "; then
 		${XDG_SCRIPTS_HOME:-$HOME/.local/bin}/fecrypt
 	fi
-	mp="$(find /media /home/$USER/Media -mindepth 1 -maxdepth 1 -type d 2>/dev/null | dmenu -i -p "Mount this drive where?")"
+	mp="$(find /media /mnt /home/$USER/Media -mindepth 1 -maxdepth 1 -type d 2>/dev/null | dmenu -i -p "Mount this drive where?")"
 	test -n "$mp"
 	if [ ! -d "$mp" ]; then
 		mkdiryn=$(printf "No\\nYes" | dmenu -i -p "$mp does not exist. Create it?")
@@ -102,7 +102,7 @@ case "$chosen" in
 	test -b "/dev/mapper/usb$num"
 
 	attemptmount || getmount
-	sudo -A mount "/dev/mapper/usb$num" "$mp" -o uid="$(id -u)",gid="$(id -g)"
+	sudo -A mount "/dev/mapper/usb$num" "$mp" -o uid="$(id -u)",gid="$(id -g)" || sudo -A mount "/dev/mapper/usb$num" "$mp"
 	notify-send "🔓 Decrypted drive Mounted." "$chosen decrypted and mounted to $mp."
 	;;
 

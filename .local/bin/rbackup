@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # local backup
-backup_path="$HOME/.backup"
+backup_path="/mnt/extra/backup"
 dot_path="${XDG_DOTFILES_DIR:-$HOME/.dotfiles}"
 music_path="${XDG_MUSIC_DIR:-$HOME/Music}"
 obsidian_path="$HOME/Obsidian"
