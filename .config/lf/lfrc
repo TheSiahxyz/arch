@@ -321,7 +321,7 @@ map z
 map ,
 
 # Chmod
-map zc chmods
+map cx chmods
 
 # Clear
 map <c-l> clear

@@ -269,6 +269,10 @@ cnf() {
     echo "Configuration directory for $selected_dir does not exist."
     return 3
   fi
+  
+  if [ "$whereami" = "artix" ]; then
+    chown -R "$USER:wheel" "/home/$USER/.config/nvim"
+  fi
 }
 
 # switch
