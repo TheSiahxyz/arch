@@ -21,7 +21,7 @@ case $BLOCK_BUTTON in
 esac
 
 if is_mounted; then
-	echo "🔑"
+	echo "📂"
 else
-	echo "🔒"
+	echo "📁"
 fi

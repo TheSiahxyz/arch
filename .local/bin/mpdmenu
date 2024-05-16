@@ -26,15 +26,13 @@ d_album() {
 }
 
 d_title() {
-	local titles=$(mpc list title | sort -f)
+	titles=$(mpc list title | sort -f)
 	echo "$titles" | dmenu -p "Select title:" "${dmenu_args[@]}"
 }
 
 d_playlist() {
-	local format="%position% %title%"
-	local extra_format="(%artist% - %album%)"
-	local track
-	local num_extras
+	format="%position% %title%"
+	extra_format="(%artist% - %album%)"
 
 	# If all tracks are from the same artist and album, no need to display that
 	num_extras=$(mpc playlist -f "$extra_format" | sort | uniq | wc -l)
@@ -45,8 +43,8 @@ d_playlist() {
 }
 
 d_saved_playlist() {
-	local playlists=$(find "$PLAYLIST_DIR" -type f -name "*.m3u" -exec basename {} .m3u \;)
-	local selected_playlist=$(echo "$playlists" | dmenu -i -p "Select Playlist:" "${dmenu_args[@]}")
+	playlists=$(find "$PLAYLIST_DIR" -type f -name "*.m3u" -exec basename {} .m3u \;)
+	selected_playlist=$(echo "$playlists" | dmenu -i -p "Select Playlist:" "${dmenu_args[@]}")
 
 	printf '%s' "$selected_playlist"
 }
@@ -68,7 +66,7 @@ for arg; do
 	-s) mode="saved playlist" ;;
 	esac
 
-	let i++
+	i++
 done
 
 # Mode Handling

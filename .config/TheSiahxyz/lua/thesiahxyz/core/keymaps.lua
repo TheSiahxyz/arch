@@ -81,7 +81,7 @@ vim.keymap.set("n", "<leader>xl", "<cmd>lopen<cr>")
 vim.keymap.set("n", "<leader>xq", "<cmd>copen<cr>")
 
 -- Formats
-vim.keymap.set("n", "<leader>cf", vim.lsp.buf.format)
+vim.keymap.set("n", "<leader>cF", vim.lsp.buf.format)
 
 -- Health
 vim.keymap.set("n", "<leader>ch", ":checkhealth<cr>")

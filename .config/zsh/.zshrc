@@ -16,8 +16,8 @@ zstyle ':vcs_info:git:*' actionformats "%{$fg[blue]%}(%b%{$reset_color%}|%{$fg[r
 # GnuPG
 unset SSH_AGENT_PID
 if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
-  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
-  # gpgconf --launch gpg-agent
+    export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+    # gpgconf --launch gpg-agent
 fi
 export GPG_TTY="$(tty)"
 gpg-connect-agent updatestartuptty /bye >/dev/null
@@ -35,6 +35,7 @@ unsetopt bad_pattern
 HISTSIZE=10000000
 SAVEHIST=10000000
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
+setopt inc_append_history
 setopt appendhistory
 setopt share_history
 setopt hist_ignore_all_dups

@@ -1,11 +1,4 @@
-#!/bin/bash
-
-# Initialize variables
-DOWNLOAD_TYPE=""
-OUTPUT_DIR=""
-ARCHIVE_FILE=""
-URL=""
-PL_DOWNLOAD_CHOICE=""
+#!/bin/sh
 
 # Process command-line options for download type
 while getopts "mv" opt; do
@@ -29,13 +22,13 @@ done
 shift $((OPTIND - 1))
 
 # Use the first non-option argument as the URL if provided, else from clipboard
-if [[ -n "$1" ]]; then
+if [ -n "$1" ]; then
 	URL="$1"
 else
 	URL=$(xclip -selection clipboard -o)
 fi
 
-if [[ -z "$URL" ]]; then
+if [ -z "$URL" ]; then
 	notify-send "⛔ No URL provided and clipboard is empty or does not contain a valid URL."
 	exit 1
 fi
@@ -43,34 +36,36 @@ fi
 YTDL_CMD_BASE="yt-dlp --continue --embed-metadata --ignore-errors --no-force-overwrites --verbose"
 SIMULATION_CMD="yt-dlp --simulate --print filename"
 
-if [ "$DOWNLOAD_TYPE" == "music" ]; then
+if [ "$DOWNLOAD_TYPE" = "music" ]; then
 	YTDL_OUTPUT_FORMAT="${OUTPUT_DIR}/%(artist)s - %(title)s.%(ext)s"
-	YTDL_CMD_BASE+=" --audio-format best --audio-quality 0 --download-archive \"$ARCHIVE_FILE\" --extract-audio"
-elif [ "$DOWNLOAD_TYPE" == "video" ]; then
-	YTDL_OUTPUT_FORMAT="${OUTPUT_DIR}/%(title)s.%(ext)s"
-	YTDL_CMD_BASE+=" --buffer-size 1M --embed-thumbnail --format bestvideo+bestaudio/best --no-sponsorblock"
+    YTDL_CMD_BASE="$YTDL_CMD_BASE --audio-format best --audio-quality 0 --download-archive \"$ARCHIVE_FILE\" --extract-audio"
+elif [ "$DOWNLOAD_TYPE" = "video" ]; then
+	YTDL_OUTPUT_FORMAT="${OUTPUT_DIR}/%(title)s [%(id)s].%(ext)s"
+    YTDL_CMD_BASE="$YTDL_CMD_BASE --buffer-size 1M --embed-thumbnail --format bestvideo+bestaudio/best --no-sponsorblock"
 else
 	notify-send "⛔ Failed unknown type: $DOWNLOAD_TYPE" "$SIMULATION_CMD"
 	exit 1
 fi
 
 # Initial assumption: playlist is not intended
-YTDL_CMD_BASE+=" --no-playlist"
+YTDL_CMD_BASE="$YTDL_CMD_BASE --no-playlist"
 
 if echo "$URL" | grep -q "playlist\|list="; then
-	PL_DOWNLOAD_CHOICE=$(echo -e "playlist\na content" | dmenu -i -p "Download entire playlist or just this content?")
+	PL_DOWNLOAD_CHOICE=$(echo -e "playlist\nvideo" | dmenu -i -p "Download entire playlist or just this video?")
 	if [ "$PL_DOWNLOAD_CHOICE" == "playlist" ]; then
 		notify-send -t 5000 "⏳ Reading $URL to download..."
 		YTDL_CMD_BASE=${YTDL_CMD_BASE/--no-playlist/}
-		YTDL_CMD_BASE+=" --yes-playlist"
-	fi
+		YTDL_CMD_BASE="$YTDL_CMD_BASE --yes-playlist"
+    fi
 
 	if [ "$DOWNLOAD_TYPE" == "video" ]; then
-		YTDL_OUTPUT_FORMAT="${OUTPUT_DIR}/%(playlist_index)s_%(title)s.%(ext)s"
+        SUBDIR=$(echo "$URL" | sed 's|https://www.youtube.com/watch?v=||g')
+        mkdir -p "${OUTPUT_DIR}/${SUBDIR}"
+		YTDL_OUTPUT_FORMAT="${OUTPUT_DIR}/${SUBDIR}/%(playlist_index)s_%(title)s [%(id)s].%(ext)s"
 	fi
 fi
 
-SIMULATION_CMD+=" $URL"
+SIMULATION_CMD="$SIMULATION_CMD $URL"
 YTDL_CMD="$YTDL_CMD_BASE --output \"$YTDL_OUTPUT_FORMAT\" \"$URL\""
 
 # Notify and perform simulation to get filename (feedback to user)
@@ -89,6 +84,6 @@ pkill -RTMIN+26 "${STATUSBAR:-dwmblocks}"
 tsp -D $idnum notify-send "✅ $DOWNLOAD_TYPE download complete:" "$URL"
 
 # Conditionally update the music database if the download type is music
-if [ "$DOWNLOAD_TYPE" == "music" ]; then
+if [ "$DOWNLOAD_TYPE" = "music" ]; then
 	tsp -D $idnum bash -c "mpc update"
 fi

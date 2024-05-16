@@ -25,7 +25,7 @@ local settings = {
 	key_unselectfile = "ctrl+space",
 	key_playfile = "ENTER",
 	key_removefile = "DEL",
-	key_closeplaylist = "ESC ctrl+c",
+	key_closeplaylist = "ESC q ctrl+c",
 
 	-- extra functionality keys
 	key_sortplaylist = "shift+s",

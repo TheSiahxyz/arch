@@ -47,18 +47,18 @@ startup_window: nvim
 windows:
   - dotfiles:
       root: ~/.dotfiles
-  - Kickstart:
-      root: ~/.dotfiles/.config/TheSiahxyz/
-      panes:
-        - nts
-  - NvChad:
-      root: ~/.dotfiles/.config/NvChad/
-      panes:
-        - nvc
   - LazyVim:
       root: ~/.dotfiles/.config/LazyVim/
       panes:
         - nlv
+  - NvChad:
+      root: ~/.dotfiles/.config/NvChad/
+      panes:
+        - nvc
+  - TheSiahxyz:
+      root: ~/.dotfiles/.config/TheSiahxyz/
+      panes:
+        - nts
   - nvim:
       layout: main-vertical
       root: ~/.config

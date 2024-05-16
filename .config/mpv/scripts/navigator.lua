@@ -25,7 +25,7 @@ local settings = {
 	key_navback = "h",
 	key_navforward = "l",
 	key_navopen = "ENTER",
-	key_navclose = "ESC",
+	key_navclose = "q",
 
 	--fallback if no file is open, should be a string that points to a path in your system
 	defaultpath = windows_desktop or os.getenv("HOME") or "/",

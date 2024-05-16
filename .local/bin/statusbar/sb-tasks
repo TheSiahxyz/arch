@@ -3,9 +3,7 @@
 notify_filenames() {
 	while IFS= read -r line; do
 		id=$(echo "$line" | awk '{print $1}')
-		# Use a broad pattern to capture the URL
 		url=$(tsp -l | awk -v id="$id" 'flag && /notify-send/ {print $0; flag=0} $1 == id {flag=1}' | grep -o 'https://[^\"]*')
-
 		if [ -n "$url" ]; then
 			decoded_url=$(echo $url | sed 's/&amp;/\&/g')
 			yt-dlp --no-playlist --simulate --get-filename "$decoded_url" 2>/dev/null | while IFS= read -r filename; do
@@ -14,12 +12,12 @@ notify_filenames() {
 		else
 			notify-send "🪹 No URL extracted for task $id"
 		fi
-	done <<<"$(tsp -l | awk '/running/ && /yt-dlp/')"
-
+	done <<EOF
+$(tsp -l | awk '/running/ && /yt-dlp/')
+EOF
 	if [ -z "$url" ]; then
 		notify-send "💤 No active yt-dlp downloads"
 	fi
-
 	pkill -RTMIN+26 "${STATUSBAR:-dwmblocks}"
 }
 
@@ -28,8 +26,8 @@ num=$(tsp -l | awk -v numr=0 -v numq=0 '{if (/running/)numr++; if (/queued/)numq
 
 # Handle mouse clicks
 case $BLOCK_BUTTON in
-1) setsid -f "$TERMINAL" -e sh -c 'tsp -l; read -p "Press enter to close..."' ;;
-2) setsid -f "$TERMINAL" -e sh -c 'tsp -c' ;;
+1) setsid -f "$TERMINAL" -e sh -c 'tsp -l; echo "\nPress enter to close..." ; read REPLY' ;;
+2) setsid -f "$TERMINAL" -e sh -c 'tsp -t' ;;
 3) notify_filenames
    notify-send "📝 Tasks module" "🤖: number of running/queued background tasks
 - Left click to show all tasks
@@ -38,3 +36,6 @@ case $BLOCK_BUTTON in
 esac
 
 [ "$num" != "0(0)" ] && echo "🤖$num"
+
+# "$TERMINAL" -e sh -c 'tsp -l; read "Press enter to close..."'
+# "$TERMINAL" -e sh -c 'tsp -c' ;;

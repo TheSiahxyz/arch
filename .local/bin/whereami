@@ -1,23 +1,8 @@
 #!/bin/sh
 
-# Determine OS platform using uname
-os="$(uname)"
-
-case $os in
-Linux)
-	# Check if /etc/os-release exists and then perform actions
-	[ -f /etc/os-release ] && {
-		. /etc/os-release
-		echo "$PRETTY_NAME" | sed 's/Linux//g; s/^[[:space:]]*//; s/[[:space:]]*$//' | tr '[:upper:]' '[:lower:]'
-	}
-	;;
-Darwin)
-	echo "mac"
-	;;
-CYGWIN* | MINGW32* | MSYS* | MINGW*)
-	echo "windows"
-	;;
-*)
-	echo "unknown"
-	;;
+case "$(uname)" in
+Linux) [ -f /etc/os-release ] && . /etc/os-release && echo "$PRETTY_NAME" | sed 's/Linux//g; s/^[[:space:]]*//; s/[[:space:]]*$//' | tr '[:upper:]' '[:lower:]' ;;
+Darwin) echo "mac" ;;
+CYGWIN* | MINGW32* | MSYS* | MINGW*) echo "windows" ;;
+*) echo "unknown" ;;
 esac

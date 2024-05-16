@@ -147,8 +147,8 @@ alias \
 
 # hugo
 alias \
-    hss="hugo server --noHTTPCache" \
-    hcl="hugo --cleanDestinationDir"
+	hss="hugo server --noHTTPCache" \
+	hcl="hugo --cleanDestinationDir"
 
 # ip
 alias ip="ip -color=auto"
@@ -240,6 +240,9 @@ alias \
 	tozsh="sudo chsh $USER -s /bin/zsh && 'Now log out.'" \
 	tofish="sudo chsh $USER -s /bin/fish && 'Now log out.'"
 
+# shellcheck
+alias shck="shellcheck --color=always"
+
 # shortcut
 alias ref="shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc && source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc"
 
@@ -256,7 +259,7 @@ alias stw="${XDG_DOTFILES_DIR:-$HOME/.dotfiles}/.local/bin/stw"
 # sudo
 alias \
 	su="sudo su -l root" \
-	smi="sudo make clean install"
+	smi="rm -rf *.rej *.orig; sudo make clean install"
 
 # systemctl
 alias s="systemctl"
@@ -292,14 +295,17 @@ alias trem="transmission-remote"
 
 # trash
 alias \
-	tp="trash-put" \
-	te="trash-empty" \
-	tl="trash-list" \
-	trs="trash-restore" \
-	trm="trash-rm"
+	trd="trash-rm" \
+	tre="trash-empty" \
+	trl="trash-list" \
+	trp="trash-put" \
+	trr="trash-restore"
 
 # vim
 alias vi="vim"
+
+# vpn
+alias vpns="openvpn --config /home/si/.config/openvpn/thesiah.ovpn"
 
 # weather
 alias weath="less -S ${XDG_CACHE_HOME:-$HOME/.cache}/weatherreport"
@@ -320,3 +326,6 @@ alias za="zathura"
 alias \
 	sps="source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile" \
 	szs="source ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.zshrc"
+
+# afreecatv
+alias waf="rm -rf ${XDG_DATA_HOME:-$HOME/.local/share}/afreecatv >/dev/null; export WINEPREFIX="${HOME}/.local/share/afreecatv" >/dev/null && winetricks dlls mfc42 >/dev/null && wine /home/si/afreecatvstreamer_installer.exe"

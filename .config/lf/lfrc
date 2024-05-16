@@ -132,17 +132,17 @@ cmd delete ${{
 }}
 
 cmd trash ${{
-  files=$(printf "$fx" | tr '\n' ';')
-  while [ "$files" ]; do
-    file=${files%%;*}
+    files=$(printf "$fx" | tr '\n' ';')
+    while [ "$files" ]; do
+        file=${files%%;*}
 
-    trash-put "$(basename "$file")"
-    if [ "$files" = "$file" ]; then
-      files=''
-    else
-      files="${files#*;}"
-    fi
-  done
+        trash-put "$(basename "$file")"
+        if [ "$files" = "$file" ]; then
+            files=''
+        else
+            files="${files#*;}"
+        fi
+    done
 }}
 
 cmd restore_trash ${{
@@ -186,14 +186,22 @@ cmd moveto ${{
 
 # MPV
 cmd mpvdir ${{
-    mpv ./*
+    if [ -n "$fx" ]; then
+        set -- $fx
+        mpv -- "$@"
+    else
+        for file in *.mp4 *.mkv *.avi *.flv *.webm *.mov; do
+            [ -e "$file" ] && set -- "$@" "$file"
+        done
+        [ -n "$1" ] && mpv -- "$@"
+    fi
 }}
 
 # Open
 cmd open ${{
     case $(file --mime-type "$(readlink -f $f)" -b) in
         application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) localc $fx ;;
-        image/vnd.djvu|application/pdf|application/octet-stream|application/postscript) setsid -f zathura $fx >/dev/null 2>&1 ;;
+        image/vnd.djvu|application/pdf|application/postscript) setsid -f zathura $fx >/dev/null 2>&1 ;;
         text/csv) sc-im $fx;;
         text/*|application/json|inode/x-empty|application/x-subrip) $EDITOR $fx;;
         image/x-xcf) setsid -f gimp $f >/dev/null 2>&1 ;;
@@ -209,7 +217,14 @@ cmd open ${{
         video/*) setsid -f mpv $f -quiet >/dev/null 2>&1 ;;
         application/pdf|application/vnd.djvu|application/epub*) setsid -f zathura $fx >/dev/null 2>&1 ;;
         application/pgp-encrypted) $EDITOR $fx ;;
-        application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.oasis.opendocument.text|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/octet-stream|application/vnd.oasis.opendocument.spreadsheet|application/vnd.oasis.opendocument.spreadsheet-template|application/vnd.openxmlformats-officedocument.presentationml.presentation|application/vnd.oasis.opendocument.presentation-template|application/vnd.oasis.opendocument.presentation|application/vnd.ms-powerpoint|application/vnd.oasis.opendocument.graphics|application/vnd.oasis.opendocument.graphics-template|application/vnd.oasis.opendocument.formula|application/vnd.oasis.opendocument.database) setsid -f libreoffice $fx >/dev/null 2>&1 ;;
+        application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.oasis.opendocument.text|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/vnd.oasis.opendocument.spreadsheet|application/vnd.oasis.opendocument.spreadsheet-template|application/vnd.openxmlformats-officedocument.presentationml.presentation|application/vnd.oasis.opendocument.presentation-template|application/vnd.oasis.opendocument.presentation|application/vnd.ms-powerpoint|application/vnd.oasis.opendocument.graphics|application/vnd.oasis.opendocument.graphics-template|application/vnd.oasis.opendocument.formula|application/vnd.oasis.opendocument.database) setsid -f libreoffice $fx >/dev/null 2>&1 ;;
+        application/octet-stream) case ${f##*.} in
+			doc|docx|xls|xlsx|odt|ppt|pptx) setsid -f libreoffice $fx >/dev/null 2>&1 ;;
+			ghw) setsid -f gtkwave $f >/dev/null 2>&1 ;;
+			ts) setsid -f mpv $f -quiet >/dev/null 2>&1 ;;
+			*) setsid -f zathura $fx >/dev/null 2>&1 ;;
+	   	esac ;;
+	*) for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;
         *) for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;
     esac
 }}
@@ -296,7 +311,7 @@ cmd zi ${{
 	lf -remote "send $id cd \"$result\""
 }}
 cmd follow_link %{{
-  lf -remote "send ${id} select '$(readlink $f)'"
+    lf -remote "send ${id} select '$(readlink $f)'"
 }}
 
 # Wallpaper
@@ -311,9 +326,11 @@ map c
 map d
 map f
 map g
+map H
 map M
 map p
 map s
+map t
 map v
 map w
 map y
@@ -325,16 +342,19 @@ map cx chmods
 
 # Clear
 map <c-l> clear
+map L unselect
 
 # Copy
 # map yy %cp -ri -- $fs .; clear
-map yy copy
-map yt copyto; clear
 map Y $printf "%s" "$fx" | xclip -selection clipboard; clear
-map yd yank-dirname
-map yp yank-path
 map yb yank-basename
+map yd yank-dirname
+map ye copyto; clear
+map yl $printf "%s" "$fx" | sed -E 's/^.+\[/https:\/\/piped.video\/watch?v=/' | sed -E 's/\]\..+//' | xclip -selection clipboard
 map yn yank-basename-without-extension
+map yp yank-path
+map yt $printf "%s" "$fx" | sed -E 's/^.+\[/https:\/\/www.youtube.com\/watch?v=/' | sed -E 's/\]\..+//' | xclip -selection clipboard
+map yy copy
 
 # Create
 map Md mkdir
@@ -357,14 +377,17 @@ map V push :!nvim<space>
 map E extract; clear
 
 # Move
-map Mt moveto; clear
+map Me moveto; clear
 
 # MPV
 map Mpv mpvdir
 
+# Nsxiv
+map sx $nsxiv -pt "$(pwd)" # opens thumbnail mode
+
 # Open
-map o open
 map O $mimeopen "$f"
+map o open
 map <c-o> $mimeopen --ask "$f"
 
 # Paste
@@ -410,6 +433,9 @@ map <space> :toggle; down; save-select
 map su :unselect; save-select
 map sv :invert; save-select
 load-select
+
+# Tag
+map tg tag-toggle
 
 # Traversal
 map fa $lf -remote "send $id select \"$(fzf)\""

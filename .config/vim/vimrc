@@ -280,10 +280,6 @@ let &t_EI = "\<Esc>[2 q"
 " Clipboard
 set clipboard=unnamedplus
 
-
-" Disable compatibility with vi which can cause unexpected issues.
-set nocompatible
-
 " Disable auto commenting in a new line
 autocmd Filetype * setlocal formatoptions-=c formatoptions-=r  formatoptions-=o
 

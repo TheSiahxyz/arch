@@ -4,8 +4,8 @@
 # Change cursor shape for different vi modes.
 zle-keymap-select () {
     case $KEYMAP in
-        vicmd) echo -ne '\e[1 q';;      # block
-        viins|main) echo -ne '\e[5 q';; # beam
+        vicmd) echo -ne '\e[1 q' ;;      # block
+        viins|main) echo -ne '\e[5 q' ;; # beam
     esac
 }
 zle-line-init() {

@@ -12,12 +12,6 @@ select_timezone() {
 	echo "${tz_selection#$initial_path/}"
 }
 
-ntp=$(timedatectl status | grep 'NTP service' | awk '{print $3}')
-
-current_zone=$(select_timezone) || exit 1
-
-[ "$ntp" != "active" ] && sudo systemctl restart systemd-timesyncd
-
 sudo ln -sf /usr/share/zoneinfo/$current_zone /etc/localtime || exit 1
 sudo hwclock --systohc
 

@@ -6,11 +6,7 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Nerd tree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-if has('vim')
-    let NERDTreeBookmarksFile = stdpath('data') . '/NERDTreeBookmarks'
-else
-    let NERDTreeBookmarksFile = '~/.config/vim' . '/NERDTreeBookmarks'
-endif
+let NERDTreeBookmarksFile = stdpath('data') . '/NERDTreeBookmarks'
 
 " Runs a script that cleans out tex build files whenever I close out of a .tex file.
 autocmd VimLeave *.tex !texclear %
@@ -123,13 +119,6 @@ map <leader>n :NERDTreeToggle<CR>
 " Undotree
 nnoremap <leader>u :UndotreeToggle<CR>
 
-" vimling:
-nm <leader>d :call ToggleDeadKeys()<CR>
-imap <leader>d <esc>:call ToggleDeadKeys()<CR>a
-nm <leader>i :call ToggleIPA()<CR>
-imap <leader>i <esc>:call ToggleIPA()<CR>a
-nm <leader>q :call ToggleProse()<CR>
-
 " vimwiki
 map <leader>vw :VimwikiIndex<CR>
 
@@ -147,7 +136,7 @@ nnoremap <silent> <localleader> :<c-u>WhichKey  '\'<CR>
 
 " vim-airline
 if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
+        let g:airline_symbols = {}
 endif
 let g:airline_symbols.colnr = ' C:'
 let g:airline_symbols.linenr = ' L:'

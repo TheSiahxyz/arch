@@ -5,8 +5,8 @@
 ### --- Paste --- ###
 # init
 pasteinit() {
-  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
-  zle -N self-insert url-quote-magic
+    OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+    zle -N self-insert url-quote-magic
 }
 
 
@@ -14,5 +14,5 @@ pasteinit() {
 ###########################################################################################
 ### --- Last Command Output --- ###
 insert-last-command-output() {
-  LBUFFER+="$(eval $history[$((HISTCMD-1))])"
+    LBUFFER+="$(eval $history[$((HISTCMD-1))])"
 }

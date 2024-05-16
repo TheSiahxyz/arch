@@ -1,25 +1,40 @@
-#!/bin/bash
+#!/bin/sh
 
 MOUNT_SCRIPT="${XDG_SCRIPTS_HOME:-$HOME/.local/bin}/fecrypt"
+
+check_mount() {
+    mount | grep -q " $HOME/Media " || $MOUNT_SCRIPT
+}
+
+check_unmount() {
+    mount | grep -q " $HOME/Media " && $MOUNT_SCRIPT
+}
+
+play_url() {
+	url=$(xclip -selection clipboard -o)
+    echo "$url" | grep -E '^https?://' > /dev/null || return 1
+	notify-send "📽️ Playing video from URL:" "$url"
+	play_media "$url"
+}
 
 play_media() {
 	mpv "$@" && $MOUNT_SCRIPT
 }
 
 play_playlist() {
-	local playlist_name=$1
+	playlist_name=$1
 	mpv --playlist="$HOME/.config/mpv/playlists/$playlist_name.m3u"
 }
 
 list_and_play() {
-	local directory=$1
-	CHOICE=$(echo -e "List files\nEnter filenames" | dmenu -i -p "Choose an option:")
+	directory=$1
+	CHOICE=$(printf "List files\nEnter filenames" | dmenu -i -p "Choose an option:")
 	case "$CHOICE" in
 	"Enter filenames")
-		local search_term=$(echo | dmenu -i -p "File names:")
-		[[ -z "$search_term" ]] && return
-		local files=$(find "$directory" -type f \( -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.webm" -o -iname "*.avi" -o -iname "*.flv" -o -iname "*.wmv" -o -iname "*.wav" -o -iname "*.aac" -o -iname "*.flac" -o -iname "*.m4a" -o -iname "*.ogg" \) -iname "*$search_term*")
-		[[ -z "$files" ]] && return
+		search_term=$(echo | dmenu -i -p "File names:")
+		[ -z "$search_term" ] && return
+		files=$(find "$directory" -type f \( -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.webm" -o -iname "*.avi" -o -iname "*.flv" -o -iname "*.wmv" -o -iname "*.wav" -o -iname "*.aac" -o -iname "*.flac" -o -iname "*.m4a" -o -iname "*.ogg" \) -iname "*$search_term*")
+		[ -z "$files" ] && return
 		TMP_PLAYLIST=$(mktemp /tmp/mpv_playlist.XXXXXX)
 		echo "$files" | while read -r file; do
 			echo "$file"
@@ -29,66 +44,42 @@ list_and_play() {
 		rm -f "$TMP_PLAYLIST"
 		;;
 	"List files")
-		local files_with_paths=$(find "$directory" -type f \( -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.webm" -o -iname "*.avi" -o -iname "*.flv" -o -iname "*.wmv" \) -print0 | sort -z | xargs -0 -I{} basename {})
-		SELECTED_FILE=$(echo -e "All files\n$files_with_paths" | dmenu -i -l 21 -p "Select a file:")
-		[[ "$SELECTED_FILE" == "All files" ]] && {
-			play_media "$directory/"
-			return
-		}
-		FULL_PATH="$directory/$(echo "$files_with_paths" | grep -F "$SELECTED_FILE")"
-		[[ -f "$FULL_PATH" ]] && play_media "$FULL_PATH"
+        files_with_paths=$(find "$directory" -maxdepth 1 -type f \( -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.webm" -o -iname "*.avi" -o -iname "*.flv" -o -iname "*.wmv" \) | sort)
+        SELECTED_FILE=$(printf "All files\n%s" "$files_with_paths" | sed 's!.*/!!' | dmenu -i -l 21 -p "Select a file:")
+        [ "$SELECTED_FILE" = "All files" ] && play_media "$directory/" && return
+		FULL_PATH="$(echo "$files_with_paths" | grep -F "$SELECTED_FILE")"
+		[ -f "$FULL_PATH" ] && play_media "$FULL_PATH"
 		;;
 	*) return ;;
 	esac
 }
 
-check_mount() {
-	if ! mount | grep -q " $HOME/Media "; then
-		$MOUNT_SCRIPT
-	fi
-}
-
-check_unmount() {
-	if mount | grep -q " $HOME/Media "; then
-		$MOUNT_SCRIPT
-	fi
-}
-
-play_url() {
-	local url=$(xclip -selection clipboard -o)
-	[[ "$url" =~ ^https?:// ]] || return 1
-	notify-send "📽️ Playing video from URL:" "$url"
-	play_media "$url"
-}
-
-CONTENT_CHOICE=$(echo -e "URL\nLocal Files\nPlaylist" | dmenu -i -p "Choose media source:")
+CONTENT_CHOICE=$(printf "URL\nLocal Files\nPlaylist" | dmenu -i -p "Choose media source:")
 case "$CONTENT_CHOICE" in
 "URL") play_url ;;
 "Playlist")
-	PLAYLISTS=$(ls $HOME/.config/mpv/playlists | sed 's/\.m3u$//' | dmenu -i -p "Select a playlist:")
-	[[ -z "$PLAYLISTS" ]] && exit
+    PLAYLISTS=$(find "$HOME/.config/mpv/playlists" -maxdepth 1 -type f -name "*.m3u" -exec basename {} .m3u \; | dmenu -i -p "Select a playlist:")
+	[ -z "$PLAYLISTS" ] && exit
 	play_playlist "$PLAYLISTS"
 	;;
 "Local Files")
 	check_mount
-	SELECTED_FOLDER="$HOME"
-	while true; do
-		SUBFOLDER_OPTIONS=$(find "$SELECTED_FOLDER" -mindepth 1 -maxdepth 1 -type d ! -name ".*" -printf "%P\n" | sort)
-		[[ -z "$SUBFOLDER_OPTIONS" ]] && {
-			list_and_play "$SELECTED_FOLDER"
-			break
-		}
-		OPTIONS="All files\n$SUBFOLDER_OPTIONS"
-		SELECTED_RELATIVE_FOLDER=$(echo -e "$OPTIONS" | dmenu -i -p "Select a folder or 'All files':")
-		[[ "$SELECTED_RELATIVE_FOLDER" == "All files" ]] && {
-			list_and_play "$SELECTED_FOLDER"
-			break
-		}
-		[[ -z "$SELECTED_RELATIVE_FOLDER" ]] && exit
-		SELECTED_FOLDER="$SELECTED_FOLDER/$SELECTED_RELATIVE_FOLDER"
-	done
+    printf "%s\n%s\n%s\n%s\n%s\n%s\n" "$HOME/Downloads" "$HOME/Media" "$HOME/Torrents/complete" "$HOME/Videos" "/media" "/mnt" | dmenu -i -p "Choose your initial directory:" | {
+		read -r initial_directory
+		[ -z "$initial_directory" ] && exit
+		SELECTED_FOLDER="$initial_directory"
+		while true; do
+			SUBFOLDER_OPTIONS=$(find "$SELECTED_FOLDER" -mindepth 1 -maxdepth 1 -type d ! -name ".*" -printf "%P\n" | sort)
+			[ -z "$SUBFOLDER_OPTIONS" ] && list_and_play "$SELECTED_FOLDER" && break
+			OPTIONS="All files\n$SUBFOLDER_OPTIONS"
+            SELECTED_RELATIVE_FOLDER=$(printf "%b" "$OPTIONS" | dmenu -i -p "Select a folder or 'All files':")
+			[ "$SELECTED_RELATIVE_FOLDER" = "All files" ] && list_and_play "$SELECTED_FOLDER" && break
+			[ -z "$SELECTED_RELATIVE_FOLDER" ] && exit
+			SELECTED_FOLDER="$SELECTED_FOLDER/$SELECTED_RELATIVE_FOLDER"
+		done
+	}
 	;;
 *) exit ;;
 esac
 
-trap 'check_unmount; exit' EXIT SIGINT
+trap 'check_unmount; exit' EXIT INT

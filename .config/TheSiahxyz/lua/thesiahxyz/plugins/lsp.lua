@@ -108,26 +108,27 @@ return {
 
         require("conform").setup({
             formatters_by_ft = {
-                javascript = { "prettier" },
-                typescript = { "prettier" },
-                javascriptreact = { "prettier" },
-                typescriptreact = { "prettier" },
-                svelte = { "prettier" },
+                bash = { "shfmt" },
                 css = { "prettier" },
-                html = { "prettier" },
-                json = { "prettier" },
-                yaml = { "prettier" },
-                markdown = { "prettier" },
                 graphql = { "prettier" },
+                html = { "prettier" },
+                javascript = { "prettier" },
+                javascriptreact = { "prettier" },
+                json = { "prettier" },
                 liquid = { "prettier" },
                 lua = { "stylua" },
+                markdown = { "prettier" },
                 python = { "isort", "black" },
                 sh = { "shfmt" },
+                svelte = { "prettier" },
+                typescript = { "prettier" },
+                typescriptreact = { "prettier" },
+                yaml = { "prettier" },
                 zsh = { "beautysh" },
             },
         })
 
-        vim.keymap.set({ "n", "v" }, "<leader>cF", function()
+        vim.keymap.set({ "n", "v" }, "<leader>cf", function()
             require("conform").format({ lsp_fallback = true, async = false, timeout_ms = 1000 })
         end)
     end,
