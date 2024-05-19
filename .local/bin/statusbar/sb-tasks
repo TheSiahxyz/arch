@@ -5,7 +5,7 @@ notify_filenames() {
 		id=$(echo "$line" | awk '{print $1}')
 		url=$(tsp -l | awk -v id="$id" 'flag && /notify-send/ {print $0; flag=0} $1 == id {flag=1}' | grep -o 'https://[^\"]*')
 		if [ -n "$url" ]; then
-			decoded_url=$(echo $url | sed 's/&amp;/\&/g')
+			decoded_url=$(echo "$url" | sed 's/&amp;/\&/g')
 			yt-dlp --no-playlist --simulate --get-filename "$decoded_url" 2>/dev/null | while IFS= read -r filename; do
 				notify-send "🔽 Downloading:" "$filename"
 			done
@@ -36,6 +36,3 @@ case $BLOCK_BUTTON in
 esac
 
 [ "$num" != "0(0)" ] && echo "🤖$num"
-
-# "$TERMINAL" -e sh -c 'tsp -l; read "Press enter to close..."'
-# "$TERMINAL" -e sh -c 'tsp -c' ;;

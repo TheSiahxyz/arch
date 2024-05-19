@@ -17,12 +17,23 @@ plugins=(
 )
 
 ### --- Source Plugins --- ###
+# Check plugins
+zsh_check_plugins() {
+    installed="true"
+    for plugin in "${plugins[@]}"; do
+        PLUGIN_NAME=$(echo "$plugin" | cut -d '/' -f 2)
+        PLUGIN_PATH="$ZPLUGINDIR/$PLUGIN_NAME"
+        [ -d "$PLUGIN_PATH" ] && zsh_source_plugin "$PLUGIN_NAME/$PLUGIN_NAME" || { installed="false"; break; }
+    done
+    [ "$installed" = "true" ] || zsh_add_plugins "${plugins[@]}"
+}
+
 # Function to source plugin files
 zsh_source_plugin() {
     for file in "$@"; do
         [ -f "$ZPLUGINDIR/$file.plugin.zsh" ] && . "$ZPLUGINDIR/$file.plugin.zsh"
         [ -f "$ZPLUGINDIR/$file.zsh" ] && . "$ZPLUGINDIR/$file.zsh"
-        [ -f "$ZPLUGINDIR/$file.zsh-theme" ] && . "$ZPLUGINDIR/$file.zsh-theme" && . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/p10k"
+        [ -f "$ZPLUGINDIR/$file.zsh-theme" ] && . "$ZPLUGINDIR/$file.zsh-theme" && . "${XDG_CONFIG_HOME:-${HOME}/.config}/shell/p10k"
     done
 }
 
@@ -70,5 +81,5 @@ zsh_update_plugins() {
     done
 }
 
-zsh_add_plugins "${plugins[@]}"
+zsh_check_plugins "${plugins[@]}"
 zsh_update_plugins

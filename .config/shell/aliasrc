@@ -244,7 +244,7 @@ alias \
 alias shck="shellcheck --color=always"
 
 # shortcut
-alias ref="shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc && source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc"
+alias ref="shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-${HOME}/.config}/shell/shortcutrc && source ${XDG_CONFIG_HOME:-${HOME}/.config}/shell/zshnameddirrc"
 
 # skype
 alias skype="skypeforlinux"
@@ -254,7 +254,7 @@ alias \
 	gts="ssh $THESIAH"
 
 # stow
-alias stw="${XDG_DOTFILES_DIR:-$HOME/.dotfiles}/.local/bin/stw"
+alias stw="${XDG_DOTFILES_DIR:-${HOME}/.dotfiles}/.local/bin/stw"
 
 # sudo
 alias \
@@ -284,7 +284,7 @@ alias \
 	tis="tmuxinator start" \
 	tic="tmuxinator config" \
 	tio="tmuxinator obsidian" \
-	tip="tmuxinator private" \
+	tip="tmuxinator personal" \
 	tiw="tmuxinator work" \
 	tin="tmuxinator new" \
 	ti="tmuxinator" \
@@ -304,14 +304,11 @@ alias \
 # vim
 alias vi="vim"
 
-# vpn
-alias vpns="openvpn --config /home/si/.config/openvpn/thesiah.ovpn"
-
 # weather
-alias weath="less -S ${XDG_CACHE_HOME:-$HOME/.cache}/weatherreport"
+alias weath="less -S ${XDG_CACHE_HOME:-${HOME}/.cache}/weatherreport"
 
 # wget
-alias wget=wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"
+alias wget=wget --hsts-file="${XDG_CACHE_HOME:-${HOME}/.cache}/wget-hsts"
 
 # xev
 alias keys='xev -event keyboard | awk '\''/^KeyPress/,/^KeyRelease/ { if ($0 ~ /keysym/) print $0 }'\'''
@@ -324,8 +321,5 @@ alias za="zathura"
 
 # zsh
 alias \
-	sps="source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile" \
-	szs="source ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.zshrc"
-
-# afreecatv
-alias waf="rm -rf ${XDG_DATA_HOME:-$HOME/.local/share}/afreecatv >/dev/null; export WINEPREFIX="${HOME}/.local/share/afreecatv" >/dev/null && winetricks dlls mfc42 >/dev/null && wine /home/si/afreecatvstreamer_installer.exe"
+	sps="source ${XDG_CONFIG_HOME:-${HOME}/.config}/shell/profile" \
+	szs="source ${XDG_CONFIG_HOME:-${HOME}/.config}/zsh/.zshrc"

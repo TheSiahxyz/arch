@@ -1,13 +1,17 @@
 #!/bin/sh
 
-MOUNT_SCRIPT="${XDG_SCRIPTS_HOME:-$HOME/.local/bin}/fecrypt"
+MOUNT_SCRIPT="${XDG_SCRIPTS_HOME:-${HOME}/.local/bin}/fecrypt"
 
 check_mount() {
-    mount | grep -q " $HOME/Media " || $MOUNT_SCRIPT
+    mount | grep -q " $HOME/Personal " || $MOUNT_SCRIPT
+    mount | grep -q " /mnt/extra/videos " || $MOUNT_SCRIPT
 }
 
 check_unmount() {
-    mount | grep -q " $HOME/Media " && $MOUNT_SCRIPT
+    lsof +D "$HOME/Personal" || lsof +D "/mnt/extra/videos" || {
+        mount | grep -q " $HOME/Personal " && $MOUNT_SCRIPT
+        mount | grep -q " /mnt/extra/videos " && $MOUNT_SCRIPT
+    }
 }
 
 play_url() {
@@ -18,7 +22,8 @@ play_url() {
 }
 
 play_media() {
-	mpv "$@" && $MOUNT_SCRIPT
+    check_unmount "$@"
+    mpv "$@" || exit
 }
 
 play_playlist() {
@@ -33,7 +38,7 @@ list_and_play() {
 	"Enter filenames")
 		search_term=$(echo | dmenu -i -p "File names:")
 		[ -z "$search_term" ] && return
-		files=$(find "$directory" -type f \( -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.webm" -o -iname "*.avi" -o -iname "*.flv" -o -iname "*.wmv" -o -iname "*.wav" -o -iname "*.aac" -o -iname "*.flac" -o -iname "*.m4a" -o -iname "*.ogg" \) -iname "*$search_term*")
+		files=$(find "$directory" -type f \( -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.mov" -o -iname "*.flv" -o -iname "*.wmv" -o -iname "*.webm" -o -iname "*.mpeg" -o -iname "*.mpg" \) -iname "*$search_term*")
 		[ -z "$files" ] && return
 		TMP_PLAYLIST=$(mktemp /tmp/mpv_playlist.XXXXXX)
 		echo "$files" | while read -r file; do
@@ -46,9 +51,10 @@ list_and_play() {
 	"List files")
         files_with_paths=$(find "$directory" -maxdepth 1 -type f \( -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.webm" -o -iname "*.avi" -o -iname "*.flv" -o -iname "*.wmv" \) | sort)
         SELECTED_FILE=$(printf "All files\n%s" "$files_with_paths" | sed 's!.*/!!' | dmenu -i -l 21 -p "Select a file:")
+        [ -z "$SELECTED_FILE" ] && exit 1
         [ "$SELECTED_FILE" = "All files" ] && play_media "$directory/" && return
 		FULL_PATH="$(echo "$files_with_paths" | grep -F "$SELECTED_FILE")"
-		[ -f "$FULL_PATH" ] && play_media "$FULL_PATH"
+		[ -f "$FULL_PATH" ] && play_media "$FULL_PATH" && return
 		;;
 	*) return ;;
 	esac
@@ -64,7 +70,7 @@ case "$CONTENT_CHOICE" in
 	;;
 "Local Files")
 	check_mount
-    printf "%s\n%s\n%s\n%s\n%s\n%s\n" "$HOME/Downloads" "$HOME/Media" "$HOME/Torrents/complete" "$HOME/Videos" "/media" "/mnt" | dmenu -i -p "Choose your initial directory:" | {
+    printf "%s\n%s\n%s\n%s\n%s\n%s\n" "$HOME/Downloads" "$HOME/Personal" "$HOME/Torrents/complete" "$HOME/Videos" "/media" "/mnt" | dmenu -i -p "Choose your initial directory:" | {
 		read -r initial_directory
 		[ -z "$initial_directory" ] && exit
 		SELECTED_FOLDER="$initial_directory"
@@ -73,8 +79,8 @@ case "$CONTENT_CHOICE" in
 			[ -z "$SUBFOLDER_OPTIONS" ] && list_and_play "$SELECTED_FOLDER" && break
 			OPTIONS="All files\n$SUBFOLDER_OPTIONS"
             SELECTED_RELATIVE_FOLDER=$(printf "%b" "$OPTIONS" | dmenu -i -p "Select a folder or 'All files':")
-			[ "$SELECTED_RELATIVE_FOLDER" = "All files" ] && list_and_play "$SELECTED_FOLDER" && break
 			[ -z "$SELECTED_RELATIVE_FOLDER" ] && exit
+			[ "$SELECTED_RELATIVE_FOLDER" = "All files" ] && list_and_play "$SELECTED_FOLDER" && break
 			SELECTED_FOLDER="$SELECTED_FOLDER/$SELECTED_RELATIVE_FOLDER"
 		done
 	}

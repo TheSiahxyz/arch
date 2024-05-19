@@ -1,7 +1,7 @@
 #!/bin/sh
 
-MOUNT_POINT="$HOME/Media"
-MOUNT_SCRIPT="${XDG_SCRIPTS_HOME:-$HOME/.local/bin}/fecrypt"
+MOUNT_POINT="$HOME/Personal"
+MOUNT_SCRIPT="${XDG_SCRIPTS_HOME:-${HOME}/.local/bin}/fecrypt"
 
 is_mounted() {
 	mount | grep -q " $MOUNT_POINT "
@@ -14,14 +14,10 @@ toggle_mount() {
 case $BLOCK_BUTTON in
 1) toggle_mount ;;
 3)
-	notify-send "💾 Media Mount Module" "\- Shows mount status of Media
-- Left click to toggle mount status"
+	notify-send "📁 Encrypted Media Folder " "\- Shows mount status of Media
+- Left click to toggle mount"
 	;;
 6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 
-if is_mounted; then
-	echo "📂"
-else
-	echo "📁"
-fi
+is_mounted && echo "📂" || echo "📁"

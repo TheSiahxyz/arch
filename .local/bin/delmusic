@@ -1,6 +1,6 @@
 #!/bin/sh
 
-music_dir="${XDG_MUSIC_DIR:-$HOME/Music}"
+music_dir="${XDG_MUSIC_DIR:-${HOME}/Music}"
 music_txt="${music_dir}/.music.txt"
 
 # Using POSIX-compliant methods for file selection

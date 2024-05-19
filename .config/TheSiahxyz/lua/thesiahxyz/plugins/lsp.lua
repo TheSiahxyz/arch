@@ -32,6 +32,7 @@ return {
         require("mason").setup()
         require("mason-lspconfig").setup({
             ensure_installed = {
+                "jdtls",
                 "lua_ls",
                 "pyright",
             },
@@ -61,14 +62,14 @@ return {
 
         require("mason-tool-installer").setup({
             ensure_installed = {
-                "prettier", -- prettier formatter
-                "stylua", -- lua formatter
-                "isort", -- python formatter
-                "black", -- python formatter
-                "pylint",
-                "eslint_d",
-                "shfmt",    -- sh formatter
                 "beautysh", -- zsh formatter
+                "black", -- python formatter
+                "eslint_d",
+                "isort", -- python formatter
+                "prettier", -- prettier formatter
+                "pylint",
+                "shfmt",    -- sh formatter
+                "stylua", -- lua formatter
             },
         })
 

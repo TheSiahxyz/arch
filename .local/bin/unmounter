@@ -7,11 +7,10 @@ set -e
 
 mounteddroids="$(grep simple-mtpfs /etc/mtab | awk '{print "📱" $2}')"
 lsblkoutput="$(lsblk -nrpo "name,type,size,mountpoint")"
-echo "lsb $lsblkoutput"
 mounteddrives="$(echo "$lsblkoutput" | awk '($2=="part"||$2="crypt")&&$4!~/\/boot|\/home$|SWAP/&&length($4)>1{printf "💾%s (%s)\n",$4,$3}')"
 
-allunmountable="$(echo "$mounteddroids$mounteddrives" | sed "/^$/d;s/ *$//")"
-echo "allun $allunmountable"
+allunmountable="$(echo "$mounteddroids
+$mounteddrives" | sed "/^$/d;s/ *$//")"
 test -n "$allunmountable"
 
 chosen="$(echo "$allunmountable" | dmenu -i -p "Unmount which drive?")"
@@ -21,25 +20,9 @@ test -n "$chosen"
 sudo -A umount -l "/${chosen#*/}"
 notify-send "⏏️ Device unmounted." "$chosen has been unmounted."
 
-MOUNT_SCRIPT="${XDG_SCRIPTS_HOME:-$HOME/.local/bin}/fecrypt"
-MEDIA_PATH="$HOME/Media"
-no_mounts=true
-find "$MEDIA_PATH" -mindepth 1 -maxdepth 1 -type d | while IFS= read -r dir; do
-    if mount | grep -q " on ${dir} type"; then
-        no_mounts=false
-        break
-    fi
-done
-if [ "$no_mounts" = true ]; then
-    $MOUNT_SCRIPT
-fi
-
 # Close the chosen drive if decrypted.
 cryptid="$(echo "$lsblkoutput" | grep "/${chosen#*/}$")"
-echo "cryp1 $cryptid"
 cryptid="${cryptid%% *}"
-echo "cryp2 $cryptid"
 test -b /dev/mapper/"${cryptid##*/}"
 sudo -A cryptsetup close "$cryptid"
-
 notify-send "🔒 Device dencryption closed." "Drive is now securely locked again."

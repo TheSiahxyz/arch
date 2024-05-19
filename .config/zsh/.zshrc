@@ -34,7 +34,7 @@ unsetopt bad_pattern
 # History in cache directory
 HISTSIZE=10000000
 SAVEHIST=10000000
-HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
+HISTFILE="${XDG_CACHE_HOME:-${HOME}/.cache}/zsh/history"
 setopt inc_append_history
 setopt appendhistory
 setopt share_history
@@ -79,9 +79,9 @@ echo -ne '\e[5 q'   # Use beam shape cursor on startup.
 
 
 ### --- Load ZSH Configs, Aliases, Functions, and Shortcuts --- ###
-for zsh_config (${ZDOTDIR:-$HOME/.config/zsh}/*.zsh) source $zsh_config
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc"
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/scriptrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/scriptrc"
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc"
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc"
-# [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/git-aliasrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/git-aliasrc"
+for zsh_config (${ZDOTDIR:-${HOME}/.config/zsh}/*.zsh) source $zsh_config
+[ -f "${XDG_CONFIG_HOME:-${HOME}/.config}/shell/aliasrc" ] && source "${XDG_CONFIG_HOME:-${HOME}/.config}/shell/aliasrc"
+[ -f "${XDG_CONFIG_HOME:-${HOME}/.config}/shell/scriptrc" ] && source "${XDG_CONFIG_HOME:-${HOME}/.config}/shell/scriptrc"
+[ -f "${XDG_CONFIG_HOME:-${HOME}/.config}/shell/shortcutrc" ] && source "${XDG_CONFIG_HOME:-${HOME}/.config}/shell/shortcutrc"
+[ -f "${XDG_CONFIG_HOME:-${HOME}/.config}/shell/zshnameddirrc" ] && source "${XDG_CONFIG_HOME:-${HOME}/.config}/shell/zshnameddirrc"
+# [ -f "${XDG_CONFIG_HOME:-${HOME}/.config}/shell/git-aliasrc" ] && source "${XDG_CONFIG_HOME:-${HOME}/.config}/shell/git-aliasrc"

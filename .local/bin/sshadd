@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SSH_KEY_DIR="${PASSWORD_STORE_DIR:-$HOME/.local/share/.password-store}"
+SSH_KEY_DIR="${PASSWORD_STORE_DIR:-${HOME}/.local/share/.password-store}"
 
 temp_private_keys_list=$(mktemp)
 

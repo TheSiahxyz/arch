@@ -9,7 +9,7 @@
 # fi
 
 url="${WTTRURL:-wttr.in}"
-weatherreport="${XDG_CACHE_HOME:-$HOME/.cache}/weatherreport"
+weatherreport="${XDG_CACHE_HOME:-${HOME}/.cache}/weatherreport"
 
 # Get a weather report from 'wttr.in' and save it locally.
 getforecast() {

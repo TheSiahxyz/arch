@@ -17,7 +17,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 	exit 0
 fi
 
-PASSDIR=${PASSWORD_STORE_DIR:-$HOME/.password-store}
+PASSDIR=${PASSWORD_STORE_DIR:-$HOME/.local/share/.password-store}
 cd $PASSDIR
 
 # Unlock the password for this session

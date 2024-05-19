@@ -2,7 +2,7 @@
 
 all_name='[ALL]'
 mode=library
-PLAYLIST_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/mpd/playlists"
+PLAYLIST_DIR="${XDG_CONFIG_HOME:-${HOME}/.config}/mpd/playlists"
 
 # Functions
 d_artist() {

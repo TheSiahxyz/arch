@@ -3,7 +3,7 @@ set autoquit true
 set cleaner '~/.config/lf/cleaner'
 set drawbox true
 set dupfilefmt '%f_%n'
-set hidden true
+set hidden false
 set hiddenfiles ".*:*.aux:*.log:*.bbl:*.bcf:*.blg:*.run.xml"
 set ignorecase true
 set icons true
@@ -340,9 +340,8 @@ map ,
 # Chmod
 map cx chmods
 
-# Clear
-map <c-l> clear
-map L unselect
+# Clear && Unselect
+map <c-l> :clear; unselect
 
 # Copy
 # map yy %cp -ri -- $fs .; clear
@@ -416,11 +415,8 @@ map R :rename; cmd-end; cmd-delete-home # entire filename
 map i :rename # before extension
 map I :rename; cmd-home # at the very beginning
 
-# Redraw
-map <c-r> redraw
-
-# Reload
-map <f-5> reload
+# Redraw && Reload
+map <c-r> :redraw; reload
 
 # Restore
 map U restore_trash

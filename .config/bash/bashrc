@@ -24,9 +24,9 @@ shopt -s histappend   # Causes bash to append to history instead of overwriting 
 # Completion settings
 # Ignore case on auto-completion
 # Note: bind used instead of sticking these in .inputrc
-if [[ $iatest > 0 ]]; then bind "set completion-ignore-case on"; fi
+bind "set completion-ignore-case on"
 # Show auto-completion list automatically, without double tab
-if [[ $iatest > 0 ]]; then bind "set show-all-if-ambiguous on"; fi
+bind "set show-all-if-ambiguous on"
 
 #######################################################
 # MACHINE SPECIFIC ALIASES
@@ -699,7 +699,6 @@ bind '"\C-g":"lfcd\n"'
 
 eval "$(dircolors)"
 
-[[ -f ~/.local/bin/bash-preexec ]] && source ~/.local/bin/bash-preexec
-
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/rootshortcutrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/rootshortcutrc"
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/rootzshnameddirrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/rootzshnameddirrc"
+[ -f "${XDG_SCRIPTS_HOME:-${HOME}/.local/bin}/bash-preexec" ] && . "${XDG_SCRIPTS_HOME:-${HOME}/.local/bin}/bash-preexec"
+[ -f "${XDG_CONFIG_HOME:-${HOME}/.config}/shell/rootshortcutrc" ] && . "${XDG_CONFIG_HOME:-${HOME}/.config}/shell/rootshortcutrc"
+[ -f "${XDG_CONFIG_HOME:-${HOME}/.config}/shell/rootzshnameddirrc" ] && . "${XDG_CONFIG_HOME:-${HOME}/.config}/shell/rootzshnameddirrc"

@@ -2,7 +2,7 @@
     defaultBranch = main
 
 [core]
-    excludesFile = /home/si/.config/git/ignore
+    excludesFile = ~/.config/git/ignore
     pager = delta
 
 [credential]

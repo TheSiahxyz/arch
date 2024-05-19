@@ -26,6 +26,7 @@ vim.keymap.set("o", "n", "'Nn'[v:searchforward]", { expr = true })
 vim.keymap.set("n", "N", "'nN'[v:searchforward].'zv'", { expr = true })
 vim.keymap.set("x", "N", "'nN'[v:searchforward]", { expr = true })
 vim.keymap.set("o", "N", "'nN'[v:searchforward]", { expr = true })
+vim.keymap.set("n", "x", '"_x')
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "<C-b>", "<C-b>zz")
@@ -49,6 +50,7 @@ vim.api.nvim_set_keymap("n", "<leader>rr", ':w!<CR>:!compiler "%:p"<CR>', { nore
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
+vim.keymap.set("n", "<leader>D", [["_D]])
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
 -- Diagnostic

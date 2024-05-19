@@ -1,7 +1,7 @@
 # /Users/si/.config/tmuxinator/school.yml
 
 name: code
-root: ~
+root: ~/Public
 
 # Optional tmux socket
 # socket_name: foo

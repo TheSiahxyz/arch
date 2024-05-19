@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Define paths and phrases
-path="/home/si/.local/src/suckless/dwm/thesiah"
-readme_file="/home/si/.local/share/thesiah/thesiah.mom"
+path="${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/dwm/thesiah"
+readme_file="${XDG_DATA_HOME:-${HOME}/.local/share}/thesiah/thesiah.mom"
 output_file="$path.mom"
 temp_file_before="$path.tmp.before"
 temp_file_after="$path.tmp.after"
@@ -32,8 +32,8 @@ echo "$start_phrase" >>"$temp_file_before"
 
 # Define your configuration files
 mapfile -t config_files <<EOF
-$HOME/.local/src/suckless/dwm/config.h
-$HOME/.local/src/suckless/st/config.h
+${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/dwm/config.h
+${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/st/config.h
 EOF
 
 # Process each configuration file and append content

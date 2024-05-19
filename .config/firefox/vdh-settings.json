@@ -16,7 +16,7 @@
     "smartnamerFnameMaxlen": 64,
     "downloadControlledMax": 10,
     "downloadStreamControlledMax": 10,
-    "autoPin": true,
+    "autoPin": false,
     "mediaExtensions": "flv|ram|mpg|mpeg|avi|rm|wmv|mov|asf|mp3|rar|movie|divx|rbs|mp4|mpeg4",
     "dashHideM4s": true,
     "mpegtsHideTs": true,
@@ -38,7 +38,7 @@
     "blacklistEnabled": true,
     "chunksConcurrentDownloads": 10,
     "chunksPrefetchCount": 10,
-    "downloadRetries": 3,
+    "downloadRetries": 10,
     "downloadRetryDelay": 1000,
     "mpegtsSaveRaw": false,
     "mpegtsSaveRawStreams": false,
@@ -48,11 +48,11 @@
     "dlconvLastOutput": "",
     "qrMessageNotAgain": false,
     "coappShellEnabled": false,
-    "downloadCount": 2,
+    "downloadCount": 272,
     "donateNotAgainExpire": 0,
     "popupHeightLeftOver": 100,
-    "coappDownloads": "ask",
-    "lastDownloadDirectory": "/home/si/Media/share",
+    "coappDownloads": "coapp",
+    "lastDownloadDirectory": "/home/si/Videos",
     "fileDialogType": "tab",
     "alertDialogType": "tab",
     "monitorNetworkRequests": true,
@@ -88,3 +88,4 @@
     "use_native_filepicker": false
   }
 }
+

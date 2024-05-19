@@ -1,0 +1,25 @@
+#!/bin/sh
+
+rm -rf "${XDG_DATA_HOME:-${HOME}/.local/share}/afreecatv" 2>/dev/null
+export WINEPREFIX="$HOME/.local/share/afreecatv" 2>/dev/null
+
+SRC_URL='https://creatorup.afreecatv.com/afreecatvstreamer_installer.exe'
+DST_FILE="$(mktemp)"
+
+HOME_ORIGIN="$HOME"
+HOME_PATCH="$WINEPREFIX/tmp"
+export HOME="$HOME_PATCH" 2>/dev/null
+
+echo 'Installing AfreecaTV Streamer...'
+curl -s "$SRC_URL" -o "$DST_FILE" 2>/dev/null
+
+wineboot 2>/dev/null
+winetricks dlls mfc42 2>/dev/null
+wine "$DST_FILE" /S 2>/dev/null
+rm "$DST_FILE" 2>/dev/null
+
+# Remove tmp home directory
+rm -rf "$HOME_PATCH" 2>/dev/null
+
+# Restore home directory
+export HOME="$HOME_ORIGIN" 2>/dev/null
