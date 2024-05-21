@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MOUNT_POINT="$HOME/Personal"
+MOUNT_POINT="$HOME/Private"
 MOUNT_SCRIPT="${XDG_SCRIPTS_HOME:-${HOME}/.local/bin}/fecrypt"
 
 is_mounted() {

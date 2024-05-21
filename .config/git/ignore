@@ -35,6 +35,7 @@ zshnameddirrc
 
 # Transmission
 */transmission-daemon/bandwidth-groups.json
+dht.dat
 
 # Vim
 */vim/*/

@@ -105,352 +105,354 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .HEADING 9 "Audio Controls"
 .LI
 .ITEM
-\f(CWMOD+m\fP \(en spawn SHCMD("mpcrandomon;mpcloadentire;mpcplay;pkill-RTMIN+11dwmblocks")
+\f(CWMOD+m\fP \(en mpc random on; mpc load entire; mpc play; pkill -RTMIN+11 dwmblocks
 .ITEM
-\f(CWMOD+Shift+m\fP \(en spawn SHCMD("mpdmenu;pkill-RTMIN+11dwmblocks")
+\f(CWMOD+Shift+m\fP \(en mpdmenu; pkill -RTMIN+11 dwmblocks
 .ITEM
-\f(CWMOD+Ctrl+m\fP \(en spawn SHCMD("mpcstop;pkill-RTMIN+11dwmblocks")
+\f(CWMOD+Ctrl+m\fP \(en mpc stop; pkill -RTMIN+11 dwmblocks
 .ITEM
-\f(CWMOD+Ctrl+Shift+m\fP \(en spawn {.v=(constchar*[]){"delmusic",NULL}}
+\f(CWMOD+Ctrl+Shift+m\fP \(en delmusic  
 .ITEM
-\f(CWMOD+p\fP \(en spawn SHCMD("mpctoggle;pkill-RTMIN+11dwmblocks")
+\f(CWMOD+p\fP \(en mpc toggle; pkill -RTMIN+11 dwmblocks
 .ITEM
-\f(CWMOD+Shift+p\fP \(en spawn SHCMD("mpcpause;pauseallmpv")
+\f(CWMOD+Shift+p\fP \(en mpc pause; pauseallmpv
 .ITEM
-\f(CWMOD+Ctrl+p\fP \(en spawn SHCMD("wpctlset-mute@DEFAULT_AUDIO_SINK@toggle;kill-44$(pidofdwmblocks)")
+\f(CWMOD+Ctrl+p\fP \(en wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; kill -44 $(pidof dwmblocks)
 .ITEM
-\f(CWMOD+comma\fP \(en spawn {.v=(constchar*[]){"mpc","prev",NULL}}
+\f(CWMOD+comma\fP \(en mpc prev  
 .ITEM
-\f(CWMOD+period\fP \(en spawn {.v=(constchar*[]){"mpc","next",NULL}}
+\f(CWMOD+period\fP \(en mpc next  
 .ITEM
-\f(CWMOD+Shift+comma\fP \(en spawn {.v=(constchar*[]){"mpc","seek","-10",NULL}}
+\f(CWMOD+Shift+comma\fP \(en mpc seek -10  
 .ITEM
-\f(CWMOD+Shift+period\fP \(en spawn {.v=(constchar*[]){"mpc","seek","+10",NULL}}
+\f(CWMOD+Shift+period\fP \(en mpc seek +10  
 .ITEM
-\f(CWMOD+Ctrl+comma\fP \(en spawn {.v=(constchar*[]){"mpc","seek","-60",NULL}}
+\f(CWMOD+Ctrl+comma\fP \(en mpc seek -60  
 .ITEM
-\f(CWMOD+Ctrl+period\fP \(en spawn {.v=(constchar*[]){"mpc","seek","+60",NULL}}
+\f(CWMOD+Ctrl+period\fP \(en mpc seek +60  
 .ITEM
-\f(CWMOD+Ctrl+Shift+comma\fP \(en spawn {.v=(constchar*[]){"mpc","seek","0%",NULL}}
+\f(CWMOD+Ctrl+Shift+comma\fP \(en mpc seek 0%  
 .ITEM
-\f(CWMOD+Ctrl+Shift+period\fP \(en spawn {.v=(constchar*[]){"mpc","repeat",NULL}}
+\f(CWMOD+Ctrl+Shift+period\fP \(en mpc repeat  
 .ITEM
-\f(CWMOD+slash\fP \(en spawn SHCMD("mpcsingleon;mpcrandomoff;mpcrepeaton")
+\f(CWMOD+slash\fP \(en mpc single on; mpc random off; mpc repeat on
 .ITEM
-\f(CWMOD+Shift+slash\fP \(en spawn SHCMD("mpcsingleoff;mpcrandomon;mpcrepeaton")
+\f(CWMOD+Shift+slash\fP \(en mpc single off; mpc random on; mpc repeat on
 .ITEM
-\f(CWMOD+Ctrl+slash\fP \(en spawn SHCMD("mpcrepeatoff;mpcrandomoff;mpcsingleoff;pkill-RTMIN+11dwmblocks")
+\f(CWMOD+Ctrl+slash\fP \(en mpc repeat off; mpc random off; mpc single off; pkill -RTMIN+11 dwmblocks
 .LIST OFF
 .HEADING 9 "Floating Sizes"
 .LI
 .ITEM
-\f(CWMOD2+Ctrl+h\fP \(en exresize {.v=(int[]){-25}}
+\f(CWMOD2+Ctrl+h\fP \(en exresize -25 0 
 .ITEM
-\f(CWMOD2+Ctrl+l\fP \(en exresize {.v=(int[]){25}}
+\f(CWMOD2+Ctrl+l\fP \(en exresize 25 0 
 .ITEM
-\f(CWMOD2+Ctrl+j\fP \(en exresize {.v=(int[]){25}}
+\f(CWMOD2+Ctrl+j\fP \(en exresize 0 25 
 .ITEM
-\f(CWMOD2+Ctrl+k\fP \(en exresize {.v=(int[]){-25}}
+\f(CWMOD2+Ctrl+k\fP \(en exresize 0 -25 
 .ITEM
-\f(CWMOD2+Ctrl+comma\fP \(en exresize {.v=(int[]){-25,-25}}
+\f(CWMOD2+Ctrl+comma\fP \(en exresize -25 -25 
 .ITEM
-\f(CWMOD2+Ctrl+period\fP \(en exresize {.v=(int[]){25+25}}
+\f(CWMOD2+Ctrl+period\fP \(en exresize 25 25 
 .LIST OFF
 .HEADING 9 "Layout Sizes"
 .LI
 .ITEM
-\f(CWMOD+Shift+n\fP \(en incnmaster {.i=-1}
+\f(CWMOD+Shift+n\fP \(en incnmaster -1 
 .ITEM
-\f(CWMOD+Ctrl+n\fP \(en incnmaster {.i=+1}
+\f(CWMOD+Ctrl+n\fP \(en incnmaster +1 
 .ITEM
-\f(CWMOD+f\fP \(en togglefullscr {0}
+\f(CWMOD+f\fP \(en togglefullscr 
 .ITEM
-\f(CWMOD+Ctrl+f\fP \(en togglefloating {0}
+\f(CWMOD+Ctrl+f\fP \(en togglefloating 
 .ITEM
-\f(CWMOD+h\fP \(en setmfact {.f=-0.05}
+\f(CWMOD+h\fP \(en setmfact -0.05 
 .ITEM
-\f(CWMOD+l\fP \(en setmfact {.f=+0.05}
+\f(CWMOD+l\fP \(en setmfact +0.05 
 .ITEM
-\f(CWMOD+s\fP \(en togglesticky {0}
+\f(CWMOD+s\fP \(en togglesticky 
 .ITEM
-\f(CWMOD+space\fP \(en zoom {0}
+\f(CWMOD+space\fP \(en zoom 
 .ITEM
-\f(CWMOD+Ctrl+j\fP \(en setcfact {.f=-0.25}
+\f(CWMOD+Ctrl+j\fP \(en setcfact -0.25 
 .ITEM
-\f(CWMOD+Ctrl+k\fP \(en setcfact {.f=+0.25}
+\f(CWMOD+Ctrl+k\fP \(en setcfact +0.25 
 .ITEM
-\f(CWMOD+Ctrl+l\fP \(en setcfact {.f=0.00}
+\f(CWMOD+Ctrl+l\fP \(en setcfact 0.00 
 .ITEM
-\f(CWMOD+Shift+c\fP \(en incrgaps {.i=-5}
+\f(CWMOD+Shift+c\fP \(en incrgaps -5 
 .ITEM
-\f(CWMOD+Ctrl+c\fP \(en incrgaps {.i=+5}
+\f(CWMOD+Ctrl+c\fP \(en incrgaps +5 
 .ITEM
-\f(CWMOD+Shift+i\fP \(en incrigaps {.i=-5}
+\f(CWMOD+Shift+i\fP \(en incrigaps -5 
 .ITEM
-\f(CWMOD+Ctrl+i\fP \(en incrigaps {.i=+5}
+\f(CWMOD+Ctrl+i\fP \(en incrigaps +5 
 .ITEM
-\f(CWMOD+Shift+o\fP \(en incrogaps {.i=-5}
+\f(CWMOD+Shift+o\fP \(en incrogaps -5 
 .ITEM
-\f(CWMOD+Ctrl+o\fP \(en incrogaps {.i=+5}
+\f(CWMOD+Ctrl+o\fP \(en incrogaps +5 
 .ITEM
-\f(CWMOD+Shift+y\fP \(en incrihgaps {.i=-5}
+\f(CWMOD+Shift+y\fP \(en incrihgaps -5 
 .ITEM
-\f(CWMOD+Ctrl+y\fP \(en incrihgaps {.i=+5}
+\f(CWMOD+Ctrl+y\fP \(en incrihgaps +5 
 .ITEM
-\f(CWMOD+Shift+t\fP \(en incrivgaps {.i=-5}
+\f(CWMOD+Shift+t\fP \(en incrivgaps -5 
 .ITEM
-\f(CWMOD+Ctrl+t\fP \(en incrivgaps {.i=+5}
+\f(CWMOD+Ctrl+t\fP \(en incrivgaps +5 
 .ITEM
-\f(CWMOD+Shift+u\fP \(en incrohgaps {.i=-5}
+\f(CWMOD+Shift+u\fP \(en incrohgaps -5 
 .ITEM
-\f(CWMOD+Ctrl+u\fP \(en incrohgaps {.i=+5}
+\f(CWMOD+Ctrl+u\fP \(en incrohgaps +5 
 .ITEM
-\f(CWMOD+Shift+r\fP \(en incrovgaps {.i=-5}
+\f(CWMOD+Shift+r\fP \(en incrovgaps -5 
 .ITEM
-\f(CWMOD+Ctrl+r\fP \(en incrovgaps {.i=+5}
+\f(CWMOD+Ctrl+r\fP \(en incrovgaps +5 
 .ITEM
-\f(CWMOD+Shift+g\fP \(en defaultgaps {0}
+\f(CWMOD+Shift+g\fP \(en defaultgaps 
 .ITEM
-\f(CWMOD+Ctrl+g\fP \(en togglegaps {0}
+\f(CWMOD+Ctrl+g\fP \(en togglegaps 
 .LIST OFF
 .HEADING 9 "Media Controls"
 .LI
 .ITEM
-\f(CWXF86Battery\fP \(en spawn SHCMD("pkill-RTMIN+3dwmblocks")
+\f(CWBattery\fP \(en pkill -RTMIN+3 dwmblocks
 .ITEM
-\f(CWXF86WWW\fP \(en spawn {.v=(constchar*[]){BROWSER+NULL}}
+\f(CWWWW\fP \(en BROWSER  
 .ITEM
-\f(CWXF86DOS\fP \(en spawn {.v=termcmd}
+\f(CWDOS\fP \(en termcmd 
 .ITEM
-\f(CWXF86AudioMute\fP \(en spawn SHCMD("wpctlset-mute@DEFAULT_AUDIO_SINK@toggle;kill-44$(pidofdwmblocks)")
+\f(CWAudioMute\fP \(en wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; kill -44 $(pidof dwmblocks)
 .ITEM
-\f(CWXF86AudioRaiseVolume\fP \(en spawn SHCMD("wpctlset-volume@DEFAULT_AUDIO_SINK@0%-&&wpctlset-volume@DEFAULT_AUDIO_SINK@3%+;kill-44$(pidofdwmblocks)")
+\f(CWAudioRaiseVolume\fP \(en wpctl set-volume @DEFAULT_AUDIO_SINK@ 0%- && wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+; kill -44 $(pidof dwmblocks)
 .ITEM
-\f(CWXF86AudioLowerVolume\fP \(en spawn SHCMD("wpctlset-volume@DEFAULT_AUDIO_SINK@0%+&&wpctlset-volume@DEFAULT_AUDIO_SINK@3%-;kill-44$(pidofdwmblocks)")
+\f(CWAudioLowerVolume\fP \(en wpctl set-volume @DEFAULT_AUDIO_SINK@ 0%+ && wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%-; kill -44 $(pidof dwmblocks)
 .ITEM
-\f(CWXF86AudioPrev\fP \(en spawn {.v=(constchar*[]){"mpc","prev",NULL}}
+\f(CWAudioPrev\fP \(en mpc prev  
 .ITEM
-\f(CWXF86AudioNext\fP \(en spawn {.v=(constchar*[]){"mpc","next",NULL}}
+\f(CWAudioNext\fP \(en mpc next  
 .ITEM
-\f(CWXF86AudioPause\fP \(en spawn {.v=(constchar*[]){"mpc","pause",NULL}}
+\f(CWAudioPause\fP \(en mpc pause  
 .ITEM
-\f(CWXF86AudioPlay\fP \(en spawn {.v=(constchar*[]){"mpc","play",NULL}}
+\f(CWAudioPlay\fP \(en mpc play  
 .ITEM
-\f(CWXF86AudioStop\fP \(en spawn {.v=(constchar*[]){"mpc","stop",NULL}}
+\f(CWAudioStop\fP \(en mpc stop  
 .ITEM
-\f(CWXF86AudioRewind\fP \(en spawn {.v=(constchar*[]){"mpc","seek","-10",NULL}}
+\f(CWAudioRewind\fP \(en mpc seek -10  
 .ITEM
-\f(CWXF86AudioForward\fP \(en spawn {.v=(constchar*[]){"mpc","seek","+10",NULL}}
+\f(CWAudioForward\fP \(en mpc seek +10  
 .ITEM
-\f(CWXF86AudioMedia\fP \(en spawn {.v=(constchar*[]){TERMINAL,"-e","ncmpcpp",NULL}}
+\f(CWAudioMedia\fP \(en ncmpcpp  
 .ITEM
-\f(CWXF86AudioMicMute\fP \(en spawn SHCMD("pactlset-source-mute@DEFAULT_SOURCE@toggle")
+\f(CWAudioMicMute\fP \(en pactl set-source-mute @DEFAULT_SOURCE@ toggle
 .ITEM
-\f(CWXF86PowerOff\fP \(en spawn {.v=(constchar*[]){"sysact",NULL}}
+\f(CWPowerOff\fP \(en sysact  
 .ITEM
-\f(CWXF86Calculator\fP \(en spawn {.v=(constchar*[]){TERMINAL,"-e","bc","-l",NULL}}
+\f(CWCalculator\fP \(en bc -l  
 .ITEM
-\f(CWXF86Sleep\fP \(en spawn {.v=(constchar*[]){"sudo","-A","zzz",NULL}}
+\f(CWSleep\fP \(en sudo -A zzz  
 .ITEM
-\f(CWXF86ScreenSaver\fP \(en spawn SHCMD("slock&xsetdpmsforceoff;mpcpause;pauseallmpv")
+\f(CWScreenSaver\fP \(en slock & xset dpms force off; mpc pause; pauseallmpv
 .ITEM
-\f(CWXF86TaskPane\fP \(en spawn {.v=(constchar*[]){TERMINAL,"-e","htop",NULL}}
+\f(CWTaskPane\fP \(en htop  
 .ITEM
-\f(CWXF86Mail\fP \(en spawn SHCMD(TERMINAL"-eneomutt;pkill-RTMIN+12dwmblocks")
+\f(CWMail\fP \(en neomutt ; pkill -RTMIN+12 dwmblocks
 .ITEM
-\f(CWXF86MyComputer\fP \(en spawn {.v=(constchar*[]){TERMINAL,"-e","lfub","/",NULL}}
+\f(CWMyComputer\fP \(en lfub /  
 .ITEM
-\f(CWXF86Launch1\fP \(en spawn {.v=(constchar*[]){"xset","dpms","force","off",NULL}}
+\f(CWLaunch1\fP \(en xset dpms force off  
 .ITEM
-\f(CWXF86TouchpadToggle\fP \(en spawn SHCMD("(synclient+grep'TouchpadOff.*1'&&synclientTouchpadOff=0)++synclientTouchpadOff=1")
+\f(CWTouchpadToggle\fP \(en (synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1
 .ITEM
-\f(CWXF86TouchpadOff\fP \(en spawn {.v=(constchar*[]){"synclient","TouchpadOff=1",NULL}}
+\f(CWTouchpadOff\fP \(en synclient TouchpadOff=1  
 .ITEM
-\f(CWXF86TouchpadOn\fP \(en spawn {.v=(constchar*[]){"synclient","TouchpadOff=0",NULL}}
+\f(CWTouchpadOn\fP \(en synclient TouchpadOff=0  
 .ITEM
-\f(CWXF86MonBrightnessUp\fP \(en spawn SHCMD("sudobrillo-U5-q;pkill-RTMIN+22dwmblocks")
+\f(CWMonBrightnessUp\fP \(en sudo brillo -U 5 -q; pkill -RTMIN+22 dwmblocks
 .ITEM
-\f(CWXF86MonBrightnessDown\fP \(en spawn SHCMD("sudobrillo-A5-q;pkill-RTMIN+22dwmblocks")
+\f(CWMonBrightnessDown\fP \(en sudo brillo -A 5 -q; pkill -RTMIN+22 dwmblocks
 .LIST OFF
 .HEADING 9 "Mode"
 .LI
 .ITEM
-\f(CWMOD+Esc\fP \(en setkeymode {.ui=ModeCommand}
+\f(CWMOD+Escape\fP \(en setkeymode ModeCommand 
 .LIST OFF
 .HEADING 9 "Programs"
 .LI
 .ITEM
-\f(CWMOD+d\fP \(en spawn {.v=(constchar*[]){"dmenu_run",NULL}}
+\f(CWMOD+c\fP \(en calcurse  
 .ITEM
-\f(CWMOD+e\fP \(en spawn SHCMD(TERMINAL"-eneomutt;pkill-RTMIN+12dwmblocks;rmdir~/.abook2>/dev/null")
+\f(CWMOD+d\fP \(en dmenu_run  
 .ITEM
-\f(CWMOD+g\fP \(en spawn {.v=(constchar*[]){TERMINAL,"-e","lfub",NULL}}
+\f(CWMOD+e\fP \(en neomutt ; pkill -RTMIN+12 dwmblocks; rmdir ~/.abook 2>/dev/null
 .ITEM
-\f(CWMOD+n\fP \(en spawn SHCMD(TERMINAL"-enewsboat;pkill-RTMIN+6dwmblocks")
+\f(CWMOD+g\fP \(en lfub  
 .ITEM
-\f(CWMOD+r\fP \(en spawn {.v=(constchar*[]){TERMINAL,"-e","htop",NULL}}
+\f(CWMOD+n\fP \(en newsboat ; pkill -RTMIN+6 dwmblocks
 .ITEM
-\f(CWMOD+t\fP \(en spawn {.v=(constchar*[]){"torwrap",NULL}}
+\f(CWMOD+r\fP \(en htop  
 .ITEM
-\f(CWMOD+w\fP \(en spawn {.v=(constchar*[]){BROWSER+NULL}}
+\f(CWMOD+t\fP \(en torwrap  
 .ITEM
-\f(CWMOD+Ctrl+w\fP \(en spawn {.v=(constchar*[]){"pkill","-f",BROWSER,NULL}}
+\f(CWMOD+w\fP \(en BROWSER  
 .ITEM
-\f(CWMOD+Shift+grave\fP \(en spawn {.v=(constchar*[]){"dmenuunicode",NULL}}
+\f(CWMOD+Ctrl+w\fP \(en pkill -f BROWSER  
 .ITEM
-\f(CWMOD+Return\fP \(en spawn {.v=termcmd}
+\f(CWMOD+Shift+grave\fP \(en dmenuunicode  
 .ITEM
-\f(CWMOD+Shift+Return\fP \(en spawn {.v=(constchar*[]){"sd",NULL}}
+\f(CWMOD+Return\fP \(en termcmd 
+.ITEM
+\f(CWMOD+Shift+Return\fP \(en sd  
 .LIST OFF
 .HEADING 9 "Scripts"
 .LI
 .ITEM
-\f(CWMOD+b\fP \(en spawn SHCMD("xdotooltype$(grep-v'^#'~/.local/share/thesiah/snippets+dmenu-i-l50+cut-d''-f1)")
+\f(CWMOD+b\fP \(en xdotool type $(grep -v '^#' ~/.local/share/thesiah/snippets | dmenu -i -l 50 | cut -d' ' -f1)
 .ITEM
-\f(CWMOD+Shift+d\fP \(en spawn {.v=(constchar*[]){"passmenu",NULL}}
+\f(CWMOD+Shift+d\fP \(en passmenu  
 .ITEM
-\f(CWMOD+Ctrl+d\fP \(en spawn {.v=(constchar*[]){"passmenu2",NULL}}
+\f(CWMOD+Ctrl+d\fP \(en passmenu2  
 .ITEM
-\f(CWMOD+Ctrl+e\fP \(en spawn {.v=(constchar*[]){"fecrypt",NULL}}
+\f(CWMOD+Ctrl+e\fP \(en fecrypt  
 .ITEM
-\f(CWMOD+v\fP \(en spawn {.v=(constchar*[]){"mpvplay",NULL}}
+\f(CWMOD+v\fP \(en mpvplay  
 .ITEM
-\f(CWMOD+Ctrl+v\fP \(en spawn {.v=(constchar*[]){"ovpn",NULL}}
+\f(CWMOD+Ctrl+v\fP \(en ovpn  
 .ITEM
-\f(CWMOD+Insert\fP \(en spawn SHCMD("xdotooltype$(grep-v'^#'~/.local/share/thesiah/snippets+dmenu-i-l50+cut-d''-f1)")
+\f(CWMOD+Insert\fP \(en xdotool type $(grep -v '^#' ~/.local/share/thesiah/snippets | dmenu -i -l 50 | cut -d' ' -f1)
 .ITEM
-\f(CWPrint\fP \(en spawn SHCMD("maim+tee~/Pictures/screenshot-$(date'+%y%m%d-%H%M-%S').png+xclip-selectionclipboard")
+\f(CWPrint\fP \(en maim | tee ~/Pictures/screenshot-$(date '+%y%m%d-%H%M-%S').png | xclip -selection clipboard
 .ITEM
-\f(CWShift+Print\fP \(en spawn {.v=(constchar*[]){"maimpick",NULL}}
+\f(CWShift+Print\fP \(en maimpick  
 .ITEM
-\f(CWMOD+Print\fP \(en spawn {.v=(constchar*[]){"dmenurecord",NULL}}
+\f(CWMOD+Print\fP \(en dmenurecord  
 .ITEM
-\f(CWMOD+Delete\fP \(en spawn {.v=(constchar*[]){"dmenurecord","kill",NULL}}
+\f(CWMOD+Delete\fP \(en dmenurecord kill  
 .ITEM
-\f(CWMOD+Scroll_Lock\fP \(en spawn SHCMD("killallscreenkey++screenkey-t3-pfixed-ssmall-g20%x5%+40%-5%--key-modekeysyms--bak-modenormal--mods-modenormal-fttf-font-awesome--opacity0.5&")
+\f(CWMOD+Scroll_Lock\fP \(en killall screenkey || screenkey -t 3 -p fixed -s small -g 20%x5%+40%-5% --key-mode keysyms --bak-mode normal --mods-mode normal -f ttf-font-awesome --opacity 0.5 &
 .ITEM
-\f(CWMOD+F1\fP \(en spawn SHCMD("groff-mom/usr/local/share/dwm/thesiah.mom-Tpdf+zathura-")
+\f(CWMOD+F1\fP \(en groff -mom /usr/local/share/dwm/thesiah.mom -Tpdf | zathura -
 .ITEM
-\f(CWMOD+Shift+F1\fP \(en spawn SHCMD("nsxiv${XDG_PICTURES_DIR:-${HOME}/Pictures}/resources")
+\f(CWMOD+Shift+F1\fP \(en nsxiv ${XDG_PICTURES_DIR:-${HOME}/Pictures}/resources
 .ITEM
-\f(CWMOD+Ctrl+F1\fP \(en spawn {.v=(constchar*[]){TERMINAL,"-e","dman",NULL}}
+\f(CWMOD+Ctrl+F1\fP \(en dman  
 .ITEM
-\f(CWMOD+F2\fP \(en spawn {.v=(constchar*[]){"tutorialvids",NULL}}
+\f(CWMOD+F2\fP \(en tutorialvids  
 .ITEM
-\f(CWMOD+F3\fP \(en spawn {.v=(constchar*[]){"displayselect",NULL}}
+\f(CWMOD+F3\fP \(en displayselect  
 .ITEM
-\f(CWMOD+F4\fP \(en spawn SHCMD(TERMINAL"-epulsemixer;kill-44$(pidofdwmblocks)")
+\f(CWMOD+F4\fP \(en pulsemixer; kill -44 $(pidof dwmblocks)
 .ITEM
-\f(CWMOD+F5\fP \(en xrdb {.v=NULL}
+\f(CWMOD+F5\fP \(en xrdb 
 .ITEM
-\f(CWMOD+Shift+F5\fP \(en spawn {.v=(constchar*[]){"stw",NULL}}
+\f(CWMOD+Shift+F5\fP \(en stw  
 .ITEM
-\f(CWMOD+Ctrl+F5\fP \(en spawn {.v=(constchar*[]){"rbackup",NULL}}
+\f(CWMOD+Ctrl+F5\fP \(en rbackup  
 .ITEM
-\f(CWMOD+Ctrl+Shift+F5\fP \(en spawn {.v=(constchar*[]){"pacupgrade",NULL}}
+\f(CWMOD+Ctrl+Shift+F5\fP \(en pacupgrade  
 .ITEM
-\f(CWMOD+F6\fP \(en spawn {.v=(constchar*[]){"qndl","-v",NULL}}
+\f(CWMOD+F6\fP \(en qndl -v  
 .ITEM
-\f(CWMOD+Shift+F6\fP \(en spawn {.v=(constchar*[]){"qndl","-m",NULL}}
+\f(CWMOD+Shift+F6\fP \(en qndl -m  
 .ITEM
-\f(CWMOD+F7\fP \(en spawn {.v=(constchar*[]){"transadd","-l",NULL}}
+\f(CWMOD+F7\fP \(en transadd -l  
 .ITEM
-\f(CWMOD+Ctrl+F7\fP \(en spawn {.v=(constchar*[]){"td-toggle",NULL}}
+\f(CWMOD+Ctrl+F7\fP \(en td-toggle  
 .ITEM
-\f(CWMOD+F8\fP \(en spawn {.v=(constchar*[]){"mailsync",NULL}}
+\f(CWMOD+F8\fP \(en mailsync  
 .ITEM
-\f(CWMOD+F9\fP \(en spawn {.v=(constchar*[]){"mounter",NULL}}
+\f(CWMOD+F9\fP \(en mounter  
 .ITEM
-\f(CWMOD+F10\fP \(en spawn {.v=(constchar*[]){"unmounter",NULL}}
+\f(CWMOD+F10\fP \(en unmounter  
 .ITEM
-\f(CWMOD+F11\fP \(en spawn SHCMD("mpv--untimed--no-cache--no-osc--no-input-default-bindings--profile=low-latency--input-conf=/dev/null--title=webcam$(ls""/dev/video[0,2,4,6,8]+tail-n1)")
+\f(CWMOD+F11\fP \(en mpv --untimed --no-cache --no-osc --no-input-default-bindings --profile=low-latency --input-conf=/dev/null --title=webcam $(ls  /dev/video[02468] | tail -n 1)
 .ITEM
-\f(CWMOD+F12\fP \(en spawn SHCMD("remaps")
+\f(CWMOD+F12\fP \(en remaps
 .ITEM
-\f(CWMOD+Shift+F12\fP \(en spawn {.v=(constchar*[]){"fcitx5-configtool",NULL}}
+\f(CWMOD+Shift+F12\fP \(en fcitx5-configtool  
 .LIST OFF
 .HEADING 9 "Systems"
 .LI
 .ITEM
-\f(CWMOD+Ctrl+k\fP \(en spawn {.v=(constchar*[]){"pkill","-f","kakaotalk",NULL}}
+\f(CWMOD+Ctrl+k\fP \(en pkill -f kakaotalk  
 .ITEM
-\f(CWMOD+q\fP \(en killclient {0}
+\f(CWMOD+q\fP \(en killclient 
 .ITEM
-\f(CWMOD+Shift+q\fP \(en killclient {.ui=1}
+\f(CWMOD+Shift+q\fP \(en killclient 1 
 .ITEM
-\f(CWMOD+Ctrl+q\fP \(en killclient {.ui=2}
+\f(CWMOD+Ctrl+q\fP \(en killclient 2 
 .ITEM
-\f(CWMOD+BackSpace\fP \(en spawn {.v=(constchar*[]){"slock",NULL}}
+\f(CWMOD+BackSpace\fP \(en slock  
 .ITEM
-\f(CWMOD+Shift+BackSpace\fP \(en spawn {.v=(constchar*[]){"sysact",NULL}}
+\f(CWMOD+Shift+BackSpace\fP \(en sysact  
 .ITEM
-\f(CWMOD+minus\fP \(en spawn SHCMD("wpctlset-volume@DEFAULT_AUDIO_SINK@5%-;kill-44$(pidofdwmblocks)")
+\f(CWMOD+minus\fP \(en wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; kill -44 $(pidof dwmblocks)
 .ITEM
-\f(CWMOD+equal\fP \(en spawn SHCMD("wpctlset-volume@DEFAULT_AUDIO_SINK@5%+;kill-44$(pidofdwmblocks)")
+\f(CWMOD+equal\fP \(en wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; kill -44 $(pidof dwmblocks)
 .ITEM
-\f(CWMOD+Shift+minus\fP \(en spawn SHCMD("wpctlset-volume@DEFAULT_AUDIO_SINK@15%-;kill-44$(pidofdwmblocks)")
+\f(CWMOD+Shift+minus\fP \(en wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%-; kill -44 $(pidof dwmblocks)
 .ITEM
-\f(CWMOD+Shift+equal\fP \(en spawn SHCMD("wpctlset-volume@DEFAULT_AUDIO_SINK@15%+;kill-44$(pidofdwmblocks)")
+\f(CWMOD+Shift+equal\fP \(en wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%+; kill -44 $(pidof dwmblocks)
 .ITEM
-\f(CWMOD+Ctrl+minus\fP \(en spawn SHCMD("sudobrillo-U5-q;pkill-RTMIN+22dwmblocks")
+\f(CWMOD+Ctrl+minus\fP \(en sudo brillo -U 5 -q; pkill -RTMIN+22 dwmblocks
 .ITEM
-\f(CWMOD+Ctrl+equal\fP \(en spawn SHCMD("sudobrillo-A5-q;pkill-RTMIN+22dwmblocks")
+\f(CWMOD+Ctrl+equal\fP \(en sudo brillo -A 5 -q; pkill -RTMIN+22 dwmblocks
 .ITEM
-\f(CWAlt_R\fP \(en spawn SHCMD("fcitx5-remote-t;pkill-RTMIN+29dwmblocks")
+\f(CWAlt_R\fP \(en fcitx5-remote -t; pkill -RTMIN+29 dwmblocks
 .ITEM
 \f(CWCtrl+F5\fP \(en quit {1}
 .ITEM
-\f(CWCtrl+Shift+F5\fP \(en spawn SHCMD("killall-qdwmblocks;setsid-fdwmblocks")
+\f(CWCtrl+Shift+F5\fP \(en killall -q dwmblocks; setsid -f dwmblocks
 .LIST OFF
 .HEADING 9 "Traversals"
 .LI
 .ITEM
-\f(CWMOD+view\fP \(en {.ui=~0} 
+\f(CWMOD+0\fP \(en view ~0 
 .ITEM
-\f(CWMOD+Shift+tag\fP \(en {.ui=~0} 
+\f(CWMOD+Shift+0\fP \(en tag ~0 
 .ITEM
-\f(CWMOD2+bracketleft\fP \(en shiftview {.i=-1}
+\f(CWMOD2+bracketleft\fP \(en shiftview -1 
 .ITEM
-\f(CWMOD2+bracketright\fP \(en shiftview {.i=1}
+\f(CWMOD2+bracketright\fP \(en shiftview 1 
 .ITEM
-\f(CWMOD2+Shift+bracketleft\fP \(en shifttag {.i=-1}
+\f(CWMOD2+Shift+bracketleft\fP \(en shifttag -1 
 .ITEM
-\f(CWMOD2+Shift+bracketright\fP \(en shifttag {.i=1}
+\f(CWMOD2+Shift+bracketright\fP \(en shifttag 1 
 .ITEM
-\f(CWMOD+bracketleft\fP \(en shiftviewclients {.i=-1}
+\f(CWMOD+bracketleft\fP \(en shiftviewclients -1 
 .ITEM
-\f(CWMOD+bracketright\fP \(en shiftviewclients {.i=+1}
+\f(CWMOD+bracketright\fP \(en shiftviewclients +1 
 .ITEM
-\f(CWMOD+Shift+bracketleft\fP \(en shifttagclients {.i=-1}
+\f(CWMOD+Shift+bracketleft\fP \(en shifttagclients -1 
 .ITEM
-\f(CWMOD+Shift+bracketright\fP \(en shifttagclients {.i=+1}
+\f(CWMOD+Shift+bracketright\fP \(en shifttagclients +1 
 .ITEM
-\f(CWMOD+Ctrl+bracketleft\fP \(en shiftboth {.i=-1}
+\f(CWMOD+Ctrl+bracketleft\fP \(en shiftboth -1 
 .ITEM
-\f(CWMOD+Ctrl+bracketright\fP \(en shiftboth {.i=+1}
+\f(CWMOD+Ctrl+bracketright\fP \(en shiftboth +1 
 .ITEM
-\f(CWMOD+Ctrl+Shift+bracketleft\fP \(en shiftswaptags {.i=-1}
+\f(CWMOD+Ctrl+Shift+bracketleft\fP \(en shiftswaptags -1 
 .ITEM
-\f(CWMOD+Ctrl+Shift+bracketright\fP \(en shiftswaptags {.i=+1}
+\f(CWMOD+Ctrl+Shift+bracketright\fP \(en shiftswaptags +1 
 .ITEM
-\f(CWMOD+Left\fP \(en focusmon {.i=-1}
+\f(CWMOD+Left\fP \(en focusmon -1 
 .ITEM
-\f(CWMOD+Right\fP \(en focusmon {.i=+1}
+\f(CWMOD+Right\fP \(en focusmon +1 
 .ITEM
-\f(CWMOD+Shift+Left\fP \(en tagmon {.i=-1}
+\f(CWMOD+Shift+Left\fP \(en tagmon -1 
 .ITEM
-\f(CWMOD+Shift+Right\fP \(en tagmon {.i=+1}
+\f(CWMOD+Shift+Right\fP \(en tagmon +1 
 .ITEM
-\f(CWMOD2+Tab\fP \(en view {0}
+\f(CWMOD2+Tab\fP \(en view 
 .LIST OFF
 .HEADING 9 "Commands"
 .LI
 .ITEM
-\f(CWEsc\fP \(en clearcmd {0}
+\f(CWEscape\fP \(en clearcmd 
 .ITEM
-\f(CWCtrl+c\fP \(en clearcmd {0}
+\f(CWCtrl+c\fP \(en clearcmd 
 .ITEM
-\f(CWCtrl+x\fP \(en setkeymode {.ui=ModeInsert}
+\f(CWCtrl+x\fP \(en setkeymode ModeInsert 
 .LIST OFF
 .HEADING 8 "COMMAND MODE"
 .LI
@@ -458,132 +460,132 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .HEADING 9 "Appearances"
 .LI
 .ITEM
-\f(CWCtrl+b\fP \(en togglebar {0}
+\f(CWCtrl+b\fP \(en togglebar 
 .ITEM
-\f(CWShift+b\fP \(en togglebar {.i=1}
+\f(CWShift+b\fP \(en togglebar 1 
 .ITEM
-\f(CWCtrl+o\fP \(en toggleborder {0}
+\f(CWCtrl+o\fP \(en toggleborder 
 .ITEM
-\f(CWCtrl+f\fP \(en togglefloating {0}
+\f(CWCtrl+f\fP \(en togglefloating 
 .ITEM
-\f(CWCtrl+g\fP \(en togglegaps {0}
+\f(CWCtrl+g\fP \(en togglegaps 
 .ITEM
-\f(CWShift+g\fP \(en defaultgaps {0}
+\f(CWShift+g\fP \(en defaultgaps 
 .LIST OFF
 .HEADING 9 "Layouts"
 .LI
 .ITEM
-\f(CWlt\fP \(en setlayout {.v=&layouts[0]}
+\f(CWlt\fP \(en setlayout "[]=" 
 .ITEM
-\f(CWlm\fP \(en setlayout {.v=&layouts[1]}
+\f(CWlm\fP \(en setlayout "[M]" 
 .ITEM
-\f(CWlcl\fP \(en setlayout {.v=&layouts[2]}
+\f(CWlcl\fP \(en setlayout "|||" 
 .ITEM
-\f(CWls\fP \(en setlayout {.v=&layouts[3]}
+\f(CWls\fP \(en setlayout "[@]" 
 .ITEM
-\f(CWlw\fP \(en setlayout {.v=&layouts[4]}
+\f(CWlw\fP \(en setlayout "[\\]" 
 .ITEM
-\f(CWld\fP \(en setlayout {.v=&layouts[5]}
+\f(CWld\fP \(en setlayout "H[]" 
 .ITEM
-\f(CWlbe\fP \(en setlayout {.v=&layouts[6]}
+\f(CWlbe\fP \(en setlayout "TTT" 
 .ITEM
-\f(CWlbh\fP \(en setlayout {.v=&layouts[7]}
+\f(CWlbh\fP \(en setlayout "===" 
 .ITEM
-\f(CWlge\fP \(en setlayout {.v=&layouts[8]}
+\f(CWlge\fP \(en setlayout "HHH" 
 .ITEM
-\f(CWlgr\fP \(en setlayout {.v=&layouts[9]}
+\f(CWlgr\fP \(en setlayout "###" 
 .ITEM
-\f(CWlgh\fP \(en setlayout {.v=&layouts[10]}
+\f(CWlgh\fP \(en setlayout "---" 
 .ITEM
-\f(CWlgg\fP \(en setlayout {.v=&layouts[11]}
+\f(CWlgg\fP \(en setlayout ":::" 
 .ITEM
-\f(CWlcm\fP \(en setlayout {.v=&layouts[12]}
+\f(CWlcm\fP \(en setlayout "|M|" 
 .ITEM
-\f(CWlcf\fP \(en setlayout {.v=&layouts[13]}
+\f(CWlcf\fP \(en setlayout ">M>" 
 .ITEM
-\f(CWfu\fP \(en explace {.ui=EX_NW}
+\f(CWfu\fP \(en explace EX_NW 
 .ITEM
-\f(CWfi\fP \(en explace {.ui=EX_N}
+\f(CWfi\fP \(en explace EX_N 
 .ITEM
-\f(CWfo\fP \(en explace {.ui=EX_NE}
+\f(CWfo\fP \(en explace EX_NE 
 .ITEM
-\f(CWfh\fP \(en explace {.ui=EX_W}
+\f(CWfh\fP \(en explace EX_W 
 .ITEM
-\f(CWfk\fP \(en explace {.ui=EX_C}
+\f(CWfk\fP \(en explace EX_C 
 .ITEM
-\f(CWfl\fP \(en explace {.ui=EX_E}
+\f(CWfl\fP \(en explace EX_E 
 .ITEM
-\f(CWfm\fP \(en explace {.ui=EX_SW}
+\f(CWfm\fP \(en explace EX_SW 
 .ITEM
-\f(CWfcomma\fP \(en explace {.ui=EX_S}
+\f(CWfcomma\fP \(en explace EX_S 
 .ITEM
-\f(CWfperiod\fP \(en explace {.ui=EX_SE}
+\f(CWfperiod\fP \(en explace EX_SE 
 .LIST OFF
 .HEADING 9 "Floating Sizes"
 .LI
 .ITEM
-\f(CWsj\fP \(en exresize {.v=(int[]){25}}
+\f(CWsj\fP \(en exresize 0 25 
 .ITEM
-\f(CWsk\fP \(en exresize {.v=(int[]){-25}}
+\f(CWsk\fP \(en exresize 0 -25 
 .ITEM
-\f(CWsl\fP \(en exresize {.v=(int[]){25}}
+\f(CWsl\fP \(en exresize 25 0 
 .ITEM
-\f(CWsh\fP \(en exresize {.v=(int[]){-25}}
+\f(CWsh\fP \(en exresize -25 0 
 .ITEM
-\f(CWscomma\fP \(en exresize {.v=(int[]){-25,-25}}
+\f(CWscomma\fP \(en exresize -25 -25 
 .ITEM
-\f(CWsperiod\fP \(en exresize {.v=(int[]){25+25}}
+\f(CWsperiod\fP \(en exresize 25 25 
 .ITEM
-\f(CWfsih\fP \(en togglehorizontalexpand {.i=+1}
+\f(CWfsih\fP \(en togglehorizontalexpand +1 
 .ITEM
-\f(CWfsrh\fP \(en togglehorizontalexpand {.i=0}
+\f(CWfsrh\fP \(en togglehorizontalexpand 
 .ITEM
-\f(CWfsdh\fP \(en togglehorizontalexpand {.i=-1}
+\f(CWfsdh\fP \(en togglehorizontalexpand -1 
 .ITEM
-\f(CWfsiv\fP \(en toggleverticalexpand {.i=+1}
+\f(CWfsiv\fP \(en toggleverticalexpand +1 
 .ITEM
-\f(CWfsrv\fP \(en toggleverticalexpand {.i=0}
+\f(CWfsrv\fP \(en toggleverticalexpand 
 .ITEM
-\f(CWfsdv\fP \(en toggleverticalexpand {.i=-1}
+\f(CWfsdv\fP \(en toggleverticalexpand -1 
 .ITEM
-\f(CWfsim\fP \(en togglemaximize {.i=+1}
+\f(CWfsim\fP \(en togglemaximize +1 
 .ITEM
-\f(CWfsrm\fP \(en togglemaximize {.i=0}
+\f(CWfsrm\fP \(en togglemaximize 
 .ITEM
-\f(CWfsdm\fP \(en togglemaximize {.i=-1}
+\f(CWfsdm\fP \(en togglemaximize -1 
 .LIST OFF
 .HEADING 9 "Programs"
 .LI
 .ITEM
-\f(CWa\fP \(en spawn SHCMD(TERMINAL"-eabook-C${XDG_CONFIG_HOME:-${HOME}/.config}/abook/abookrc--datafile${XDG_CONFIG_HOME:-${HOME}/.config}/abook/addressbook")
+\f(CWa\fP \(en abook -C ${XDG_CONFIG_HOME:-${HOME}/.config}/abook/abookrc --datafile ${XDG_CONFIG_HOME:-${HOME}/.config}/abook/addressbook
 .ITEM
-\f(CWc\fP \(en spawn {.v=(constchar*[]){TERMINAL,"-e","profanity",NULL}}
+\f(CWc\fP \(en profanity  
 .ITEM
-\f(CWe\fP \(en spawn SHCMD(TERMINAL"-eneomutt;pkill-RTMIN+12dwmblocks;rmdir~/.abook2>/dev/null")
+\f(CWe\fP \(en neomutt ; pkill -RTMIN+12 dwmblocks; rmdir ~/.abook 2>/dev/null
 .ITEM
-\f(CWg\fP \(en spawn {.v=(constchar*[]){"gimp",NULL}}
+\f(CWg\fP \(en gimp  
 .ITEM
-\f(CWh\fP \(en spawn {.v=(constchar*[]){TERMINAL,"-e","htop",NULL}}
+\f(CWh\fP \(en htop  
 .ITEM
-\f(CWi\fP \(en spawn {.v=(constchar*[]){TERMINAL,"-e","sudo","nmtui",NULL}}
+\f(CWi\fP \(en sudo nmtui  
 .ITEM
-\f(CWk\fP \(en spawn {.v=(constchar*[]){"kakaotalk",NULL}}
+\f(CWk\fP \(en kakaotalk  
 .ITEM
-\f(CWm\fP \(en spawn {.v=(constchar*[]){TERMINAL,"-e","ncmpcpp",NULL}}
+\f(CWm\fP \(en ncmpcpp  
 .ITEM
-\f(CWn\fP \(en spawn SHCMD(TERMINAL"-enewsboat;pkill-RTMIN+6dwmblocks")
+\f(CWn\fP \(en newsboat ; pkill -RTMIN+6 dwmblocks
 .ITEM
-\f(CWp\fP \(en spawn SHCMD(TERMINAL"-esc-im${WEBDIR:-${HOME}/THESIAH}/static/progs.csv")
+\f(CWp\fP \(en sc-im ${WEBDIR:-${HOME}/THESIAH}/static/progs.csv
 .ITEM
-\f(CWt\fP \(en spawn {.v=(constchar*[]){"torwrap",NULL}}
+\f(CWt\fP \(en torwrap  
 .ITEM
-\f(CWv\fP \(en spawn {.v=(constchar*[]){"ovpn",NULL}}
+\f(CWv\fP \(en ovpn  
 .ITEM
-\f(CWShift+v\fP \(en spawn {.v=(constchar*[]){TERMINAL,"-e","nvim","-c","VimwikiIndex","1",NULL}}
+\f(CWShift+v\fP \(en nvim -c VimwikiIndex 1  
 .ITEM
-\f(CWw\fP \(en spawn SHCMD(TERMINAL"-eless-Sf${XDG_CACHE_HOME:-${HOME}/.cache}/weatherreport")
+\f(CWw\fP \(en less -Sf ${XDG_CACHE_HOME:-${HOME}/.cache}/weatherreport
 .ITEM
-\f(CWReturn\fP \(en spawn {.v=(constchar*[]){TERMINAL,"-e","lfub",NULL}}
+\f(CWReturn\fP \(en lfub  
 .LIST OFF
 .HEADING 8 "INSERT MODE"
 .LI
@@ -591,47 +593,47 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .HEADING 9 "Mouse Buttons"
 .LI
 .ITEM
-\f(CWClkWinTitle+Button2\fP \(en zoom {0}
+\f(CWClkWinTitle+\fP \(en Button2 zoom 
 .ITEM
-\f(CWClkStatusText+Button1\fP \(en sigdwmblocks {.i=1}
+\f(CWClkStatusText+\fP \(en Button1 1 
 .ITEM
-\f(CWClkStatusText+Button2\fP \(en sigdwmblocks {.i=2}
+\f(CWClkStatusText+\fP \(en Button2 2 
 .ITEM
-\f(CWClkStatusText+Button3\fP \(en sigdwmblocks {.i=3}
+\f(CWClkStatusText+\fP \(en Button3 3 
 .ITEM
-\f(CWClkStatusText+Button4\fP \(en sigdwmblocks {.i=4}
+\f(CWClkStatusText+\fP \(en Button4 4 
 .ITEM
-\f(CWClkStatusText+Button5\fP \(en sigdwmblocks {.i=5}
+\f(CWClkStatusText+\fP \(en Button5 5 
 .ITEM
-\f(CWClkStatusText+Shift\fP \(en Button1 sigdwmblocks,{.i=6}
+\f(CWClkStatusText+ShiftMask\fP \(en Button1 6 
 .ITEM
-\f(CWClkStatusText+Shift\fP \(en Button3 spawn,SHCMD(TERMINAL"-envim${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/dwmblocks/config.h")
+\f(CWClkStatusText+ShiftMask\fP \(en Button3 nvim ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/dwmblocks/config.h
 .ITEM
-\f(CWClkClientWin+MOD\fP \(en Button1 movemouse,{0}
+\f(CWClkClientWin+MODKEY\fP \(en Button1 movemouse 
 .ITEM
-\f(CWClkClientWin+MOD\fP \(en Button2 defaultgaps,{0}
+\f(CWClkClientWin+MODKEY\fP \(en Button2 defaultgaps 
 .ITEM
-\f(CWClkClientWin+MOD\fP \(en Button3 resizemouse,{0}
+\f(CWClkClientWin+MODKEY\fP \(en Button3 resizemouse 
 .ITEM
-\f(CWClkClientWin+MOD\fP \(en Button4 incrgaps,{.i=+1}
+\f(CWClkClientWin+MODKEY\fP \(en Button4 +1 
 .ITEM
-\f(CWClkClientWin+MOD\fP \(en Button5 incrgaps,{.i=-1}
+\f(CWClkClientWin+MODKEY\fP \(en Button5 -1 
 .ITEM
-\f(CWClkTagBar+Button1\fP \(en view {0}
+\f(CWClkTagBar+\fP \(en Button1 view 
 .ITEM
-\f(CWClkTagBar+Button3\fP \(en toggleview {0}
+\f(CWClkTagBar+\fP \(en Button3 toggleview 
 .ITEM
-\f(CWClkTagBar+MOD\fP \(en Button1 tag,{0}
+\f(CWClkTagBar+MODKEY\fP \(en Button1 tag 
 .ITEM
-\f(CWClkTagBar+MOD\fP \(en Button3 toggletag,{0}
+\f(CWClkTagBar+MODKEY\fP \(en Button3 toggletag 
 .ITEM
-\f(CWClkTagBar+Button4\fP \(en shiftview {.i=-1}
+\f(CWClkTagBar+\fP \(en Button4 -1 
 .ITEM
-\f(CWClkTagBar+Button5\fP \(en shiftview {.i=1}
+\f(CWClkTagBar+\fP \(en Button5 1 
 .ITEM
-\f(CWClkRootWin+Button2\fP \(en togglebar {0}
+\f(CWClkRootWin+\fP \(en Button2 togglebar 
 .ITEM
-\f(CWClkRootWin+MOD\fP \(en Button2 togglebar,{.i=1}
+\f(CWClkRootWin+MODKEY\fP \(en Button2 1 
 .LIST OFF
 .HEADING 3 "ST"
 .LI
@@ -642,90 +644,90 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .HEADING 9 "Appeareances"
 .LI
 .ITEM
-\f(CWMOD+a\fP \(en changealpha {.f=+0.05}
+\f(CWMOD+a\fP \(en changealpha +0.05 
 .ITEM
-\f(CWMOD+s\fP \(en changealpha {.f=-0.05}
+\f(CWMOD+s\fP \(en changealpha -0.05 
 .ITEM
-\f(CWTERMMOD+Down\fP \(en zoom {.f=-1}
+\f(CWTERMMOD+Down\fP \(en zoom -1 
 .ITEM
-\f(CWTERMMOD+Up\fP \(en zoom {.f=+1}
+\f(CWTERMMOD+Up\fP \(en zoom +1 
 .ITEM
-\f(CWTERMMOD+Next\fP \(en zoom {.f=-1}
+\f(CWTERMMOD+Next\fP \(en zoom -1 
 .ITEM
-\f(CWTERMMOD+Prior\fP \(en zoom {.f=+1}
+\f(CWTERMMOD+Prior\fP \(en zoom +1 
 .ITEM
-\f(CWTERMMOD+J\fP \(en zoom {.f=-1}
+\f(CWTERMMOD+J\fP \(en zoom -1 
 .ITEM
-\f(CWTERMMOD+K\fP \(en zoom {.f=+1}
+\f(CWTERMMOD+K\fP \(en zoom +1 
 .ITEM
-\f(CWTERMMOD+D\fP \(en zoom {.f=-2}
+\f(CWTERMMOD+D\fP \(en zoom -2 
 .ITEM
-\f(CWTERMMOD+U\fP \(en zoom {.f=+2}
+\f(CWTERMMOD+U\fP \(en zoom +2 
 .ITEM
-\f(CWTERMMOD+parenright\fP \(en zoomreset {.f=0}
+\f(CWTERMMOD+parenright\fP \(en zoomreset 
 .LIST OFF
 .HEADING 9 "Copies"
 .LI
 .ITEM
-\f(CWMOD+y\fP \(en clipcopy {.i=0}
+\f(CWMOD+y\fP \(en clipcopy 
 .ITEM
-\f(CWTERMMOD+Y\fP \(en clipcopy {.i=0}
+\f(CWTERMMOD+Y\fP \(en clipcopy 
 .ITEM
-\f(CWMOD+c\fP \(en externalpipe {.v=copyurlcmd}
+\f(CWMOD+c\fP \(en externalpipe copyurlcmd 
 .ITEM
-\f(CWMOD+o\fP \(en externalpipe {.v=copyoutput}
+\f(CWMOD+o\fP \(en externalpipe copyoutput 
 .LIST OFF
 .HEADING 9 "Pastes"
 .LI
 .ITEM
-\f(CWMOD+p\fP \(en clippaste {.i=0}
+\f(CWMOD+p\fP \(en clippaste 
 .ITEM
-\f(CWTERMMOD+P\fP \(en clippaste {.i=0}
+\f(CWTERMMOD+P\fP \(en clippaste 
 .ITEM
-\f(CWShift+Insert\fP \(en clippaste {.i=0}
+\f(CWShift+Insert\fP \(en clippaste 
 .ITEM
-\f(CWShift+Insert\fP \(en selpaste {.i=0}
+\f(CWShift+Insert\fP \(en selpaste 
 .ITEM
-\f(CWMOD+v\fP \(en externalpipe {.v=openurlcmd}
+\f(CWMOD+v\fP \(en externalpipe openurlcmd 
 .LIST OFF
 .HEADING 9 "Printers"
 .LI
 .ITEM
-\f(CWShift+Print\fP \(en printscreen {.i=0}
+\f(CWShift+Print\fP \(en printscreen 
 .ITEM
-\f(CWANY_MOD+Print\fP \(en printsel {.i=0}
+\f(CWXK_ANY_MOD+Print\fP \(en printsel 
 .ITEM
-\f(CWCtrl+Print\fP \(en toggleprinter {.i=0}
+\f(CWCtrl+Print\fP \(en toggleprinter 
 .LIST OFF
 .HEADING 9 "Traversals"
 .LI
 .ITEM
-\f(CWMOD+k\fP \(en kscrollup {.i=1}
+\f(CWMOD+k\fP \(en kscrollup 1 
 .ITEM
-\f(CWMOD+j\fP \(en kscrolldown {.i=1}
+\f(CWMOD+j\fP \(en kscrolldown 1 
 .ITEM
-\f(CWMOD+u\fP \(en kscrollup {.i=-1}
+\f(CWMOD+u\fP \(en kscrollup -1 
 .ITEM
-\f(CWMOD+d\fP \(en kscrolldown {.i=-1}
+\f(CWMOD+d\fP \(en kscrolldown -1 
 .ITEM
-\f(CWMOD+Up\fP \(en kscrollup {.i=1}
+\f(CWMOD+Up\fP \(en kscrollup 1 
 .ITEM
-\f(CWMOD+Down\fP \(en kscrolldown {.i=1}
+\f(CWMOD+Down\fP \(en kscrolldown 1 
 .ITEM
-\f(CWMOD+Page_Up\fP \(en kscrollup {.i=-1}
+\f(CWMOD+Page_Up\fP \(en kscrollup -1 
 .ITEM
-\f(CWMOD+Page_Down\fP \(en kscrolldown {.i=-1}
+\f(CWMOD+Page_Down\fP \(en kscrolldown -1 
 .ITEM
-\f(CWShift+Page_Up\fP \(en kscrollup {.i=-1}
+\f(CWShift+Page_Up\fP \(en kscrollup -1 
 .ITEM
-\f(CWShift+Page_Down\fP \(en kscrolldown {.i=-1}
+\f(CWShift+Page_Down\fP \(en kscrolldown -1 
 .LIST OFF
 .HEADING 9 "Extras/"
 .LI
 .ITEM
-\f(CWTERMMOD+Num_Lock\fP \(en numlock {.i=0}
+\f(CWTERMMOD+Num_Lock\fP \(en numlock 
 .ITEM
-\f(CWANY_MOD+Break\fP \(en sendbreak {.i=0}
+\f(CWXK_ANY_MOD+Break\fP \(en sendbreak 
 .LIST OFF
 .HEADING 2 "Other buttons"
 .PP

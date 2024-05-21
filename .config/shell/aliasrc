@@ -323,3 +323,5 @@ alias za="zathura"
 alias \
 	sps="source ${XDG_CONFIG_HOME:-${HOME}/.config}/shell/profile" \
 	szs="source ${XDG_CONFIG_HOME:-${HOME}/.config}/zsh/.zshrc"
+
+alias gmz="groff -mom ~/thesiah.mom -Tpdf | zathura -"

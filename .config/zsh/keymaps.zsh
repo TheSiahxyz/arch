@@ -41,9 +41,9 @@ bindkey -s '^d' '^ufD\n'
 bindkey -s '^e' '^use\n'
 bindkey -s '^f' '^ucdi\n'
 bindkey -s '^g' '^ulfcd\n'
-bindkey -s '^s' '^usshadd\n'
 bindkey -s '^x^b' '^urbackup\n'
 bindkey -s '^x^f' '^usudo lf\n'
+bindkey -s '^x^s' '^usshadd\n'
 bindkey '^[[P' delete-char
 
 # man
@@ -60,9 +60,9 @@ sudo-command-line() {
     command_line "sudo"
 }
 zle -N command-line
-bindkey -M emacs '^x^s' sudo-command-line
-bindkey -M vicmd '^x^s' sudo-command-line
-bindkey -M viins '^x^s' sudo-command-line
+bindkey -M emacs '^s' sudo-command-line
+bindkey -M vicmd '^s' sudo-command-line
+bindkey -M viins '^s' sudo-command-line
 
 # last command output
 zle -N insert-last-command-output

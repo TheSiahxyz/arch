@@ -34,8 +34,8 @@ nmap <localleader>gob :Explore /home/si/Obsidian/SI<cr>
 nmap <localleader>gpb :Explore /home/si/Public<cr>
 nmap <localleader>gpp :Explore /home/si/Pictures<cr>
 nmap <localleader>gpr :Explore /home/si/Pictures/resources<cr>
+nmap <localleader>gpv :Explore /home/si/Private<cr>
 nmap <localleader>gpw :Explore /home/si/Pictures/wallpaper<cr>
-nmap <localleader>gps :Explore /home/si/Personal<cr>
 nmap <localleader>gtc :Explore /home/si/Torrents/complete<cr>
 nmap <localleader>gti :Explore /home/si/Torrents/incomplete<cr>
 nmap <localleader>gtt :Explore /home/si/Torrents<cr>

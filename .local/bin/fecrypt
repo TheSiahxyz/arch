@@ -2,7 +2,7 @@
 
 TARGET_PATH1="$HOME/.secret"
 TARGET_PATH2="/mnt/extra/videos"
-MOUNT_PATH1="$HOME/Personal"
+MOUNT_PATH1="$HOME/Private"
 MOUNT_PATH2="/mnt/extra/videos"
 SUB_MOUNT_PATH1="${MOUNT_PATH1#$HOME/}"
 SUB_MOUNT_PATH2="${MOUNT_PATH2#/mnt/extra/}"
@@ -15,7 +15,7 @@ mount_encrypted() {
 }
 # Unmounting process with streamlined error handling
 mount | grep -q " $MOUNT_PATH1 " && mount | grep -q " $MOUNT_PATH2 " && {
-    sudo umount "$MOUNT_PATH1" && sudo umount "$MOUNT_PATH2" && notify-send "📁 Locked:" "$SUB_MOUNT_PATH1\n$SUB_MOUNT_PATH2" ||
+    sudo umount "$MOUNT_PATH1" && sudo umount "$MOUNT_PATH2" && notify-send "📁 Locked: $SUB_MOUNT_PATH1 & $SUB_MOUNT_PATH2" ||
     {
         lsblkoutput="$(lsblk -nrpo "name,type,size,mountpoint")"
         mounteddrives="$(echo "$lsblkoutput" | awk '($2=="part"||$2="crypt")&&$4!~/\/boot|\/home$|SWAP/&&length($4)>1{printf "💾%s (%s)\n",$4,$3}')"
@@ -30,8 +30,8 @@ mount | grep -q " $MOUNT_PATH1 " && mount | grep -q " $MOUNT_PATH2 " && {
     PASSPHRASE=$(pass show encryption/ecryptfs)
     [ -z "$PASSPHRASE" ] && { notify-send "❌ Failed to retrieve passphrase." -u critical; exit 1; }
     mount_encrypted "$TARGET_PATH1" "$MOUNT_PATH1" && mount_encrypted "$TARGET_PATH2" "$MOUNT_PATH2" && \
-        notify-send "📂 Unlocked:" "$SUB_MOUNT_PATH1\n$SUB_MOUNT_PATH2" || \
-        notify-send "❌ Failed to unlock:" "$SUB_MOUNT_PATH1\n$SUB_MOUNT_PATH2" -u critical
+        notify-send "📂 Unlocked: $SUB_MOUNT_PATH1 & $SUB_MOUNT_PATH2" || \
+        notify-send "❌ Failed to unlock: $SUB_MOUNT_PATH1 & $SUB_MOUNT_PATH2" -u critical
 }
 
 # Refresh status bar

@@ -35,8 +35,8 @@ gob             $HOME/Obsidian/SI
 gpb             ${XDG_PUBLICSHARE_DIR:-${HOME}/Public}
 gpp             ${XDG_PICTURES_DIR:-${HOME}/Pictures}
 gpr             ${XDG_PICTURES_DIR:-${HOME}/Pictures}/resources
+gpv             $HOME/Private
 gpw             ${XDG_PICTURES_DIR:-${HOME}/Pictures}/wallpaper
-gps             $HOME/Personal
 gtc             $HOME/Torrents/complete
 gti             $HOME/Torrents/incomplete
 gtt             $HOME/Torrents

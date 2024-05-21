@@ -300,6 +300,6 @@ Vagrantfile                 
 *.opus                      
 *.spx                       
 *.xspf                      
-*.heic                      
+*.heic                      
 *.pdf                       :
 *.muttrc                    
