@@ -4,10 +4,26 @@
 # Decrease key repeat delay to 300ms and increase key repeat rate to 50 per second.
 xset r rate 300 50
 # Map the caps lock key to control, and map the menu key to right super.
-setxkbmap -option caps:ctrl_modifier,altwin:menu_win #,ctrl:nocaps
-# When left control or caps lock is pressed only once, treat it as escape.
-killall xcape 2>/dev/null
-xcape -e 'Control_L=Escape'
-xcape -e 'Caps_Lock=Escape'
+setxkbmap -option caps:ctrl_modifier,altwin:menu_win #,ctrl:nocaps,caps:super,
+# When left control, caps lock, or Super_L is pressed only once, treat it as escape.
+killall xcape 2>/dev/null ; xcape -e 'Caps_Lock=Escape;Control_L=Escape' # 'Super_L=Escape'
 # Turn off caps lock if on since there is no longer a key for it.
 xset -q | grep -q "Caps Lock:\s*on" && xdotool key Caps_Lock
+filter() { grep 'pointer' | grep -o 'id=[0-9]\+' | sed 's/id=//' ;}
+default=2
+[ -z "$1" ] && {
+    # Default values
+    xinput list | grep 'Logitech USB Receiver\s*id' | filter | \
+        xargs -I {} xinput set-prop {} "Coordinate Transformation Matrix" $default, 0, 0, 0, $default, 0, 0, 0, 1
+    xinput list | grep 'TPPS/2 IBM TrackPoint\s*id' | filter | \
+        xargs -I {} xinput set-prop {} "Coordinate Transformation Matrix" $default, 0, 0, 0, $default, 0, 0, 0, 1
+    xinput list | grep 'Lite-On Technology Corp. ThinkPad USB Keyboard with TrackPoint' | filter | \
+        xargs -I {} xinput set-prop {} "Coordinate Transformation Matrix" $default, 0, 0, 0, $default, 0, 0, 0, 1
+} || {
+    xinput list | grep 'Logitech USB Receiver\s*id' | filter | \
+        xargs -I {} xinput set-prop {} "Coordinate Transformation Matrix" $1, 0, 0, 0, $1, 0, 0, 0, 1
+    xinput list | grep 'TPPS/2 IBM TrackPoint\s*id' | filter | \
+        xargs -I {} xinput set-prop {} "Coordinate Transformation Matrix" $1, 0, 0, 0, $1, 0, 0, 0, 1
+    xinput list | grep 'Lite-On Technology Corp. ThinkPad USB Keyboard with TrackPoint' | filter | \
+        xargs -I {} xinput set-prop {} "Coordinate Transformation Matrix" $1, 0, 0, 0, $1, 0, 0, 0, 1
+}

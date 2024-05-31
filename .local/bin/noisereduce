@@ -28,8 +28,8 @@ if [ -e "$2" ]; then
 	printf "File %s already exists, overwrite? [y/N]\n: " "$2"
 	read -r yn
 	case $yn in
-	[Yy]*) ;;
-	*) exit ;;
+        [Yy]*) ;;
+        *) exit ;;
 	esac
 fi
 

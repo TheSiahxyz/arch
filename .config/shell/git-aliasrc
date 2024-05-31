@@ -250,8 +250,8 @@ alias gmtl='git mergetool --no-prompt'
 alias gmtlvim='git mergetool --no-prompt --tool=vimdiff'
 
 alias gl='git pull'
-alias gpr='git pull --rebase'
-alias gprv='git pull --rebase -v'
+alias gprb='git pull --rebase'
+alias gprbv='git pull --rebase -v'
 alias gpra='git pull --rebase --autostash'
 alias gprav='git pull --rebase --autostash -v'
 
@@ -301,7 +301,7 @@ alias gpsup='git push --set-upstream origin $(git_current_branch)'
 is-at-least 2.30 "$git_version" \
   && alias gpsupf='git push --set-upstream origin $(git_current_branch) --force-with-lease --force-if-includes' \
   || alias gpsupf='git push --set-upstream origin $(git_current_branch) --force-with-lease'
-alias gpv='git push --verbose'
+alias gpvb='git push --verbose'
 alias gpoat='git push origin --all && git push origin --tags'
 alias gpod='git push origin --delete'
 alias ggpush='git push origin "$(git_current_branch)"'

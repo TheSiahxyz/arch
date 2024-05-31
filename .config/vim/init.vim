@@ -18,11 +18,10 @@ autocmd BufRead,BufNewFile *.ms,*.me,*.mom,*.man set filetype=groff
 autocmd BufRead,BufNewFile *.tex set filetype=tex
 
 " Enable Goyo by default for mutt writing
-autocmd BufRead,BufNewFile /tmp/neomutt* let g:goyo_width=80
-autocmd BufRead,BufNewFile /tmp/neomutt* :Goyo | set bg=light
-autocmd BufRead,BufNewFile /tmp/neomutt* map ZZ :Goyo\|x!<CR>
-autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|q!<CR>
-
+autocmd BufRead,BufNewFile /tmp/neomutt* :Goyo 80 | call feedkeys("jk")
+autocmd BufRead,BufNewFile /tmp/neomutt* map ZZ :Goyo!\|x!<CR>
+autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo!\|q!<CR>
+    
 " Automatically deletes all trailing whitespace and newlines at end of file on save. & reset cursor position
 autocmd BufWritePre * let currPos = getpos(".")
 autocmd BufWritePre * %s/\s\+$//e

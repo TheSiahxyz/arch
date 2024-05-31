@@ -3,10 +3,7 @@
 # Displays today's precipication chance (☔), daily high (🎐), and daily low (🥶) and high (🌞).
 # Usually intended for the statusbar.
 
-# LOCATION=$(curl -s ipinfo.io | jq -r '[.city, .region] | join(",")')
-# if [ -z "$LOCATION" ]; then
-# 	LOCATION="Birmingham,Alabama"
-# fi
+LOCATION=$(curl -s ipinfo.io | jq -r '[.city, .country] | join(",")')
 
 url="${WTTRURL:-wttr.in}"
 weatherreport="${XDG_CACHE_HOME:-${HOME}/.cache}/weatherreport"
@@ -53,14 +50,14 @@ showweather() {
 }
 
 case $BLOCK_BUTTON in
-1) setsid -f "$TERMINAL" -e less -Sf "$weatherreport" ;;
-2) getforecast && showweather ;;
-3) notify-send "🌈 Weather module" "\- Left click for full forecast
+    1) setsid -f "$TERMINAL" -e less -Sf "$weatherreport" ;;
+    2) getforecast && showweather ;;
+    3) notify-send "🌈 Weather module" "\- Left click for full forecast
 - Middle click to update forecast
 ☔: Chance of rain/snow
 🥶: Daily low
 🌞: Daily high" ;;
-6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
+    6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 
 checkforecast || getforecast

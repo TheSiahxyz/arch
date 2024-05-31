@@ -2,7 +2,7 @@
 
 ### --- Vi Mode --- ###
 # Change cursor shape for different vi modes.
-zle-keymap-select () {
+zle-keymap-select() {
     case $KEYMAP in
         vicmd) echo -ne '\e[1 q' ;;      # block
         viins|main) echo -ne '\e[5 q' ;; # beam
@@ -35,12 +35,13 @@ bindkey -M visual '^[[P' vi-delete      # delete
 bindkey -M viins 'jk' vi-cmd-mode       # normal mode
 
 # programs
-bindkey -s '^a' '^ulf\n'
+bindkey -s '^a' '^ulfub\n'
 bindkey -s '^b' '^ubc -lq\n'
 bindkey -s '^d' '^ufD\n'
 bindkey -s '^e' '^use\n'
 bindkey -s '^f' '^ucdi\n'
 bindkey -s '^g' '^ulfcd\n'
+bindkey -s '^h' '^uhtop\n'
 bindkey -s '^x^b' '^urbackup\n'
 bindkey -s '^x^f' '^usudo lf\n'
 bindkey -s '^x^s' '^usshadd\n'

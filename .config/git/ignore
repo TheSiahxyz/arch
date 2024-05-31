@@ -13,6 +13,12 @@ credentials
 # Cookie
 cookie
 
+# Error
+error.log
+
+# GTK
+gtkfilechooser.ini
+
 # History
 *history*
 .zcompdump
@@ -38,6 +44,8 @@ zshnameddirrc
 */transmission-daemon/stats.json
 dht.dat
 
+# TheSiahxyz
+thesiah.mom
 
 # Vim
 */vim/*/

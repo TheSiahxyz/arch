@@ -95,29 +95,29 @@ Notice also the case sensitivity of the shortcuts\c
 To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound like an obvious and condescending thing to tell you, but there have literally been multiple people (Boomers) who have emailed me asking how to type a capital letter since caps lock isn't enabled.
 .FOOTNOTE OFF
  , Be sure you play around with these. Be flexible with the basic commands and the system will grow on you quick.
-.HEADING 2 "Suckless"
+.HEADING 2 "Suckless Programs"
 .HEADING 3 "DWM"
 .LI
 .LIST OFF
-.HEADING 8 "INSERT MODE"
+.HEADING 4 "INSERT MODE"
 .LI
 .LIST OFF
-.HEADING 9 "Audio Controls"
+.HEADING 5 "Audio Controls"
 .LI
 .ITEM
-\f(CWMOD+m\fP \(en mpc random on; mpc load entire; mpc play; pkill -RTMIN+11 dwmblocks
+\f(CWMOD+m\fP \(en mpc random on; mpc load entire; mpc play; sleep 1 && mpc volume 35
 .ITEM
-\f(CWMOD+Shift+m\fP \(en mpdmenu; pkill -RTMIN+11 dwmblocks
+\f(CWMOD+Shift+m\fP \(en mpdmenu
 .ITEM
-\f(CWMOD+Ctrl+m\fP \(en mpc stop; pkill -RTMIN+11 dwmblocks
+\f(CWMOD+Ctrl+m\fP \(en mpc stop; sleep 1 && mpc clear
 .ITEM
 \f(CWMOD+Ctrl+Shift+m\fP \(en delmusic  
 .ITEM
-\f(CWMOD+p\fP \(en mpc toggle; pkill -RTMIN+11 dwmblocks
+\f(CWMOD+p\fP \(en mpc toggle
 .ITEM
-\f(CWMOD+Shift+p\fP \(en mpc pause; pauseallmpv
+\f(CWMOD+Shift+p\fP \(en mpc pause; sleep 1 && pauseallmpv
 .ITEM
-\f(CWMOD+Ctrl+p\fP \(en wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; kill -44 $(pidof dwmblocks)
+\f(CWMOD+Ctrl+p\fP \(en wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; sleep 1 && kill -44 $(pidof dwmblocks)
 .ITEM
 \f(CWMOD+comma\fP \(en mpc prev  
 .ITEM
@@ -139,9 +139,9 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWMOD+Shift+slash\fP \(en mpc single off; mpc random on; mpc repeat on
 .ITEM
-\f(CWMOD+Ctrl+slash\fP \(en mpc repeat off; mpc random off; mpc single off; pkill -RTMIN+11 dwmblocks
+\f(CWMOD+Ctrl+slash\fP \(en mpc repeat off; mpc random off; mpc single off; sleep 1 && pkill -RTMIN+11 dwmblocks
 .LIST OFF
-.HEADING 9 "Floating Sizes"
+.HEADING 5 "Floating Sizes"
 .LI
 .ITEM
 \f(CWMOD2+Ctrl+h\fP \(en exresize -25 0 
@@ -156,7 +156,7 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWMOD2+Ctrl+period\fP \(en exresize 25 25 
 .LIST OFF
-.HEADING 9 "Layout Sizes"
+.HEADING 5 "Layout Sizes"
 .LI
 .ITEM
 \f(CWMOD+Shift+n\fP \(en incnmaster -1 
@@ -213,7 +213,7 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWMOD+Ctrl+g\fP \(en togglegaps 
 .LIST OFF
-.HEADING 9 "Media Controls"
+.HEADING 5 "Media Controls"
 .LI
 .ITEM
 \f(CWBattery\fP \(en pkill -RTMIN+3 dwmblocks
@@ -272,12 +272,12 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWMonBrightnessDown\fP \(en sudo brillo -A 5 -q; pkill -RTMIN+22 dwmblocks
 .LIST OFF
-.HEADING 9 "Mode"
+.HEADING 5 "Mode"
 .LI
 .ITEM
 \f(CWMOD+Escape\fP \(en setkeymode ModeCommand 
 .LIST OFF
-.HEADING 9 "Programs"
+.HEADING 5 "Programs"
 .LI
 .ITEM
 \f(CWMOD+c\fP \(en calcurse  
@@ -287,6 +287,8 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 \f(CWMOD+e\fP \(en neomutt ; pkill -RTMIN+12 dwmblocks; rmdir ~/.abook 2>/dev/null
 .ITEM
 \f(CWMOD+g\fP \(en lfub  
+.ITEM
+\f(CWMOD2+g\fP \(en gesture 
 .ITEM
 \f(CWMOD+n\fP \(en newsboat ; pkill -RTMIN+6 dwmblocks
 .ITEM
@@ -298,13 +300,17 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWMOD+Ctrl+w\fP \(en pkill -f BROWSER  
 .ITEM
+\f(CWMOD+grave\fP \(en togglescratch 1 
+.ITEM
 \f(CWMOD+Shift+grave\fP \(en dmenuunicode  
 .ITEM
 \f(CWMOD+Return\fP \(en termcmd 
 .ITEM
 \f(CWMOD+Shift+Return\fP \(en sd  
+.ITEM
+\f(CWMOD+Ctrl+Return\fP \(en togglescratch 
 .LIST OFF
-.HEADING 9 "Scripts"
+.HEADING 5 "Scripts"
 .LI
 .ITEM
 \f(CWMOD+b\fP \(en xdotool type $(grep -v '^#' ~/.local/share/thesiah/snippets | dmenu -i -l 50 | cut -d' ' -f1)
@@ -335,7 +341,7 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWMOD+Shift+F1\fP \(en nsxiv ${XDG_PICTURES_DIR:-${HOME}/Pictures}/resources
 .ITEM
-\f(CWMOD+Ctrl+F1\fP \(en dman  
+\f(CWMOD+Ctrl+F1\fP \(en dmenuman  
 .ITEM
 \f(CWMOD+F2\fP \(en tutorialvids  
 .ITEM
@@ -371,7 +377,7 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWMOD+Shift+F12\fP \(en fcitx5-configtool  
 .LIST OFF
-.HEADING 9 "Systems"
+.HEADING 5 "Systems"
 .LI
 .ITEM
 \f(CWMOD+Ctrl+k\fP \(en pkill -f kakaotalk  
@@ -382,6 +388,8 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWMOD+Ctrl+q\fP \(en killclient 2 
 .ITEM
+\f(CWMOD2+q\fP \(en toggleallowkill 
+.ITEM
 \f(CWMOD+BackSpace\fP \(en slock  
 .ITEM
 \f(CWMOD+Shift+BackSpace\fP \(en sysact  
@@ -390,22 +398,30 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWMOD+equal\fP \(en wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; kill -44 $(pidof dwmblocks)
 .ITEM
-\f(CWMOD+Shift+minus\fP \(en wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%-; kill -44 $(pidof dwmblocks)
+\f(CWMOD+Shift+minus\fP \(en sudo brillo -U 5 -q; pkill -RTMIN+22 dwmblocks
 .ITEM
-\f(CWMOD+Shift+equal\fP \(en wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%+; kill -44 $(pidof dwmblocks)
+\f(CWMOD+Shift+equal\fP \(en sudo brillo -A 5 -q; pkill -RTMIN+22 dwmblocks
 .ITEM
-\f(CWMOD+Ctrl+minus\fP \(en sudo brillo -U 5 -q; pkill -RTMIN+22 dwmblocks
+\f(CWMOD+Ctrl+minus\fP \(en monbright -dec 5; pkill -RTMIN+22 dwmblocks
 .ITEM
-\f(CWMOD+Ctrl+equal\fP \(en sudo brillo -A 5 -q; pkill -RTMIN+22 dwmblocks
+\f(CWMOD+Ctrl+equal\fP \(en monbright -inc 5; pkill -RTMIN+22 dwmblocks
 .ITEM
-\f(CWAlt_R\fP \(en fcitx5-remote -t; pkill -RTMIN+29 dwmblocks
+\f(CWRight_Alt\fP \(en fcitx5-remote -t; pkill -RTMIN+29 dwmblocks
 .ITEM
 \f(CWCtrl+F5\fP \(en quit {1}
 .ITEM
 \f(CWCtrl+Shift+F5\fP \(en killall -q dwmblocks; setsid -f dwmblocks
 .LIST OFF
-.HEADING 9 "Traversals"
+.HEADING 5 "Traversals"
 .LI
+.ITEM
+\f(CWMOD+semicolon\fP \(en togglemark 
+.ITEM
+\f(CWMOD+Tab\fP \(en swapfocus 
+.ITEM
+\f(CWMOD+Shift+Tab\fP \(en swapclient 
+.ITEM
+\f(CWMOD2+Tab\fP \(en view 
 .ITEM
 \f(CWMOD+0\fP \(en view ~0 
 .ITEM
@@ -442,10 +458,8 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 \f(CWMOD+Shift+Left\fP \(en tagmon -1 
 .ITEM
 \f(CWMOD+Shift+Right\fP \(en tagmon +1 
-.ITEM
-\f(CWMOD2+Tab\fP \(en view 
 .LIST OFF
-.HEADING 9 "Commands"
+.HEADING 5 "Commands"
 .LI
 .ITEM
 \f(CWEscape\fP \(en clearcmd 
@@ -454,10 +468,10 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWCtrl+x\fP \(en setkeymode ModeInsert 
 .LIST OFF
-.HEADING 8 "COMMAND MODE"
+.HEADING 4 "COMMAND MODE"
 .LI
 .LIST OFF
-.HEADING 9 "Appearances"
+.HEADING 5 "Appearances"
 .LI
 .ITEM
 \f(CWCtrl+b\fP \(en togglebar 
@@ -472,7 +486,7 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWShift+g\fP \(en defaultgaps 
 .LIST OFF
-.HEADING 9 "Layouts"
+.HEADING 5 "Layouts"
 .LI
 .ITEM
 \f(CWlt\fP \(en setlayout "[]=" 
@@ -521,7 +535,7 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWfperiod\fP \(en explace EX_SE 
 .LIST OFF
-.HEADING 9 "Floating Sizes"
+.HEADING 5 "Floating Sizes"
 .LI
 .ITEM
 \f(CWsj\fP \(en exresize 0 25 
@@ -554,7 +568,7 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWfsdm\fP \(en togglemaximize -1 
 .LIST OFF
-.HEADING 9 "Programs"
+.HEADING 5 "Programs"
 .LI
 .ITEM
 \f(CWa\fP \(en abook -C ${XDG_CONFIG_HOME:-${HOME}/.config}/abook/abookrc --datafile ${XDG_CONFIG_HOME:-${HOME}/.config}/abook/addressbook
@@ -587,10 +601,23 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWReturn\fP \(en lfub  
 .LIST OFF
-.HEADING 8 "INSERT MODE"
+.HEADING 5 "Suckless Configs"
+.LI
+.ITEM
+\f(CWShift+sdb\fP \(en nvim ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/dwmblocks/config.h
+.ITEM
+\f(CWShift+sdm\fP \(en nvim ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/dmenu/config.h
+.ITEM
+\f(CWShift+sdw\fP \(en nvim ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/dwm/config.h
+.ITEM
+\f(CWShift+sst\fP \(en nvim ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/st/config.h
+.ITEM
+\f(CWShift+ssl\fP \(en nvim ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/slock/config.h
+.LIST OFF
+.HEADING 4 "INSERT MODE"
 .LI
 .LIST OFF
-.HEADING 9 "Mouse Buttons"
+.HEADING 5 "Mouse Buttons"
 .LI
 .ITEM
 \f(CWClkWinTitle+\fP \(en Button2 zoom 
@@ -607,19 +634,35 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWClkStatusText+ShiftMask\fP \(en Button1 6 
 .ITEM
-\f(CWClkStatusText+ShiftMask\fP \(en Button3 nvim ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/dwmblocks/config.h
+\f(CWClkStatusText+MODKEY\fP \(en Button1 nvim ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/dwm/config.h
+.ITEM
+\f(CWClkStatusText+MODKEY|ShiftMask\fP \(en Button1 nvim ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/dwmblocks/config.h
+.ITEM
+\f(CWClkStatusText+MODKEY|ControlMask\fP \(en Button1 nvim ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/dmenu/config.h
+.ITEM
+\f(CWClkStatusText+MODKEY\fP \(en Button3 nvim ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/st/config.h
+.ITEM
+\f(CWClkStatusText+MODKEY|ShiftMask\fP \(en Button3 nvim ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/slock/config.h
 .ITEM
 \f(CWClkClientWin+MODKEY\fP \(en Button1 movemouse 
+.ITEM
+\f(CWClkClientWin+MODKEY|ShiftMask\fP \(en Button1 killclient 
+.ITEM
+\f(CWClkClientWin+MODKEY|ControlMask\fP \(en Button1 2 
 .ITEM
 \f(CWClkClientWin+MODKEY\fP \(en Button2 defaultgaps 
 .ITEM
 \f(CWClkClientWin+MODKEY\fP \(en Button3 resizemouse 
 .ITEM
-\f(CWClkClientWin+MODKEY\fP \(en Button4 +1 
+\f(CWClkClientWin+MODKEY|ShiftMask\fP \(en Button3 gesture 
 .ITEM
-\f(CWClkClientWin+MODKEY\fP \(en Button5 -1 
+\f(CWClkClientWin+MODKEY\fP \(en Button4 -1 
+.ITEM
+\f(CWClkClientWin+MODKEY\fP \(en Button5 +1 
 .ITEM
 \f(CWClkTagBar+\fP \(en Button1 view 
+.ITEM
+\f(CWClkTagBar+\fP \(en Button2 spawntag 
 .ITEM
 \f(CWClkTagBar+\fP \(en Button3 toggleview 
 .ITEM
@@ -627,9 +670,9 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWClkTagBar+MODKEY\fP \(en Button3 toggletag 
 .ITEM
-\f(CWClkTagBar+\fP \(en Button4 -1 
+\f(CWClkTagBar+\fP \(en Button4 1 
 .ITEM
-\f(CWClkTagBar+\fP \(en Button5 1 
+\f(CWClkTagBar+\fP \(en Button5 -1 
 .ITEM
 \f(CWClkRootWin+\fP \(en Button2 togglebar 
 .ITEM
@@ -638,10 +681,10 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .HEADING 3 "ST"
 .LI
 .LIST OFF
-.HEADING 8 "INSERT MODE"
+.HEADING 4 "INSERT MODE"
 .LI
 .LIST OFF
-.HEADING 9 "Appeareances"
+.HEADING 5 "Appeareances"
 .LI
 .ITEM
 \f(CWMOD+a\fP \(en changealpha +0.05 
@@ -666,7 +709,7 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWTERMMOD+parenright\fP \(en zoomreset 
 .LIST OFF
-.HEADING 9 "Copies"
+.HEADING 5 "Copies"
 .LI
 .ITEM
 \f(CWMOD+y\fP \(en clipcopy 
@@ -677,7 +720,7 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWMOD+o\fP \(en externalpipe copyoutput 
 .LIST OFF
-.HEADING 9 "Pastes"
+.HEADING 5 "Pastes"
 .LI
 .ITEM
 \f(CWMOD+p\fP \(en clippaste 
@@ -690,7 +733,7 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWMOD+v\fP \(en externalpipe openurlcmd 
 .LIST OFF
-.HEADING 9 "Printers"
+.HEADING 5 "Printers"
 .LI
 .ITEM
 \f(CWShift+Print\fP \(en printscreen 
@@ -699,7 +742,7 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWCtrl+Print\fP \(en toggleprinter 
 .LIST OFF
-.HEADING 9 "Traversals"
+.HEADING 5 "Traversals"
 .LI
 .ITEM
 \f(CWMOD+k\fP \(en kscrollup 1 
@@ -722,7 +765,7 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWShift+Page_Down\fP \(en kscrolldown -1 
 .LIST OFF
-.HEADING 9 "Extras/"
+.HEADING 5 "Extras"
 .LI
 .ITEM
 \f(CWTERMMOD+Num_Lock\fP \(en numlock 

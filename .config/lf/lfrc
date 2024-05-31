@@ -379,7 +379,7 @@ map E extract; clear
 map Me moveto; clear
 
 # MPV
-map Mpv mpvdir
+map Mpv :mpvdir; unselect
 
 # Nsxiv
 map th $nsxiv -pt "$(pwd)" # opens thumbnail mode
@@ -439,7 +439,7 @@ map fb $lf -remote "send $id cd $(sed -e 's/\s*#.*//' -e '/^$/d' -e 's/^\S*\s*//
 map fd $lf -remote "send $id select \"$(find . -type d | fzf)\""
 map ff $lf -remote "send $id select \"$(find . -type f | fzf)\""
 map J zi
-map gf :fzf_search
+map <c-f> :fzf_search
 map gl follow_link
 map pv z
 

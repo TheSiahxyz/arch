@@ -1,4 +1,5 @@
 nmap <localleader>bb :Explore /home/si/.local/bin<cr>
+nmap <localleader>bs :Explore /home/si/.local/bin/statusbar<cr>
 nmap <localleader>cab :Explore /home/si/.config/abook<cr>
 nmap <localleader>cac :Explore /home/si/.cache<cr>
 nmap <localleader>cbc :Explore /home/si/.config/bash<cr>
@@ -27,7 +28,6 @@ nmap <localleader>dot :Explore /home/si/.dotfiles<cr>
 nmap <localleader>gbk :Explore /home/si/.backup<cr>
 nmap <localleader>gdc :Explore /home/si/Documents<cr>
 nmap <localleader>gdn :Explore /home/si/Downloads<cr>
-nmap <localleader>gme :Explore /home/si/Media<cr>
 nmap <localleader>gmu :Explore /home/si/Music<cr>
 nmap <localleader>gmx :Explore /home/si/.mozilla/firefox/si.default<cr>
 nmap <localleader>gob :Explore /home/si/Obsidian/SI<cr>
@@ -46,9 +46,12 @@ nmap <localleader>Hbk :Explore /mnt/extra/backup<cr>
 nmap <localleader>Hex :Explore /mnt/extra<cr>
 nmap <localleader>Hme :Explore /media<cr>
 nmap <localleader>Hmf :Explore /media/flash<cr>
+nmap <localleader>Hmh :Explore /media/hdd<cr>
 nmap <localleader>Hms :Explore /media/ssd<cr>
 nmap <localleader>Hmt :Explore /mnt<cr>
-nmap <localleader>Hmw :Explore /usr/share/mutt-wizard/<cr>
+nmap <localleader>Hmv :Explore /media/win10/Videos<cr>
+nmap <localleader>Hmw :Explore /usr/share/mutt-wizard<cr>
+nmap <localleader>Hrr :Explore /etc/runit/sv<cr>
 nmap <localleader>Hsm :Explore /etc/samba<cr>
 nmap <localleader>Hvv :Explore /mnt/extra/videos<cr>
 nmap <localleader>pae :Explore /home/si/.local/share/.password-store/exported_keys<cr>
@@ -73,6 +76,7 @@ nmap <localleader>vbf :e /home/si/.config/shell/bm-files<cr>
 nmap <localleader>vbi :e /home/si/.config/shell/inputrc<cr>
 nmap <localleader>vbp :e /home/si/.config/bash/bash_profile<cr>
 nmap <localleader>vdb :e /home/si/.local/src/suckless/dwmblocks/config.h<cr>
+nmap <localleader>vgc :e /home/si/.config/shell/git-aliasrc<cr>
 nmap <localleader>vlf :e /home/si/.config/lf/lfrc<cr>
 nmap <localleader>vls :e /home/si/.config/lf/scope<cr>
 nmap <localleader>vmc :e /home/si/.config/ncmpcpp/config<cr>
@@ -100,4 +104,4 @@ nmap <localleader>vza :e /home/si/.config/shell/aliasrc<cr>
 nmap <localleader>vzc :e /home/si/.config/zsh/.zshrc<cr>
 nmap <localleader>vzk :e /home/si/.config/zsh/keymaps.zsh<cr>
 nmap <localleader>vzp :e /home/si/.config/shell/profile<cr>
-nmap <localleader>vzs :e /home/si/.config/shell/scriptrc<cr>
+nmap <localleader>vzs :e /home/si/.config/zsh/scripts.zsh<cr>

@@ -5,11 +5,11 @@
 # Show 🔒 if a vpn connection is active
 
 case $BLOCK_BUTTON in
-1)
-	"$TERMINAL" -e nmtui
-	pkill -RTMIN+4 dwmblocks
-	;;
-3) notify-send "🌐 Internet module" "\- Left click to connect
+    1)
+        "$TERMINAL" -e nmtui
+        pkill -RTMIN+4 dwmblocks
+        ;;
+    3) notify-send "🌐 Internet module" "\- Left click to connect
 ❌: wifi disabled
 📡: no wifi connection
 🛜: wifi connection with quality
@@ -17,7 +17,7 @@ case $BLOCK_BUTTON in
 🌐: ethernet working
 🔒: vpn is active
 " ;;
-6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
+    6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 
 # Wifi

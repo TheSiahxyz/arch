@@ -21,12 +21,12 @@ get_input_method() {
 }
 
 case $BLOCK_BUTTON in
-1) setsid -w -f "$TERMINAL" -e fcitx5-configtool ;;
-2) fcitx5-remote -t ;;
-3) notify-send "⌨️ Input Method module" "\- Shows current input method (defalt US)
+    1) fcitx5-remote -t ;;
+    2) setsid -w -f "$TERMINAL" -e fcitx5-configtool ;;
+    3) notify-send "⌨️ Input Method module" "\- Shows current input method (defalt US)
 - Left click to open fcitx5 configuration
 - Middle click to switch input method" ;;
-6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
+    6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 
 get_input_method

@@ -67,11 +67,11 @@ Timecodes and filenames must be separated by Tabs." &&
 if [ -n "${audio+x}" ]; then
 	# Check that the audio file looks like an actual audio file.
 	case "$(file --dereference --brief --mime-type -- "$audio")" in
-	audio/*) ;;
-	*)
-		echo "That doesn't look like an audio file."
-		exit 1
-		;;
+        audio/*) ;;
+        *)
+            echo "That doesn't look like an audio file."
+            exit 1
+            ;;
 	esac
 	totseconds="$(date '+%s' -d $(ffmpeg -i "$audio" 2>&1 | awk '/Duration/ {print $2}' | sed s/,//))"
 	endtime="$((totseconds - seconds))"

@@ -182,10 +182,29 @@ autocmd("LspAttach", {
 })
 
 -- Save file as sudo on files that require root permission
-vim.api.nvim_create_user_command("SudoWrite", function()
-    vim.cmd("write !sudo tee % >/dev/null")
-    vim.cmd("edit!")
-end, {})
+local group = vim.api.nvim_create_augroup("MyAutoCmds", { clear = true })
+vim.api.nvim_create_autocmd("VimEnter", {
+    group = group,
+    pattern = "*",
+    callback = function()
+        vim.api.nvim_create_user_command("SW", function()
+            local filepath = vim.fn.expand('%:p') -- Get the full path safely
+            vim.cmd('write !sudo tee ' .. vim.fn.shellescape(filepath) .. ' >/dev/null')
+            vim.cmd('edit') -- 'edit!' can be used but might be safer to alert if file was changed externally
+        end, {})
+
+        vim.api.nvim_create_user_command("SWQ", function()
+            local filepath = vim.fn.expand('%:p')
+            vim.cmd('write !sudo tee ' .. vim.fn.shellescape(filepath) .. ' >/dev/null')
+            vim.cmd('edit')
+            vim.cmd('quit')
+        end, {})
+
+        vim.keymap.set("n", "<leader>w", "<cmd>SW<CR>", { silent = true, buffer = false })
+        vim.keymap.set("n", "<leader>wq", "<cmd>SWQ<CR>", { silent = true, buffer = false })
+    end
+})
+
 
 -- Enable Goyo by default for mutt writing
 local goyo_group = vim.api.nvim_create_augroup("GoyoForMutt", { clear = true })

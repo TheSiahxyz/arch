@@ -278,7 +278,7 @@ let &t_SR = "\<Esc>[4 q"
 let &t_EI = "\<Esc>[2 q"
 
 " Clipboard
-set clipboard=unnamedplus
+set clipboard+=unnamedplus
 
 " Disable auto commenting in a new line
 autocmd Filetype * setlocal formatoptions-=c formatoptions-=r  formatoptions-=o
@@ -325,6 +325,9 @@ set number relativenumber
 " Mouse functionality
 set mouse=a
 
+" Background color
+set bg=light
+
 " Color scheme
 colorscheme desert
 
@@ -363,6 +366,9 @@ set showmode
 
 " Show matching words during a search.
 set showmatch
+
+" Show title of the file
+set title
 
 " Set the commands to save in history default number is 20.
 set history=1000

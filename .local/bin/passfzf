@@ -56,15 +56,15 @@ else
 
 	if [ -n "$PASSWORD" ]; then
 		case "$(uname)" in
-		Darwin*)
-			echo "$PASSWORD" | pbcopy # Use pbcopy on macOS
-			;;
-		Linux*)
-			echo "$PASSWORD" | xclip -selection clipboard # Use xclip on Linux
-			;;
-		*)
-			echo "Unsupported operating system"
-			;;
+            Darwin*)
+                echo "$PASSWORD" | pbcopy # Use pbcopy on macOS
+                ;;
+            Linux*)
+                echo "$PASSWORD" | xclip -selection clipboard # Use xclip on Linux
+                ;;
+            *)
+                echo "Unsupported operating system"
+                ;;
 		esac
 		sleep 0.1
 	fi

@@ -6,6 +6,7 @@ vbf     ${XDG_CONFIG_HOME:-${HOME}/.config}/shell/bm-files                      
 vbi     ${XDG_CONFIG_HOME:-${HOME}/.config}/shell/inputrc                         # This file is for gnu readline
 vbp     ${XDG_CONFIG_HOME:-${HOME}/.config}/bash/bash_profile                     # Bash profile
 vdb     ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/dwmblocks/config.h       # Dwmblocks: the status bar for dwm
+vgc     ${XDG_CONFIG_HOME:-${HOME}/.config}/shell/git-aliasrc                     # Git aliases
 vlf     ${XDG_CONFIG_HOME:-${HOME}/.config}/lf/lfrc                               # LF (file browser) config
 vls     ${XDG_CONFIG_HOME:-${HOME}/.config}/lf/scope                              # LF's scope/preview file
 vmc     ${XDG_CONFIG_HOME:-${HOME}/.config}/ncmpcpp/config                        # Ncmpcpp (music player) config
@@ -30,7 +31,7 @@ vxp     ${XDG_CONFIG_HOME:-${HOME}/.config}/x11/xprofile                        
 vxr     ${XDG_CONFIG_HOME:-${HOME}/.config}/x11/xresources                        # Colors, themes and variables for X11
 vya     ${XDG_CONFIG_HOME:-${HOME}/.config}/youtube-viewer/api.json               # API config for youtube-viewer
 vza     ${XDG_CONFIG_HOME:-${HOME}/.config}/shell/aliasrc                         # Aliases used by zsh (and potentially other shells)
-vzc     $ZDOTDIR/.zshrc                                                         # Zsh config
-vzk     $ZDOTDIR/keymaps.zsh                                                    # Zsh keymaps
-vzp     ${XDG_CONFIG_HOME:-${HOME}/.config}/shell/profile                         # Zsh profile
-vzs     ${XDG_CONFIG_HOME:-${HOME}/.config}/shell/scriptrc                        # Shell functions
+vzc     ${ZDOTDIR:-${XDG_CONFIG_HOME:-${HOME}/.config}/zsh}/.zshrc                # Zsh config                                        # Zsh config
+vzk     ${ZDOTDIR:-${XDG_CONFIG_HOME:-${HOME}/.config}/zsh}/keymaps.zsh           # Zsh keymaps                                              # Zsh config
+vzp     ${XDG_CONFIG_HOME:-${HOME}/.config}/shell/profile                         # System profile
+vzs     ${ZDOTDIR:-${XDG_CONFIG_HOME:-${HOME}/.config}/zsh}/scripts.zsh           # Zsh scripts                                              # Zsh config

@@ -5,28 +5,28 @@ YTDL_CMD_BASE="yt-dlp --continue --embed-metadata --ignore-errors --no-force-ove
 # Process command-line options for download type
 while getopts "mv" opt; do
 	case $opt in
-	m)
-		DOWNLOAD_TYPE="music"
-		OUTPUT_DIR="${XDG_MUSIC_DIR:-${HOME}/Music}"
-		ARCHIVE_FILE="${OUTPUT_DIR}/.music.txt"
-        YTDL_OUTPUT_FORMAT="${OUTPUT_DIR}/%(artist)s - %(title)s.%(ext)s"
-        YTDL_CMD_BASE="$YTDL_CMD_BASE --audio-format best --audio-quality 0 --download-archive \"$ARCHIVE_FILE\" --extract-audio --recode-video mp3"
-		;;
-	v)
-		DOWNLOAD_TYPE="video"
-		OUTPUT_DIR="${XDG_VIDEOS_DIR:-${HOME}/Videos}"
-        YTDL_OUTPUT_FORMAT="${OUTPUT_DIR}/%(title)s [%(id)s].%(ext)s"
-        VIDEO_EXT=$(printf "default\nmp4\nmkv" | dmenu -i -p "Choose an encoding for the video")
-        case $VIDEO_EXT in
-        "default") VIDEO_OPTIONS="" ;;
-        *) VIDEO_OPTIONS="--recode-video $VIDEO_EXT" ;;
-        esac
-        YTDL_CMD_BASE="$YTDL_CMD_BASE --buffer-size 1M --embed-thumbnail --format bestvideo+bestaudio/best --no-sponsorblock $VIDEO_OPTIONS"
-        ;;
-	*)
-		notify-send "⛔ Invalid option: -$OPTARG"
-		exit 1
-		;;
+        m)
+            DOWNLOAD_TYPE="music"
+            OUTPUT_DIR="${XDG_MUSIC_DIR:-${HOME}/Music}"
+            ARCHIVE_FILE="${OUTPUT_DIR}/.music.txt"
+            YTDL_OUTPUT_FORMAT="${OUTPUT_DIR}/%(artist)s - %(title)s.%(ext)s"
+            YTDL_CMD_BASE="$YTDL_CMD_BASE --audio-format best --audio-quality 0 --download-archive \"$ARCHIVE_FILE\" --extract-audio --recode-video mp3"
+            ;;
+        v)
+            DOWNLOAD_TYPE="video"
+            OUTPUT_DIR="${XDG_VIDEOS_DIR:-${HOME}/Videos}"
+            YTDL_OUTPUT_FORMAT="${OUTPUT_DIR}/%(title)s [%(id)s].%(ext)s"
+            VIDEO_EXT=$(printf "default\nmp4\nmkv" | dmenu -i -p "Choose an encoding for the video")
+            case $VIDEO_EXT in
+            "default") VIDEO_OPTIONS="" ;;
+            *) VIDEO_OPTIONS="--recode-video $VIDEO_EXT" ;;
+            esac
+            YTDL_CMD_BASE="$YTDL_CMD_BASE --buffer-size 1M --embed-thumbnail --format bestvideo+bestaudio/best --no-sponsorblock $VIDEO_OPTIONS"
+            ;;
+        *)
+            notify-send "⛔ Invalid option: -$OPTARG"
+            exit 1
+            ;;
 	esac
 done
 

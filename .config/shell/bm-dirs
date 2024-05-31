@@ -1,5 +1,6 @@
 # Keys                      Filename
 bb              ${XDG_SCRIPTS_HOME:-${HOME}/.local/bin}
+bs              ${XDG_SCRIPTS_HOME:-${HOME}/.local/bin}/statusbar
 cab             ${XDG_CONFIG_HOME:-${HOME}/.config}/abook
 cac             ${XDG_CACHE_HOME:-${HOME}/.cache}
 cbc             ${XDG_CONFIG_HOME:-${HOME}/.config}/bash
@@ -28,7 +29,6 @@ dot             ${XDG_DOTFILES_DIR:-${HOME}/.dotfiles}
 gbk             $HOME/.backup
 gdc             ${XDG_DOCUMENTS_DIR:-${HOME}/Documents}
 gdn             ${XDG_DOWNLOAD_DIR:-${HOME}/Downloads}
-gme             $HOME/Media
 gmu             ${XDG_MUSIC_DIR:-${HOME}/Music}
 gmx             $HOME/.mozilla/firefox/si.default
 gob             $HOME/Obsidian/SI
@@ -47,9 +47,12 @@ Hbk             /mnt/extra/backup
 Hex             /mnt/extra
 Hme             /media
 Hmf             /media/flash
+Hmh             /media/hdd
 Hms             /media/ssd
 Hmt             /mnt
-Hmw             /usr/share/mutt-wizard/
+Hmv             /media/win10/Videos
+Hmw             /usr/share/mutt-wizard
+Hrr             /etc/runit/sv
 Hsm             /etc/samba
 Hvv             /mnt/extra/videos
 pae             ${PASSWORD_STORE_DIR:-$XDG_DATA_HOME/.password-store}/exported_keys

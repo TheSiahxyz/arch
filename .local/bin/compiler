@@ -56,49 +56,49 @@ compilec() {
 }
 
 case "$file" in
-*\.[0-9]) preconv "$file" | refer -PS -e | groff -mandoc -T pdf >"$base".pdf ;;
-*\.apl) apl -f "$file" ;;
-*\.c) compilec ;;
-*config.h) make && sudo make install ;;
-*\.cpp) g++ "$file" -o "$base" && "$base" ;;
-*\.cs) mcs "$file" && mono "$base".exe ;;
-*\.docx | *\.doc)
-	Ifinstalled libreoffice && lowriter --convert-to pdf "$file" && exit
-	Ifinstalled pandoc && pandoccmd "$file" "$base" && exit
-	;;
-*\.dot | *\.gv) dot -Tsvg "$file" | convert svg:- "$base".eps ;;
-*\.h) compilec ;;
-*\.html) refreshbrowser ;;
-*\.fnl)
-	echo "fennel --compile '$file' > '$base'.lua"
-	fennel --compile "$file" >"$base".lua
-	;;
-*\.go) go run "$file" ;;
-*\.java) javac "$file" && echo "${base##*/}" | xargs java ;;
-*\.js) node "$file" ;;
-*\.m) octave "$file" ;;
-*\.md) [ -x "$(command -v lowdown)" ] && \
-          lowdown --parse-no-intraemph "${file}" -Tms | groff -mpdfmark -ms -kept -T pdf > "${base}.pdf" || \
-          [ -x "$(command -v groffdown)" ] && \
-          groffdown -i "${file}" | groff -T pdf > "${base}.pdf" || \
-          pandoc -t ms --highlight-style="kate" -s -o "${base}.pdf" "${file}" ;;
-*\.me) groff -Gktes -b -w w -me -T ps "$file" | ps2pdf - >"$base".pdf ;;
-*\.mm) groff -Gktes -b -w w -mm -mpic -T ps "$file" | ps2pdf - >"$base".pdf ;;
-*\.mom) pdfroff -pktes -b -wall -mom -mpdfmark "$file" >"$base".pdf ;;
-*\.ms | *\.groff) preconv "$file" | groff -Tpdf -ktesp -G -ms >"$base".pdf ;;
-*\.org) Ifinstalled pandoc && pandocorg "$file" "$base" && exit ;;
-*\.present) groff -p -e -t -mm -mpresent "$file" | presentps -l | ps2pdf - >"$base".pdf ;;
-*\.ps) ps2pdf "$file" ;;
-*\.py) python "$file" ;;
-*\.[rR]md) Rscript -e "rmarkdown::render('$file', quiet=TRUE)" ;;
-*\.r) R -f "$file" ;;
-*\.rkt) racket "$file" ;;
-*\.rs) cargo build ;;
-*\.sass) sassc -a "$file" "$base".css ;;
-*\.scad) openscad -o "$base".stl "$file" ;;
-*\.sent) setsid -f sent "$file" 2>/dev/null & ;;
-*\.tex) textype "$file" ;;
-*\.tcl) tclsh "$file" ;;
-*\.vim*) vint "$file" ;;
-*) chmod +x "$file" && sed 1q "$file" | grep "^#!/" | sed "s/^#!//" | xargs -r -I % "$file" ;;
+    *\.[0-9]) preconv "$file" | refer -PS -e | groff -mandoc -T pdf >"$base".pdf ;;
+    *\.apl) apl -f "$file" ;;
+    *\.c) compilec ;;
+    *config.h) make && sudo make install ;;
+    *\.cpp) g++ "$file" -o "$base" && "$base" ;;
+    *\.cs) mcs "$file" && mono "$base".exe ;;
+    *\.docx | *\.doc)
+        Ifinstalled libreoffice && lowriter --convert-to pdf "$file" && exit
+        Ifinstalled pandoc && pandoccmd "$file" "$base" && exit
+        ;;
+    *\.dot | *\.gv) dot -Tsvg "$file" | convert svg:- "$base".eps ;;
+    *\.h) compilec ;;
+    *\.html) refreshbrowser ;;
+    *\.fnl)
+        echo "fennel --compile '$file' > '$base'.lua"
+        fennel --compile "$file" >"$base".lua
+        ;;
+    *\.go) go run "$file" ;;
+    *\.java) javac "$file" && echo "${base##*/}" | xargs java ;;
+    *\.js) node "$file" ;;
+    *\.m) octave "$file" ;;
+    *\.md) [ -x "$(command -v lowdown)" ] && \
+              lowdown --parse-no-intraemph "${file}" -Tms | groff -mpdfmark -ms -kept -T pdf > "${base}.pdf" || \
+              [ -x "$(command -v groffdown)" ] && \
+              groffdown -i "${file}" | groff -T pdf > "${base}.pdf" || \
+              pandoc -t ms --highlight-style="kate" -s -o "${base}.pdf" "${file}" ;;
+    *\.me) groff -Gktes -b -w w -me -T ps "$file" | ps2pdf - >"$base".pdf ;;
+    *\.mm) groff -Gktes -b -w w -mm -mpic -T ps "$file" | ps2pdf - >"$base".pdf ;;
+    *\.mom) pdfroff -pktes -b -wall -mom -mpdfmark "$file" >"$base".pdf ;;
+    *\.ms | *\.groff) preconv "$file" | groff -Tpdf -ktesp -G -ms >"$base".pdf ;;
+    *\.org) Ifinstalled pandoc && pandocorg "$file" "$base" && exit ;;
+    *\.present) groff -p -e -t -mm -mpresent "$file" | presentps -l | ps2pdf - >"$base".pdf ;;
+    *\.ps) ps2pdf "$file" ;;
+    *\.py) python "$file" ;;
+    *\.[rR]md) Rscript -e "rmarkdown::render('$file', quiet=TRUE)" ;;
+    *\.r) R -f "$file" ;;
+    *\.rkt) racket "$file" ;;
+    *\.rs) cargo build ;;
+    *\.sass) sassc -a "$file" "$base".css ;;
+    *\.scad) openscad -o "$base".stl "$file" ;;
+    *\.sent) setsid -f sent "$file" 2>/dev/null & ;;
+    *\.tex) textype "$file" ;;
+    *\.tcl) tclsh "$file" ;;
+    *\.vim*) vint "$file" ;;
+    *) chmod +x "$file" && sed 1q "$file" | grep "^#!/" | sed "s/^#!//" | xargs -r -I % "$file" ;;
 esac

@@ -26,13 +26,13 @@ num=$(tsp -l | awk -v numr=0 -v numq=0 '{if (/running/)numr++; if (/queued/)numq
 
 # Handle mouse clicks
 case $BLOCK_BUTTON in
-1) setsid -f "$TERMINAL" -e sh -c 'tsp -l; echo "\nPress enter to close..." ; read REPLY' ;;
-2) setsid -f "$TERMINAL" -e sh -c 'tsp -t' ;;
-3) notify_filenames
-   notify-send "📝 Tasks module" "🤖: number of running/queued background tasks
+    1) setsid -f "$TERMINAL" -e sh -c 'tsp -l; echo "\nPress enter to close..." ; read REPLY' ;;
+    2) setsid -f "$TERMINAL" -e sh -c 'tsp -t' ;;
+    3) notify_filenames
+       notify-send "📝 Tasks module" "🤖: number of running/queued background tasks
 - Left click to show all tasks
 - Middle click to show the current task progress" ;;
-6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
+    6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 
 [ "$num" != "0(0)" ] && echo "🤖$num"

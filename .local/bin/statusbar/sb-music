@@ -17,25 +17,19 @@ filter() {
 		echo "$status" | grep -q 'paused' && prefix="⏸"
 		[ -z "$prefix" ] && return
 
-		output_prefix=$([ -n "$indicators" ] && echo "$indicators" || echo "$prefix")
+		output_prefix=$([ -n "$indicators" ] && echo "$indicators")
 
-		echo "$output_prefix$artist - $track $pos_dur"
+		echo "$prefix$artist - $track $pos_dur$output_prefix"
 	fi
 }
 
+pidof -x sb-mpdup >/dev/null 2>&1 || sb-mpdup >/dev/null 2>&1 &
+
 # Handling interaction based on button press
 case $BLOCK_BUTTON in
-1)
-	mpc status | filter
-	setsid "$TERMINAL" -e ncmpcpp &
-	;; # left click, opens ncmpcpp
-2)
-	mpc toggle | filter
-	;; # right click, pause/unpause
-3)
-	mpc status | filter
-	notify-send "🎵 Music module" "\
-- Shows mpd song playing and status
+    1) mpc status | filter ; setsid "$TERMINAL" -e ncmpcpp ;; # left click, opens ncmpcpp
+    2) mpc toggle | filter ;; # right click, pause/unpause
+    3) mpc status | filter ; notify-send "🎵 Music module" "- Shows mpd song playing and status
 - 🎵 if playing
 - ⏸ if paused
 - 🔂 if single on
@@ -43,19 +37,9 @@ case $BLOCK_BUTTON in
 - 🔀 if random on
 - Left click opens ncmpcpp
 - Middle click pauses
-- Scroll changes track"
-	;;
-4)
-	mpc prev | filter
-	;; # scroll up, previous
-5)
-	mpc next | filter
-	;; # scroll down, next
-6)
-	mpc status | filter
-	setsid "$TERMINAL" -e "$EDITOR" "$0" &
-	;;
-*)
-	mpc status | filter
-	;; # default, show current status
+- Scroll changes track" ;;
+    4) mpc prev | filter ;; # scroll up, previous
+    5) mpc next | filter ;; # scroll down, next
+    6) mpc status | filter ; setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
+    *) mpc status | filter ;; # default, show current status
 esac
