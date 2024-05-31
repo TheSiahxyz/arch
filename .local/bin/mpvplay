@@ -49,13 +49,14 @@ list_and_play() {
             ;;
         "List files")
             files_with_paths=$(find "$directory" -maxdepth 1 -type f \( -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.webm" -o -iname "*.avi" -o -iname "*.flv" -o -iname "*.wmv" \) | sort)
+            [ -z "$files_with_paths" ] && exit
             SELECTED_FILE=$(printf "All files\n%s" "$files_with_paths" | sed 's!.*/!!' | dmenu -i -l 21 -p "Select a file:")
             [ -z "$SELECTED_FILE" ] && exit 1
             [ "$SELECTED_FILE" = "All files" ] && play_media "$directory/" && return
             FULL_PATH="$(echo "$files_with_paths" | grep -F "$SELECTED_FILE")"
             [ -f "$FULL_PATH" ] && play_media "$FULL_PATH" && return
             ;;
-        *) return ;;
+        *) exit ;;
 	esac
 }
 

@@ -105,4 +105,4 @@ case "$mode" in
         ;;
 esac
 
-sleep 1 && mpc volume 50
+sleep 1 && mpc volume 35

@@ -107,6 +107,10 @@ vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
 
+-- Sudo
+vim.keymap.set("n", "<leader>w", "<cmd>SudoWrite<cr>", { silent = true })
+vim.keymap.set("n", "<leader>wq", "<cmd>SudoWritequit<cr>", { silent = true })
+
 -- Terminal
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>")
 vim.keymap.set("t", "<C-h>", "<cmd>wincmd h<cr>")
