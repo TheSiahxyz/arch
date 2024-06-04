@@ -3,6 +3,11 @@ nmap <localleader>bs :Explore /home/si/.local/bin/statusbar<cr>
 nmap <localleader>cab :Explore /home/si/.config/abook<cr>
 nmap <localleader>cac :Explore /home/si/.cache<cr>
 nmap <localleader>cbc :Explore /home/si/.config/bash<cr>
+nmap <localleader>cdb :Explore /home/si/.local/src/suckless/dwmblocks<cr>
+nmap <localleader>cdl :Explore /home/si/.local/src/suckless/slock<cr>
+nmap <localleader>cdm :Explore /home/si/.local/src/suckless/dmenu<cr>
+nmap <localleader>cds :Explore /home/si/.local/src/suckless/st<cr>
+nmap <localleader>cdw :Explore /home/si/.local/src/suckless/dwm<cr>
 nmap <localleader>cf :Explore /home/si/.config<cr>
 nmap <localleader>clf :Explore /home/si/.config/lf<cr>
 nmap <localleader>clv :Explore /home/si/.config/LazyVim<cr>
@@ -76,9 +81,14 @@ nmap <localleader>vbf :e /home/si/.config/shell/bm-files<cr>
 nmap <localleader>vbi :e /home/si/.config/shell/inputrc<cr>
 nmap <localleader>vbp :e /home/si/.config/bash/bash_profile<cr>
 nmap <localleader>vdb :e /home/si/.local/src/suckless/dwmblocks/config.h<cr>
+nmap <localleader>vdl :e /home/si/.local/src/suckless/slock/config.h<cr>
+nmap <localleader>vdm :e /home/si/.local/src/suckless/dmenu/config.h<cr>
+nmap <localleader>vds :e /home/si/.local/src/suckless/st/config.h<cr>
+nmap <localleader>vdw :e /home/si/.local/src/suckless/dwm/config.h<cr>
 nmap <localleader>vgc :e /home/si/.config/shell/git-aliasrc<cr>
 nmap <localleader>vlf :e /home/si/.config/lf/lfrc<cr>
 nmap <localleader>vls :e /home/si/.config/lf/scope<cr>
+nmap <localleader>vlx :e /home/si/.lynxrc<cr>
 nmap <localleader>vmc :e /home/si/.config/ncmpcpp/config<cr>
 nmap <localleader>vmw :e /home/si/.config/mutt/muttrc<cr>
 nmap <localleader>Vmw :e /usr/share/mutt-wizard/mutt-wizard.muttrc<cr>

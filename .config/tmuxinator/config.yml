@@ -47,6 +47,10 @@ startup_window: nvim
 windows:
   - dotfiles:
       root: ~/.dotfiles
+  - Vim:
+      root: ~/.dotfiles/.config/vim
+      panes:
+        - vi
   - LazyVim:
       root: ~/.dotfiles/.config/LazyVim/
       panes:

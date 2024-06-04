@@ -21,8 +21,6 @@ function WordDefinition(input)
 
     vim.api.nvim_set_current_buf(bufnr)
     vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, vim.split(output, "\n"))
-    vim.api.nvim_buf_set_option(bufnr, 'modifiable', false)
-    vim.api.nvim_buf_set_option(bufnr, 'modified', false)
 end
 
 -- Source shortcuts from bm-files and bm-folders

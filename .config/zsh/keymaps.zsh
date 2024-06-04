@@ -41,9 +41,9 @@ bindkey -s '^d' '^ufD\n'
 bindkey -s '^e' '^use\n'
 bindkey -s '^f' '^ucdi\n'
 bindkey -s '^g' '^ulfcd\n'
-bindkey -s '^h' '^uhtop\n'
 bindkey -s '^x^b' '^urbackup\n'
 bindkey -s '^x^f' '^usudo lf\n'
+bindkey -s '^x^r' '^uhtop\n'
 bindkey -s '^x^s' '^usshadd\n'
 bindkey '^[[P' delete-char
 

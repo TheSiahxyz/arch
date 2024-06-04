@@ -2,11 +2,25 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+-- Buffers
+vim.keymap.set("n", "<S-h>", "<cmd>bprevious<cr>")
+vim.keymap.set("n", "<S-l>", "<cmd>bnext<cr>")
+vim.keymap.set("n", "[b", "<cmd>bprevious<cr>")
+vim.keymap.set("n", "]b", "<cmd>bnext<cr>")
+vim.keymap.set("n", "<leader>bb", "<cmd>e #<cr>")
+vim.keymap.set("n", "<leader>`", "<cmd>e #<cr>")
+
+-- Clear search with <esc>
+vim.keymap.set({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>")
+
 -- Disable
 vim.keymap.set("n", "Q", "<nop>")
 
 -- Expolore
 vim.keymap.set("n", "<leader>e", vim.cmd.Ex)
+
+-- Highlights under cursor
+vim.keymap.set("n", "<leader>h", vim.show_pos, { desc = "Inspect Pos" })
 
 -- Remap Default
 vim.keymap.set("i", "jk", "<Esc>")
@@ -74,13 +88,13 @@ vim.keymap.set("n", "<leader>dq", vim.diagnostic.setloclist)
 vim.keymap.set("n", "<leader>fn", "<cmd>enew<cr>")
 
 -- Fix List & Trouble
-vim.keymap.set("n", "<C-[>", "<cmd>cprev<CR>zz")
-vim.keymap.set("n", "<C-]>", "<cmd>cnext<CR>zz")
-vim.keymap.set("n", "<leader>[", "<cmd>lprev<CR>zz")
-vim.keymap.set("n", "<leader>]", "<cmd>lnext<CR>zz")
+vim.keymap.set("n", "[q", "<cmd>cprev<CR>zz")
+vim.keymap.set("n", "]q", "<cmd>cnext<CR>zz")
+vim.keymap.set("n", "[l", "<cmd>lprev<CR>zz")
+vim.keymap.set("n", "]l", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>/", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-vim.keymap.set("n", "<leader>xl", "<cmd>lopen<cr>")
-vim.keymap.set("n", "<leader>xq", "<cmd>copen<cr>")
+vim.keymap.set("n", "<leader>ol", "<cmd>lopen<cr>")
+vim.keymap.set("n", "<leader>oq", "<cmd>copen<cr>")
 
 -- Formats
 vim.keymap.set("n", "<leader>cF", vim.lsp.buf.format)
@@ -102,13 +116,19 @@ vim.keymap.set("v", "<A-.>", ":m '>+1<cr>gv=gv")
 -- Ownerships
 vim.keymap.set("n", "<leader>cx", "<cmd>!chmod +x %<CR>", { silent = true })
 
+-- Resize window using <ctrl> arrow keys
+vim.keymap.set("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
+vim.keymap.set("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease window height" })
+vim.keymap.set("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease window width" })
+vim.keymap.set("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase window width" })
+
 -- Source
 vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
 
 -- Sudo
-vim.keymap.set("n", "<leader>w", "<cmd>SudoWrite<cr>", { silent = true })
+vim.keymap.set("n", "<leader>w", "<cmd>SudoWrite<cr><cr>", { silent = true })
 vim.keymap.set("n", "<leader>wq", "<cmd>SudoWritequit<cr>", { silent = true })
 
 -- Terminal
@@ -125,6 +145,10 @@ vim.keymap.set("n", "<C-h>", "<C-w><C-h>")
 vim.keymap.set("n", "<C-j>", "<C-w><C-j>")
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>")
 vim.keymap.set("n", "<C-l>", "<C-w><C-l>")
+-- vim.keymap.set("n", "<C-h>", "<C-w>h", { remap = true })
+-- vim.keymap.set("n", "<C-j>", "<C-w>j", { remap = true })
+-- vim.keymap.set("n", "<C-k>", "<C-w>k", { remap = true })
+-- vim.keymap.set("n", "<C-l>", "<C-w>l", { remap = true })
 vim.keymap.set("n", "<C-f>", "<cmd>silent !~/.config/tmux/plugins/tmux-fzf/scripts/session.sh<CR>")
 
 -- Lazy

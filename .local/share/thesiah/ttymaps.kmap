@@ -1,5 +1,2 @@
 keycode 1 = Caps_Lock
-keycode 29 = Esc
-keycode 56 = Super
-keycode 58 = Control_L
-keycode 125 = Alt_L
+keycode 58 = Control

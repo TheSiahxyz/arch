@@ -1,15 +1,9 @@
 #!/bin/sh
 
 xrandr --dpi 96 # Set DPI. User may want to use a larger number for larger screens.
-for display in $(xrandr -q | grep " connected" | awk '{ print $1 }'); do
+for display in $(xrandr -q | grep -v 'eDP' | grep "connected" | awk '{print $1}'); do
     case "$display" in
-        HDMI*|DP*)
-            xrandr --output eDP1 --off --output "$display" --auto --primary
-            break
-            ;;
-        *)
-            xrandr --output eDP1 --mode 1920x1080
-            ;;
+        HDMI*|DP*) xrandr --output eDP1 --off --output "$display" --auto --primary; break ;;
     esac
 done
 setbg &         # set the background with the `setbg` script

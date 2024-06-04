@@ -44,4 +44,4 @@ case $BLOCK_BUTTON in
     *) mpc status | filter ;; # default, show current status
 esac
 
-kill -45 "$(pidof "${STATUSBAR:-dwmblocks}")"
+kill -35 "$(pidof "${STATUSBAR:-dwmblocks}")"

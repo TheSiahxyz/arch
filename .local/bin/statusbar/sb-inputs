@@ -1,25 +1,5 @@
 #!/bin/sh
 
-keyboard="⌨️"
-
-get_input_method() {
-	state=$(fcitx5-remote)
-	current_im=$(fcitx5-remote -n)
-	name=""
-
-	if [ "$state" -eq 2 ]; then
-		name="KO"
-		case "$current_im" in
-		*ko* | *Korean* | *hangul*) echo "$keyboard$name" ;;
-		*) echo "🌐" ;;
-		esac
-	else
-		name="US"
-		echo "$keyboard$name"
-	fi
-	pkill -RTMIN+29 "${STATUSBAR:-dwmblocks}"
-}
-
 case $BLOCK_BUTTON in
     1) fcitx5-remote -t ;;
     2) setsid -w -f "$TERMINAL" -e fcitx5-configtool ;;
@@ -29,4 +9,12 @@ case $BLOCK_BUTTON in
     6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 
-get_input_method
+if [ "$(fcitx5-remote)" -eq 2 ]; then
+    case "$(fcitx5-remote -n)" in
+        *ko* | *Korean* | *hangul*) echo "⌨️KO" ;;
+        *) echo "⌨️$(setxkbmap -query | grep 'layout:' | sed 's/layout:\s*\(\S*\)/\1/g')" ;;
+    esac
+else
+    echo "⌨️US"
+fi
+kill -63 "$(pidof "${STATUSBAR:-dwmblocks}")"

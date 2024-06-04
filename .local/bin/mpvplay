@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MOUNT_SCRIPT="${XDG_SCRIPTS_HOME:-${HOME}/.local/bin}/fecrypt"
+MOUNT_SCRIPT="${XDG_SCRIPTS_HOME:-${HOME}/.local/bin}/ecrypt"
 
 check_mount() {
     mount | grep -q " $HOME/Private " && mount | grep -q " /mnt/extra/videos " || $MOUNT_SCRIPT
@@ -48,15 +48,14 @@ list_and_play() {
             rm -f "$TMP_PLAYLIST"
             ;;
         "List files")
-            files_with_paths=$(find "$directory" -maxdepth 1 -type f \( -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.webm" -o -iname "*.avi" -o -iname "*.flv" -o -iname "*.wmv" \) | sort)
-            [ -z "$files_with_paths" ] && exit
+            files_with_paths=$(find "$directory" -mindepth 1 -maxdepth 1 -type f \( -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.webm" -o -iname "*.avi" -o -iname "*.flv" -o -iname "*.wmv" -o -iname "*.ts" \) | sort)
             SELECTED_FILE=$(printf "All files\n%s" "$files_with_paths" | sed 's!.*/!!' | dmenu -i -l 21 -p "Select a file:")
             [ -z "$SELECTED_FILE" ] && exit 1
             [ "$SELECTED_FILE" = "All files" ] && play_media "$directory/" && return
             FULL_PATH="$(echo "$files_with_paths" | grep -F "$SELECTED_FILE")"
             [ -f "$FULL_PATH" ] && play_media "$FULL_PATH" && return
             ;;
-        *) exit ;;
+        *) return ;;
 	esac
 }
 
@@ -75,10 +74,10 @@ case "$CONTENT_CHOICE" in
 		[ -z "$initial_directory" ] && exit
 		SELECTED_FOLDER="$initial_directory"
 		while true; do
-			SUBFOLDER_OPTIONS=$(find "$SELECTED_FOLDER" -mindepth 1 -maxdepth 1 -type d ! -name ".*" -printf "%P\n" | sort)
+			SUBFOLDER_OPTIONS="$(find "$SELECTED_FOLDER" -mindepth 1 -maxdepth 1 -type d ! -name ".*" -printf "%P\n" | sort)"
 			[ -z "$SUBFOLDER_OPTIONS" ] && list_and_play "$SELECTED_FOLDER" && break
 			OPTIONS="All files\n$SUBFOLDER_OPTIONS"
-            SELECTED_RELATIVE_FOLDER=$(printf "%b" "$OPTIONS" | dmenu -i -p "Select a folder or 'All files':")
+            SELECTED_RELATIVE_FOLDER="$(printf "%b" "$OPTIONS" | dmenu -i -p "Select a folder or 'All files':")"
 			[ -z "$SELECTED_RELATIVE_FOLDER" ] && exit
 			[ "$SELECTED_RELATIVE_FOLDER" = "All files" ] && list_and_play "$SELECTED_FOLDER" && break
 			SELECTED_FOLDER="$SELECTED_FOLDER/$SELECTED_RELATIVE_FOLDER"

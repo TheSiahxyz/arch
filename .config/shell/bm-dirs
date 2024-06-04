@@ -4,6 +4,11 @@ bs              ${XDG_SCRIPTS_HOME:-${HOME}/.local/bin}/statusbar
 cab             ${XDG_CONFIG_HOME:-${HOME}/.config}/abook
 cac             ${XDG_CACHE_HOME:-${HOME}/.cache}
 cbc             ${XDG_CONFIG_HOME:-${HOME}/.config}/bash
+cdb             ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/dwmblocks
+cdl             ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/slock
+cdm             ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/dmenu
+cds             ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/st
+cdw             ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/dwm
 cf              ${XDG_CONFIG_HOME:-${HOME}/.config}
 clf             ${XDG_CONFIG_HOME:-${HOME}/.config}/lf
 clv             ${XDG_CONFIG_HOME:-${HOME}/.config}/LazyVim

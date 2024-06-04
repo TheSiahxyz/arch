@@ -13,14 +13,11 @@ application/pdf=pdf.desktop;
 image/png=img.desktop;
 image/jpeg=img.desktop;
 image/gif=img.desktop;
-application/rss+xml=rss.desktop
-video/x-matroska=video.desktop
-video/mp4=video.desktop
-x-scheme-handler/lbry=lbry.desktop
-inode/directory=file.desktop
+application/rss+xml=rss.desktop;
+video/x-matroska=video.desktop;
+video/mp4=video.desktop;
+x-scheme-handler/lbry=lbry.desktop;
+inode/directory=file.desktop;
 text/csv=csv.desktop;
-
-[Added Associations]
-text/html=firefox.desktop;
-
-application/x-shellscript=nvim.desktop;
+text/xml=html.desktop;
+text/troff=roff.desktop;

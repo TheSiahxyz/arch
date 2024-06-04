@@ -7,5 +7,4 @@
     nmcli connection up "$VPN" >/dev/null 2>&1
     notify-send "📡 VPN: ON"   
 }
-
-pkill -RTMIN+4 "${STATUSBAR:-dwmblocks}"
+kill -38 "$(pidof "${STATUSBAR:-dwmblocks}")"

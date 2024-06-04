@@ -319,7 +319,7 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWMOD+Ctrl+d\fP \(en passmenu2  
 .ITEM
-\f(CWMOD+Ctrl+e\fP \(en fecrypt  
+\f(CWMOD+Ctrl+e\fP \(en ecrypt; pkill -RTMIN+19 ${STATUSBAR:-dwmblocks}
 .ITEM
 \f(CWMOD+v\fP \(en mpvplay  
 .ITEM
@@ -398,15 +398,15 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWMOD+equal\fP \(en wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; kill -44 $(pidof dwmblocks)
 .ITEM
-\f(CWMOD+Shift+minus\fP \(en sudo brillo -U 5 -q; pkill -RTMIN+22 dwmblocks
+\f(CWMOD+Shift+minus\fP \(en sudo brillo -U 5 -q; kill -57 $(pidof dwmblocks)
 .ITEM
-\f(CWMOD+Shift+equal\fP \(en sudo brillo -A 5 -q; pkill -RTMIN+22 dwmblocks
+\f(CWMOD+Shift+equal\fP \(en sudo brillo -A 5 -q; kill -57 $(pidof dwmblocks)
 .ITEM
-\f(CWMOD+Ctrl+minus\fP \(en monbright -dec 5; pkill -RTMIN+22 dwmblocks
+\f(CWMOD+Ctrl+minus\fP \(en monbright -dec 5; kill -56 $(pidof dwmblocks)
 .ITEM
-\f(CWMOD+Ctrl+equal\fP \(en monbright -inc 5; pkill -RTMIN+22 dwmblocks
+\f(CWMOD+Ctrl+equal\fP \(en monbright -inc 5; kill -56 $(pidof dwmblocks)
 .ITEM
-\f(CWRight_Alt\fP \(en fcitx5-remote -t; pkill -RTMIN+29 dwmblocks
+\f(CWRight_Alt\fP \(en fcitx5-remote -t; kill -63 $(pidof dwmblocks)
 .ITEM
 \f(CWCtrl+F5\fP \(en quit {1}
 .ITEM

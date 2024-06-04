@@ -40,7 +40,7 @@ case $URL in
     *playlist*|*list=*)
         PL_DOWNLOAD_CHOICE=$(printf "playlist\na content" | dmenu -i -p "Download entire playlist or just this content?")
         [ "$PL_DOWNLOAD_CHOICE" = "playlist" ] && YTDL_CMD_BASE=$(echo "$YTDL_CMD_BASE" | sed 's/ --no-playlist//') && YTDL_CMD_BASE="$YTDL_CMD_BASE --yes-playlist"
-        [ "$DOWNLOAD_TYPE" = "video" ] && SUBDIR=$(echo "$URL" | sed 's|https://www.youtube.com/watch?v=||g') && mkdir -p "${OUTPUT_DIR}/${SUBDIR}" && YTDL_OUTPUT_FORMAT="${OUTPUT_DIR}/${SUBDIR}/%(playlist_index)s_%(title)s [%(id)s].%(ext)s"
+        [ "$DOWNLOAD_TYPE" = "video" ] && SUBDIR=$(yt-dlp --dump-single-json "$URL" --no-playlist | jq -r '.channel' | sed 's/[\/:*?"<>|]/_/g') && mkdir -p "${OUTPUT_DIR}/${SUBDIR}" && YTDL_OUTPUT_FORMAT="${OUTPUT_DIR}/${SUBDIR}/%(playlist_index)s_%(title)s [%(id)s].%(ext)s"
         ;;
 esac
 

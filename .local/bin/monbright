@@ -1,17 +1,21 @@
 #!/bin/sh
 
-MONITOR=$(xrandr --query | grep ' connected' | grep 'primary' | cut -d ' ' -f1)
-[ -z "$MONITOR" ] && MONITOR=$(xrandr --query | grep ' connected' | head -n 1 | cut -d ' ' -f1)
-CURRENT_BRIGHTNESS=$(xrandr --verbose | grep "^$MONITOR connected" -A5 | grep "Brightness:" | cut -d ' ' -f2)
-SCALE_CHANGE=$(echo "$2 / 100" | bc -l)
-
-case "$1" in
-    "-inc") NEW_BRIGHTNESS=$(echo "$CURRENT_BRIGHTNESS + $SCALE_CHANGE" | bc -l) ;;
-    "-dec") NEW_BRIGHTNESS=$(echo "$CURRENT_BRIGHTNESS - $SCALE_CHANGE" | bc -l) ;;
-esac
-
-NEW_BRIGHTNESS=$(echo "if ($NEW_BRIGHTNESS > 1) 1 else if ($NEW_BRIGHTNESS < 0) 0 else $NEW_BRIGHTNESS" | bc -l)
-xrandr --output "$MONITOR" --brightness "$NEW_BRIGHTNESS"
-
-CURRENT_BRIGHTNESS=$(echo "$CURRENT_BRIGHTNESS * 100" | bc -l)
-printf "🔆%.0f%%\n" "$CURRENT_BRIGHTNESS"
+monitor=$(xrandr --query | grep -i 'connected' | grep -i 'primary' | cut -d ' ' -f1)
+[ -z "$monitor" ] && monitor=$(xrandr --query | grep -i ' connected' | head -n 1 | cut -d ' ' -f1)
+[ -z "$monitor" ] && exit 1
+current_brightness=$(xrandr --verbose | grep -i "^$monitor connected" -A5 | grep -i "Brightness:" | cut -d ' ' -f2)
+[ -z "$current_brightness" ] && exit 1
+if [ "$#" -eq 2 ]; then
+    scale_change=$(echo "$2 / 100" | bc -l)
+    case "$1" in
+        "-inc") new_brightness=$(echo "$current_brightness + $scale_change" | bc -l) ;;
+        "-dec") new_brightness=$(echo "$current_brightness - $scale_change" | bc -l) ;;
+        *) echo "Invalid argument $1. Use -inc or -dec." && exit 1 ;;
+    esac
+    new_brightness=$(echo "if ($new_brightness > 1) 1 else if ($new_brightness < 0) 0 else $new_brightness" | bc -l)
+    xrandr --output "$monitor" --brightness "$new_brightness"
+    current_brightness=$(echo "$new_brightness * 100" | bc -l)
+else
+    current_brightness=$(echo "$current_brightness * 100" | bc -l)
+fi
+printf "🔆%.0f%%\n" "$current_brightness"
