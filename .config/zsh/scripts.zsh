@@ -36,7 +36,7 @@ gcgts() {
 
 gphm() {
     branch="$(echo $(git branch) | grep "*" | sed 's/* //g')"
-    [[ -z "$1" ]] || git push "$1" "$branch"
+    [[ -z "$1" ]] || { git push "$1" "$branch"; git push; echo "hi"; }
 }
 
 ###########################################################################################
