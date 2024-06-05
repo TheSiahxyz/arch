@@ -105,4 +105,5 @@ case "$mode" in
         ;;
 esac
 
+kill -45 "$(pidof "${STATUSBAR:-dwmblocks}")"
 sleep 1 && mpc volume 35

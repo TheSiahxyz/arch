@@ -107,7 +107,7 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWMOD+m\fP \(en mpc random on; mpc load entire; mpc play; sleep 1 && mpc volume 35
 .ITEM
-\f(CWMOD+Shift+m\fP \(en mpdmenu
+\f(CWMOD+Shift+m\fP \(en mpdmenu  
 .ITEM
 \f(CWMOD+Ctrl+m\fP \(en mpc stop; sleep 1 && mpc clear
 .ITEM
