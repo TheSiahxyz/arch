@@ -153,6 +153,9 @@ alias fr="fcitx5-remote"
 # ffmpeg
 alias ffmpeg="ffmpeg -hide_banner"
 
+# git
+alias ggg="ssh $THESIAH_GIT"
+
 # greb
 alias grep="grep --color"
 alias grepw="grep -R --include='*'"
@@ -173,9 +176,6 @@ alias ka="killall"
 
 # lf
 alias lf="lfub"
-
-# lynx
-# alias lynx="lynx -cfg=${XDG_CONFIG_HOME:-${HOME}/.config}/lynx/lynx.cfg"
 
 # mkcd
 alias mc="mkcd"
@@ -257,7 +257,7 @@ alias ref="shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-${HOME}/.config}/shel
 alias skype="skypeforlinux"
 
 # ssh
-alias gts="ssh $THESIAH"
+alias gts="ssh $THESIAH_SERVER"
 
 # stow
 alias stw="${XDG_DOTFILES_DIR:-${HOME}/.dotfiles}/.local/bin/stw"

@@ -632,33 +632,33 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWClkStatusText+\fP \(en Button5 5 
 .ITEM
-\f(CWClkStatusText+ShiftMask\fP \(en Button1 6 
+\f(CWClkStatusText+Shift\fP \(en Button1 6 
 .ITEM
-\f(CWClkStatusText+MODKEY\fP \(en Button1 nvim ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/dwm/config.h
+\f(CWClkStatusText+MOD\fP \(en Button1 nvim ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/dwm/config.h
 .ITEM
-\f(CWClkStatusText+MODKEY|ShiftMask\fP \(en Button1 nvim ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/dwmblocks/config.h
+\f(CWClkStatusText+MOD+Shift\fP \(en Button1 nvim ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/dwmblocks/config.h
 .ITEM
-\f(CWClkStatusText+MODKEY|ControlMask\fP \(en Button1 nvim ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/dmenu/config.h
+\f(CWClkStatusText+MOD+Ctrl\fP \(en Button1 nvim ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/dmenu/config.h
 .ITEM
-\f(CWClkStatusText+MODKEY\fP \(en Button3 nvim ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/st/config.h
+\f(CWClkStatusText+MOD\fP \(en Button3 nvim ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/st/config.h
 .ITEM
-\f(CWClkStatusText+MODKEY|ShiftMask\fP \(en Button3 nvim ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/slock/config.h
+\f(CWClkStatusText+MOD+Shift\fP \(en Button3 nvim ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/slock/config.h
 .ITEM
-\f(CWClkClientWin+MODKEY\fP \(en Button1 movemouse 
+\f(CWClkClientWin+MOD\fP \(en Button1 movemouse 
 .ITEM
-\f(CWClkClientWin+MODKEY|ShiftMask\fP \(en Button1 killclient 
+\f(CWClkClientWin+MOD+Shift\fP \(en Button1 killclient 
 .ITEM
-\f(CWClkClientWin+MODKEY|ControlMask\fP \(en Button1 2 
+\f(CWClkClientWin+MOD+Ctrl\fP \(en Button1 2 
 .ITEM
-\f(CWClkClientWin+MODKEY\fP \(en Button2 defaultgaps 
+\f(CWClkClientWin+MOD\fP \(en Button2 defaultgaps 
 .ITEM
-\f(CWClkClientWin+MODKEY\fP \(en Button3 resizemouse 
+\f(CWClkClientWin+MOD\fP \(en Button3 resizemouse 
 .ITEM
-\f(CWClkClientWin+MODKEY|ShiftMask\fP \(en Button3 gesture 
+\f(CWClkClientWin+MOD+Shift\fP \(en Button3 gesture 
 .ITEM
-\f(CWClkClientWin+MODKEY\fP \(en Button4 -1 
+\f(CWClkClientWin+MOD\fP \(en Button4 -1 
 .ITEM
-\f(CWClkClientWin+MODKEY\fP \(en Button5 +1 
+\f(CWClkClientWin+MOD\fP \(en Button5 +1 
 .ITEM
 \f(CWClkTagBar+\fP \(en Button1 view 
 .ITEM
@@ -666,9 +666,9 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWClkTagBar+\fP \(en Button3 toggleview 
 .ITEM
-\f(CWClkTagBar+MODKEY\fP \(en Button1 tag 
+\f(CWClkTagBar+MOD\fP \(en Button1 tag 
 .ITEM
-\f(CWClkTagBar+MODKEY\fP \(en Button3 toggletag 
+\f(CWClkTagBar+MOD\fP \(en Button3 toggletag 
 .ITEM
 \f(CWClkTagBar+\fP \(en Button4 1 
 .ITEM
@@ -676,7 +676,7 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWClkRootWin+\fP \(en Button2 togglebar 
 .ITEM
-\f(CWClkRootWin+MODKEY\fP \(en Button2 1 
+\f(CWClkRootWin+MOD\fP \(en Button2 1 
 .LIST OFF
 .HEADING 3 "ST"
 .LI

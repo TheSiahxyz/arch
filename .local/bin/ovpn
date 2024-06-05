@@ -1,10 +1,10 @@
 #!/bin/sh
 
 [ -n "$(cat /sys/class/net/tun*/operstate 2>/dev/null)" ] && {
-    nmcli connection down "$VPN" >/dev/null 2>&1
-    notify-send "📡 VPN: OFF"
+    nmcli connection down "$THESIAH_VPN" >/dev/null 2>&1
+    notify-send "📡 THESIAH_VPN: OFF"
 } || {
-    nmcli connection up "$VPN" >/dev/null 2>&1
-    notify-send "📡 VPN: ON"   
+    nmcli connection up "$THESIAH_VPN" >/dev/null 2>&1
+    notify-send "📡 THESIAH_VPN: ON"   
 }
 kill -38 "$(pidof "${STATUSBAR:-dwmblocks}")"
