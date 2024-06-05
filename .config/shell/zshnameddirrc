@@ -98,6 +98,7 @@ hash -d vnu=/home/si/.config/newsboat/urls
 hash -d vpf=/home/si/.local/bin/passfzf 
 hash -d vpi=/home/si/.local/bin/pacinstall 
 hash -d Vsm=/etc/samba/smb.conf 
+hash -d vss=/home/si/.local/share/thesiah/snippets 
 hash -d vst=/home/si/.config/starship/starship.toml 
 hash -d vsx=/home/si/.config/nsxiv/exec/key-handler 
 hash -d vtm=/home/si/.config/tmux/tmux.conf 

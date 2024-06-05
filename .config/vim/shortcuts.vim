@@ -98,6 +98,7 @@ nmap <localleader>vnu :e /home/si/.config/newsboat/urls<cr>
 nmap <localleader>vpf :e /home/si/.local/bin/passfzf<cr>
 nmap <localleader>vpi :e /home/si/.local/bin/pacinstall<cr>
 nmap <localleader>Vsm :e /etc/samba/smb.conf<cr>
+nmap <localleader>vss :e /home/si/.local/share/thesiah/snippets<cr>
 nmap <localleader>vst :e /home/si/.config/starship/starship.toml<cr>
 nmap <localleader>vsx :e /home/si/.config/nsxiv/exec/key-handler<cr>
 nmap <localleader>vtm :e /home/si/.config/tmux/tmux.conf<cr>
