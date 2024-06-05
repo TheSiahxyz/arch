@@ -41,6 +41,6 @@ else
 		exit 1
 	fi
 	# Run stow to ensure all new dotfiles are linked, targeting directories named after the OS
-	stow --target="$HOME" -v # Verbose output
+	stow -v . # Verbose output
 	printf "${GREEN}Dotfiles successfully linked.${NC}\n"
 fi
