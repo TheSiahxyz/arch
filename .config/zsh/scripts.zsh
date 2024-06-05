@@ -34,9 +34,9 @@ gcgts() {
     git clone "${THESIAH_GIT:-git@git.${THESIAH:-thesiah.xyz}}":"{$1}".git
 }
 
-gphm() {
+gph() {
     branch="$(git rev-parse --abbrev-ref HEAD)"
-    [[ -z "$1" ]] || git push "$1" "$branch" && git push && echo "hi"
+    [[ -z "$1" ]] && git push home "$branch" && git push || git push "$1" "$branch" && git push
 }
 
 
