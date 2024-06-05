@@ -23,7 +23,7 @@ filter() {
 	fi
 }
 
-# pidof -x sb-mpdup >/dev/null 2>&1 || sb-mpdup >/dev/null 2>&1 &
+pidof -x sb-mpdup >/dev/null 2>&1 || sb-mpdup >/dev/null 2>&1 &
 
 # Handling interaction based on button press
 case $BLOCK_BUTTON in
@@ -37,11 +37,10 @@ case $BLOCK_BUTTON in
 - 🔀 if random on
 - Left click opens ncmpcpp
 - Middle click pauses
-- Scroll changes track" ;;
-    4) mpc prev | filter ;; # scroll up, previous
+- Scroll changes track" ;; 4) mpc prev | filter ;; # scroll up, previous
     5) mpc next | filter ;; # scroll down, next
     6) mpc status | filter ; setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
     *) mpc status | filter ;; # default, show current status
 esac
 
-kill -35 "$(pidof "${STATUSBAR:-dwmblocks}")"
+kill -45 "$(pidof "${STATUSBAR:-dwmblocks}")"
