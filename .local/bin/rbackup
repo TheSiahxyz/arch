@@ -87,6 +87,7 @@ sync_server() {
     ssh "$THESIAH_SERVER" "echo 'wen=\"cd /var/www/nextcloud && ls -A\" ' >> /root/.config/shell/rootshortcutrc"
     ssh "$THESIAH_SERVER" "echo 'wep=\"cd /var/www/prosody && ls -A\" ' >> /root/.config/shell/rootshortcutrc"
     ssh "$THESIAH_SERVER" "echo 'wet=\"cd /var/www/thesiah && ls -A\" ' >> /root/.config/shell/rootshortcutrc"
+    ssh "$THESIAH_SERVER" "echo 'gng=\"cd /etc/nginx/sites-available && ls -A\" ' >> /root/.config/shell/rootshortcutrc"
 
     # Sync Bash configuration
     rsync -vrazPlu --delete "$bash_path" "$THESIAH_SERVER:/root/.config/"

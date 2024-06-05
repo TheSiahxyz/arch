@@ -707,7 +707,7 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWTERMMOD+U\fP \(en zoom +2 
 .ITEM
-\f(CWTERMMOD+parenright\fP \(en zoomreset 
+\f(CWTERMMOD+plus\fP \(en zoomreset 
 .LIST OFF
 .HEADING 5 "Copies"
 .LI
@@ -719,6 +719,11 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 \f(CWMOD+c\fP \(en externalpipe copyurlcmd 
 .ITEM
 \f(CWMOD+o\fP \(en externalpipe copyoutput 
+.LIST OFF
+.HEADING 5 "Fonts"
+.LI
+.ITEM
+\f(CWTERMMOD+I\fP \(en cyclefonts {}
 .LIST OFF
 .HEADING 5 "Pastes"
 .LI
