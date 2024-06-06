@@ -12,25 +12,25 @@ if $USER != "root"
     let g:netrw_home = $XDG_DATA_HOME."/vim"
     call mkdir($XDG_DATA_HOME."/vim/spell", 'p')
 
-    set backupdir=$XDG_STATE_HOME/vim/backup | call mkdir(&backupdir, 'p')
-    set directory=$XDG_STATE_HOME/vim/swap   | call mkdir(&directory, 'p')
-    set undodir=$XDG_STATE_HOME/vim/undo     | call mkdir(&undodir,   'p')
-    set viewdir=$XDG_STATE_HOME/vim/view     | call mkdir(&viewdir,   'p')
+    set backupdir=$XDG_CONFIG_HOME/vim/backup | call mkdir(&backupdir, 'p')
+    set directory=$XDG_CONFIG_HOME/vim/swap   | call mkdir(&directory, 'p')
+    set undodir=$XDG_CONFIG_HOME/vim/undo     | call mkdir(&undodir,   'p')
+    set viewdir=$XDG_CONFIG_HOME/vim/view     | call mkdir(&viewdir,   'p')
 else
-    set runtimepath^=/root/vim
+    set runtimepath^=/root/.config/vim
     set runtimepath+=/root/.local/share/vim
-    set runtimepath+=/root/vim/after
+    set runtimepath+=/root/.cofig/vim/after
 
-    set packpath^=/root/.local/share/vim,/root/vim
-    set packpath+=/root/vim/after,/root/.local/share/vim/after
+    set packpath^=/root/.local/share/vim,/root/.config/vim
+    set packpath+=/root/.config/vim/after,/root/.local/share/vim/after
 
     let g:netrw_home = "/root/.local/share/vim"
     call mkdir("/root/.local/share/vim/spell", 'p')
 
-    set backupdir=/root/.local/state/vim/backup | call mkdir(&backupdir, 'p')
-    set directory=/root/.local/state/vim/swap   | call mkdir(&directory, 'p')
-    set undodir=/root/.local/state/vim/undo     | call mkdir(&undodir,   'p')
-    set viewdir=/root/.local/state/vim/view     | call mkdir(&viewdir,   'p')
+    set backupdir=/root/.config/vim/backup | call mkdir(&backupdir, 'p')
+    set directory=/root/.config/vim/swap   | call mkdir(&directory, 'p')
+    set undodir=/root/.config/vim/undo     | call mkdir(&undodir,   'p')
+    set viewdir=/root/.config/vim/view     | call mkdir(&viewdir,   'p')
 
 endif
 

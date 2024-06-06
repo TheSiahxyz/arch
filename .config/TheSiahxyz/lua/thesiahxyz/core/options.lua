@@ -28,5 +28,5 @@ vim.opt.termguicolors = true
 vim.opt.timeoutlen = 500
 vim.opt.updatetime = 500
 vim.opt.undofile = true
-vim.opt.undodir = os.getenv("HOME") .. "/.config/vim/undodir"
+vim.opt.undodir = os.getenv("HOME") .. "/.config/vim/undo"
 vim.opt.wrap = false
