@@ -78,7 +78,7 @@ cmd mkdir ${{ clear; tput cup $(($(tput lines)/3)); tput bold
     read ans
     mkdir $ans
 }}
-cmd touch ${{
+cmd mkfile ${{
     clear; tput cup $(($(tput lines)/3)); tput bold
     printf "File Name: "
     read ans
@@ -359,7 +359,7 @@ map yy copy
 
 # Create
 map Md mkdir
-map Mf touch
+map Mf mkfile
 map Ml :link
 
 # Cut

@@ -23,8 +23,6 @@ filter() {
 	fi
 }
 
-pidof -x sb-mpdup >/dev/null 2>&1 || sb-mpdup >/dev/null 2>&1 &
-
 # Handling interaction based on button press
 case $BLOCK_BUTTON in
     1) mpc status | filter ; setsid "$TERMINAL" -e ncmpcpp ;; # left click, opens ncmpcpp
@@ -42,5 +40,3 @@ case $BLOCK_BUTTON in
     6) mpc status | filter ; setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
     *) mpc status | filter ;; # default, show current status
 esac
-
-kill -45 "$(pidof "${STATUSBAR:-dwmblocks}")"
