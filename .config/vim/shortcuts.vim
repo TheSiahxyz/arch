@@ -35,7 +35,7 @@ nmap <localleader>gdc :Explore /home/si/Documents<cr>
 nmap <localleader>gdn :Explore /home/si/Downloads<cr>
 nmap <localleader>gmu :Explore /home/si/Music<cr>
 nmap <localleader>gmx :Explore /home/si/.mozilla/firefox/si.default<cr>
-nmap <localleader>gob :Explore /home/si/Obsidian/SI<cr>
+nmap <localleader>gob :Explore /home/si/Private/git/Obsidian/SI<cr>
 nmap <localleader>gpb :Explore /home/si/Public<cr>
 nmap <localleader>gpp :Explore /home/si/Pictures<cr>
 nmap <localleader>gpr :Explore /home/si/Pictures/resources<cr>
@@ -71,9 +71,9 @@ nmap <localleader>tr :Explore /home/si/.local/share/Trash/files<cr>
 nmap <localleader>ts :Explore /home/si/.local/share/thesiah<cr>
 nmap <localleader>tt :Explore /home/si/.local/state<cr>
 nmap <localleader>vwk :Explore /home/si/.local/share/vimwiki<cr>
-nmap <localleader>web :Explore /home/si/THESIAH<cr>
-nmap <localleader>wep :Explore /home/si/THESIAH/public<cr>
-nmap <localleader>wes :Explore /home/si/THESIAH/static<cr>
+nmap <localleader>web :Explore /home/si/Private/git/THESIAH<cr>
+nmap <localleader>wep :Explore /home/si/Private/git/THESIAH/public<cr>
+nmap <localleader>wes :Explore /home/si/Private/git/THESIAH/static<cr>
 nmap <localleader>vab :e /home/si/.config/abook/addressbook<cr>
 nmap <localleader>vbc :e /home/si/.config/bash/bashrc<cr>
 nmap <localleader>vbd :e /home/si/.config/shell/bm-dirs<cr>
@@ -96,9 +96,8 @@ nmap <localleader>vnb :e /home/si/.config/ncmpcpp/bindings<cr>
 nmap <localleader>vnc :e /home/si/.config/newsboat/config<cr>
 nmap <localleader>vnu :e /home/si/.config/newsboat/urls<cr>
 nmap <localleader>vpf :e /home/si/.local/bin/passfzf<cr>
-nmap <localleader>vpi :e /home/si/.local/bin/pacinstall<cr>
 nmap <localleader>Vsm :e /etc/samba/smb.conf<cr>
-nmap <localleader>vss :e /home/si/.local/share/thesiah/snippets<cr>
+nmap <localleader>vsp :e /home/si/.local/share/thesiah/snippets<cr>
 nmap <localleader>vst :e /home/si/.config/starship/starship.toml<cr>
 nmap <localleader>vsx :e /home/si/.config/nsxiv/exec/key-handler<cr>
 nmap <localleader>vtm :e /home/si/.config/tmux/tmux.conf<cr>

@@ -21,9 +21,8 @@ vnb     ${XDG_CONFIG_HOME:-${HOME}/.config}/ncmpcpp/bindings                    
 vnc     ${XDG_CONFIG_HOME:-${HOME}/.config}/newsboat/config                     # Newsboat config (RSS reader)
 vnu     ${XDG_CONFIG_HOME:-${HOME}/.config}/newsboat/urls                       # Newsboat url (RSS reader)
 vpf     ${XDG_SCRIPTS_HOME:-${HOME}/.local/bin}/passfzf                         # Passfzf
-vpi     ${XDG_SCRIPTS_HOME:-${HOME}/.local/bin}/pacinstall                      # Pacman install
 Vsm     /etc/samba/smb.conf                                                     # Samba config
-vss     ${XDG_DATA_HOME:-${HOME}/.local/share}/thesiah/snippets                 # Snippets
+vsp     ${XDG_DATA_HOME:-${HOME}/.local/share}/thesiah/snippets                 # Snippets
 vst     ${XDG_CONFIG_HOME:-${HOME}/.config}/starship/starship.toml              # Starship
 vsx     ${XDG_CONFIG_HOME:-${HOME}/.config}/nsxiv/exec/key-handler              # Nsxiv (image viewer) key/script handler
 vtm     ${XDG_CONFIG_HOME:-${HOME}/.config}/tmux/tmux.conf                      # Tmux config

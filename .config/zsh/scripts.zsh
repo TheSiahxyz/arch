@@ -281,7 +281,7 @@ se() {
 }
 
 fdot() {
-    search_dirs=("$HOME/.dotfiles" "$HOME/.local/share/.password-store" "$HOME/.local/src/suckless" "$HOME/THESIAH" "$HOME/mac")
+    search_dirs=("$HOME/.dotfiles" "$HOME/.local/share/.password-store" "$HOME/.local/src/suckless" "$HOME/THESIAH" "$HOME/Private/git/mac")
     selected_git=$(printf "%s\n" "${search_dirs[@]}" | fzf --prompt="  " --height=~50% --layout=reverse --border --exit-0)
     [ -d "$selected_git" ] && cd "$selected_git"
 }
