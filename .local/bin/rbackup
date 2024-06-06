@@ -28,7 +28,7 @@ mount_luks() {
         SIZE_NVME1=$(sudo blockdev --getsize64 /dev/nvme1n1p1)
         [ "$SIZE_NVME1" -lt "$SIZE_NVME0" ] && TARGET_DEVICE="/dev/nvme0n1p1" || TARGET_DEVICE="/dev/nvme1n1p1"
         ${TERMINAL:-st} -n floatterm -g 60x1 -e sudo cryptsetup open "$TARGET_DEVICE" "extra"
-        sudo -A mount "/dev/mapper/extra" "/mnt/extra" -o uid="$(id -u)",gid="$(id -g)" || sudo -A mount "/dev/mapper/extra" "/mnt/extra"
+        sudo -A mount "/dev/mapper/extra" "/mnt/extra" -o uid="$(id -u)",gid="$(id -g)" 2>/dev/null || sudo -A mount "/dev/mapper/extra" "/mnt/extra"
     fi
 }
 
@@ -74,12 +74,12 @@ sync_root() {
 
 sync_server() {
     # Sync operations with explicit error checking
-    rsync -vrazPlu --delete "$thesiah_path/" "$THESIAH_SERVER:/var/www/thesiah/"
-    rsync -vrazPlu --delete "$vim_path/vimrc" "$THESIAH_SERVER:/root/.config/vim/"
-    rsync -vrazPlu --delete "$shell_path/inputrc" "$THESIAH_SERVER:/root/.config/shell/"
+    rsync -vrazPlu --delete "$thesiah_path/" "$THESIAH_SERVER:/var/www/thesiah/" 2>/dev/null
+    rsync -vrazPlu --delete "$vim_path/vimrc" "$THESIAH_SERVER:/root/.config/vim/" 2>/dev/null
+    rsync -vrazPlu --delete "$shell_path/inputrc" "$THESIAH_SERVER:/root/.config/shell/" 2>/dev/null
     sudo cp /root/.config/shell/rootshortcutrc ~/.cache/
     sudo chown -R "$USER":wheel ~/.cache/rootshortcutrc
-    rsync -vrazPlu --remove-source-files "$HOME/.cache/rootshortcutrc" "$THESIAH_SERVER:/root/.config/shell/"
+    rsync -vrazPlu --remove-source-files "$HOME/.cache/rootshortcutrc" "$THESIAH_SERVER:/root/.config/shell/" 2>/dev/null
 
     # Adding custom shortcuts to root's shell configuration on the remote system
     ssh "$THESIAH_SERVER" "echo 'web=\"cd /var/www && ls -A\" \\' >> /root/.config/shell/rootshortcutrc"
@@ -89,7 +89,7 @@ sync_server() {
     ssh "$THESIAH_SERVER" "echo 'gng=\"cd /etc/nginx/sites-available && ls -A\" \\' >> /root/.config/shell/rootshortcutrc"
 
     # Sync Bash configuration
-    rsync -vrazPlu --delete "$bash_path" "$THESIAH_SERVER:/root/.config/"
+    rsync -vrazPlu --delete "$bash_path" "$THESIAH_SERVER:/root/.config/" 2>/dev/null
     ssh "$THESIAH_SERVER" "chown -R root:root /var/www/thesiah"
     ssh "$THESIAH_SERVER" "chown -R root:root /root/.config/"
     ssh "$THESIAH_SERVER" "ln -sf /root/.config/bash/bash_profile /root/.profile"
@@ -109,13 +109,13 @@ sync_nextcloud() {
     pw="$(pass show server/nextcloud)"
     cd "$tmpdir"
     tar -C "$parent" -zcf "$base".tar.gz "$base"
-    rsync -vrazPlu --delete "$tmpdir/$base".tar.gz "$THESIAH_SERVER:/var/www/nextcloud/data/si@thesiah.xyz/files/backup/"
-    ssh "$THESIAH_SERVER" "chown -R www-date:www-data /var/www/nextcloud/data/si@thesiah.xyz/files/backup 2>/dev/null"
-    ssh "$THESIAH_SERVER" "cd /var/www/nextcloud && sudo -u www-data ./occ files:scan --path="/si@thesiah.xyz/files" 2>/dev/null"
+    rsync -vrazPlu --delete "$tmpdir/$base".tar.gz "$THESIAH_SERVER:/var/www/nextcloud/data/si@thesiah.xyz/files/backup/" 2>/dev/null
+    ssh "$THESIAH_SERVER" "chown -R www-date:www-data /var/www/nextcloud/data/si@thesiah.xyz/files/backup"
+    ssh "$THESIAH_SERVER" "cd /var/www/nextcloud && sudo -u www-data ./occ files:scan --path="/si@thesiah.xyz/files""
     rm -r "$tmpdir"
 }
 
-# mount_luks || error "Failed to mount $backup_path"
+mount_luks || error "Failed to mount $backup_path"
 echo "Backup starts to $backup_path..."
 [ -d "$backup_path" ] || mkdir -p "$backup_path"
 sync_files || error "Failed back up files"
