@@ -37,12 +37,13 @@ bindkey -M viins 'jk' vi-cmd-mode       # normal mode
 # programs
 bindkey -s '^a' '^ulfub\n'
 bindkey -s '^b' '^ubc -lq\n'
-bindkey -s '^d' '^ufD\n'
+bindkey -s '^d' '^ufdot\n'
 bindkey -s '^e' '^use\n'
 bindkey -s '^f' '^ucdi\n'
 bindkey -s '^g' '^ulfcd\n'
+bindkey -s '^x^a' '^usudo lf\n'
 bindkey -s '^x^b' '^urbackup\n'
-bindkey -s '^x^f' '^usudo lf\n'
+bindkey -s '^x^d' '^ufD\n'
 bindkey -s '^x^r' '^uhtop\n'
 bindkey -s '^x^s' '^usshadd\n'
 bindkey '^[[P' delete-char

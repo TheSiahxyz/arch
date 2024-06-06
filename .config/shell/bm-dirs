@@ -72,6 +72,6 @@ tr              ${XDG_DATA_HOME:-${HOME}/.local/share}/Trash/files
 ts              ${XDG_DATA_HOME:-${HOME}/.local/share}/thesiah
 tt              ${XDG_STATE_HOME:-${HOME}/.local/state}
 vwk             ${XDG_DATA_HOME:-${HOME}/.local/share}/vimwiki
-web             ${WEBDIR:-${HOME}/THESIAH}
-wep             ${WEBDIR:-${HOME}/THESIAH}/public
-wes             ${WEBDIR:-${HOME}/THESIAH}/static
+web             ${THESIAH_WWW:-${HOME}/THESIAH}
+wep             ${THESIAH_WWW:-${HOME}/THESIAH}/public
+wes             ${THESIAH_WWW:-${HOME}/THESIAH}/static

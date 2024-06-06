@@ -280,6 +280,12 @@ se() {
     [ -f "$HOME/.local/bin/$choice" ] && $EDITOR "$HOME/.local/bin/$choice"
 }
 
+fdot() {
+    search_dirs=("$HOME/.dotfiles" "$HOME/.local/share/.password-store" "$HOME/.local/src/suckless" "$HOME/THESIAH" "$HOME/mac")
+    selected_git=$(printf "%s\n" "${search_dirs[@]}" | fzf --prompt="  " --height=~50% --layout=reverse --border --exit-0)
+    [ -d "$selected_git" ] && cd "$selected_git"
+}
+
 
 ###########################################################################################
 ###########################################################################################
@@ -394,6 +400,10 @@ pss() {
 
 psc() {
     pass show -c $(find $PASSWORD_STORE_DIR -type f -name '*.gpg' | sed 's|^''$PASSWORD_STORE_DIR/||; s/\.gpg$//' | fzf)
+}
+
+gpgqr() {
+    qrencode -o "$1".png -t png -Sv 40 < "$1".pgp
 }
 
 
