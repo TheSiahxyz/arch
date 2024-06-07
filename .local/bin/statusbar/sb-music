@@ -19,9 +19,12 @@ filter() {
 
 		output_prefix=$([ -n "$indicators" ] && echo "$indicators")
 
-		echo "$prefix$artist - $track $pos_dur$output_prefix"
-	fi
+        [ $(echo -n "$track" | wc -m) -gt 30 ] && track="$(echo "$track" | cut -c 1-29)..."
+        echo "$prefix$artist - $track $pos_dur$output_prefix"
+    fi
 }
+
+# pidof -x sb-mpdup >/dev/null 2>&1 || sb-mpdup >/dev/null 2>&1 &
 
 # Handling interaction based on button press
 case $BLOCK_BUTTON in

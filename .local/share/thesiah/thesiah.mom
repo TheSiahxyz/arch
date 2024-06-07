@@ -415,7 +415,7 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .HEADING 5 "Traversals"
 .LI
 .ITEM
-\f(CWMOD+semicolon\fP \(en togglemark 
+\f(CWMOD+apostrophe\fP \(en togglemark 
 .ITEM
 \f(CWMOD+Tab\fP \(en swapfocus 
 .ITEM

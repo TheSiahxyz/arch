@@ -15,4 +15,4 @@ case $BLOCK_BUTTON in
 - Middle click to refresh window manager" ;;
     6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
-echo "❓ "
+echo "❓"

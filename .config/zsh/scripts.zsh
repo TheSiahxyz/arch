@@ -134,18 +134,18 @@ ctn() {
 ### --- Color --- ###
 pcol() {
     awk 'BEGIN{
-    s="/\\/\\/\\/\\/\\"; s=s s s s s s s s;
-    for (colnum = 0; colnum<77; colnum++) {
-        r = 255-(colnum*255/76);
-        g = (colnum*510/76);
-        b = (colnum*255/76);
-        if (g>255) g = 510-g;
-        printf "\033[48;2;%d;%d;%dm", r,g,b;
-        printf "\033[38;2;%d;%d;%dm", 255-r,255-g,255-b;
-        printf "%s\033[0m", substr(s,colnum+1,1);
-    }
-    printf "\n";
-    }'
+s="/\\/\\/\\/\\/\\"; s=s s s s s s s s;
+for (colnum = 0; colnum<77; colnum++) {
+    r = 255-(colnum*255/76);
+    g = (colnum*510/76);
+    b = (colnum*255/76);
+    if (g>255) g = 510-g;
+    printf "\033[48;2;%d;%d;%dm", r,g,b;
+    printf "\033[38;2;%d;%d;%dm", 255-r,255-g,255-b;
+    printf "%s\033[0m", substr(s,colnum+1,1);
+}
+printf "\n";
+}'
 }
 
 
@@ -281,7 +281,13 @@ se() {
 }
 
 fdot() {
-    search_dirs=("$HOME/.dotfiles" "$HOME/.local/share/.password-store" "$HOME/.local/src/suckless" "$HOME/THESIAH" "$HOME/Private/git/mac")
+    search_dirs=("$HOME/.dotfiles" "$HOME/.local/share/.password-store" "$HOME/.local/src/suckless")
+    git_dirs=("$HOME/Private/git")
+    for git_dir in "${git_dirs[@]}"; do
+        find "$git_dir" -mindepth 1 -maxdepth 1 -type d -print0 | while IFS= read -r -d $'\0' git_subdir; do
+            search_dirs+=("$git_subdir")
+        done
+    done
     selected_git=$(printf "%s\n" "${search_dirs[@]}" | fzf --prompt="  " --height=~50% --layout=reverse --border --exit-0)
     [ -d "$selected_git" ] && cd "$selected_git"
 }

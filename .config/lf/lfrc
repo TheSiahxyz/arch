@@ -345,6 +345,9 @@ map cx chmods
 # Clear && Unselect
 map <c-l> :clear; unselect
 
+# Compress
+map C tar
+
 # Copy
 # map yy %cp -ri -- $fs .; clear
 map Y $printf "%s" "$fx" | xclip -selection clipboard; clear
@@ -450,9 +453,6 @@ map bg $setbg "$f"
 
 # Wine
 map wi $wine "$f"
-
-# Zip
-map Z tar
 
 # shortcuts
 source "~/.config/lf/shortcutrc"
