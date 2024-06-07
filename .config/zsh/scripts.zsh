@@ -282,9 +282,9 @@ se() {
 
 fdot() {
     search_dirs=("$HOME/.dotfiles" "$HOME/.local/share/.password-store" "$HOME/.local/src/suckless")
-    git_dirs=("$HOME/Private/git")
+    git_dirs=("$HOME/Private/git" "$HOME/Public/git")
     for git_dir in "${git_dirs[@]}"; do
-        find "$git_dir" -mindepth 1 -maxdepth 1 -type d -print0 | while IFS= read -r -d $'\0' git_subdir; do
+        find "$git_dir" -mindepth 1 -maxdepth 1 -type d -print0 2>/dev/null | while IFS= read -r -d $'\0' git_subdir; do
             search_dirs+=("$git_subdir")
         done
     done
