@@ -281,14 +281,25 @@ se() {
 }
 
 fdot() {
-    search_dirs=("$HOME/.dotfiles" "$HOME/.local/share/.password-store" "$HOME/.local/src/suckless")
+    search_dirs=()
+    initial_dirs=("$HOME/.dotfiles" "$HOME/.local/share/.password-store" "$HOME/.local/src/suckless")
     git_dirs=("$HOME/Private/git" "$HOME/Public/git")
+
+    for dir in "${initial_dirs[@]}"; do
+        [ -d "$dir" ] && [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ] && search_dirs+=("! $dir") || search_dirs+=("$dir")
+    done
     for git_dir in "${git_dirs[@]}"; do
-        find "$git_dir" -mindepth 1 -maxdepth 1 -type d -print0 2>/dev/null | while IFS= read -r -d $'\0' git_subdir; do
-            search_dirs+=("$git_subdir")
-        done
+        if [ -d "$git_dir" ]; then
+            find "$git_dir" -mindepth 1 -maxdepth 1 -type d -exec bash -c '
+                for dir; do
+                    [ -d "$dir" ] && [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ] && echo "! $dir" || echo "$dir"
+                done' _ {} +
+        fi
+    done | while IFS= read -r selected_git; do
+        search_dirs+=("$selected_git")
     done
     selected_git=$(printf "%s\n" "${search_dirs[@]}" | fzf --prompt="  " --height=~50% --layout=reverse --border --exit-0)
+    selected_git=${selected_git%!}
     [ -d "$selected_git" ] && cd "$selected_git"
 }
 
