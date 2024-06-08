@@ -23,13 +23,9 @@ test -n "$chosen"
 mountpath="$(sudo lsblk -no "mountpoints" $(df /${chosen#*/} | tail -n 1 | awk '{print $1}'))"
 sudo -A umount -l "/${chosen#*/}"
 [ "/media/${chosen##*/}" = "$mountpath" ] && [ $rmcheck ] && {
-    [ -e "/${chosen#*/}" ] && {
+    [ -e "/${chosen#*/}" ] && [ -z "$(ls -A "/${chosen#*/}")" ] && (rm -rf "/${chosen#*/}" || sudo rm -rf "/${chosen#*/}") || {
         rmdiryn=$(printf "No\\nYes" | dmenu -i -p "Do you want to delete /${chosen#*/}?")
-        [ "$rmdiryn" = "Yes" ] && {
-            rm -rf "/${chosen#*/}" 2>/dev/null || sudo -A rm -r "/${chosen#*/}"
-        }
-    } || {
-        rm -r "/${chosen#*/}" || sudo rm -r "/${chosen#*/}"
+        [ "$rmdiryn" = "Yes" ] && (rm -rf "/${chosen#*/}" 2>/dev/null || sudo -A rm -r "/${chosen#*/}")
     }
 }
 notify-send "⏏️ Device unmounted." "$chosen has been unmounted."
