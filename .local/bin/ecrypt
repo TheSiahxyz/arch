@@ -11,7 +11,7 @@ mount_luks() {
 }
 
 mount_encrypted() {
-    echo "$PASSPHRASE" | sudo mount -t ecryptfs "$1" "$2" \
+    ! mount | grep -q " $1 " && echo "$PASSPHRASE" | sudo mount -t ecryptfs "$1" "$2" \
         -o ecryptfs_cipher=aes,ecryptfs_key_bytes=32,ecryptfs_passthrough=no,ecryptfs_enable_filename_crypto=yes,ecryptfs_sig=$ECRYPTFS_SIG,ecryptfs_fnek_sig=$FNEK_SIG,passwd=$(printf '%s' "$PASSPHRASE")
 }
 
@@ -25,8 +25,7 @@ attempt_mount() {
         FNEK_SIG=$ECRYPTFS_SIG
         PASSPHRASE=$(pass show encryption/ecryptfs)
         [ -z "$PASSPHRASE" ] && { notify-send "❌ Failed to retrieve passphrase."; exit 1; }
-        mount_luks
-        mount_encrypted "$1" "$2" && notify-send "📂 Unlocked: $3" || notify-send "❌ Failed to unlock: $3"
+        mount_luks && mount_encrypted "$1" "$2" && notify-send "📂 Unlocked: $3" || notify-send "❌ Failed to unlock: $3"
     fi
 }
 
