@@ -2,25 +2,17 @@
 
 filter() {
 	if ps -C mpd >/dev/null 2>&1; then
-		status=$(mpc status)
-		artist=$(mpc current -f %artist%)
-		track=$(mpc current -f %title%)
-		pos_dur=$(echo "$status" | grep -o '[0-9]\+:[0-9]\+/[0-9]\+:[0-9]\+')
-
-		indicators=""
-		echo "$status" | grep -q 'random: on' && indicators="${indicators}🔀"
-		echo "$status" | grep -q 'repeat: on' && indicators="${indicators}🔁"
-		echo "$status" | grep -q 'single: on' && indicators="${indicators}🔂"
-
+        [ $(echo -n "$(mpc current -f %artist%)" | wc -m) -gt 30 ] && artist="$(echo "$(mpc current -f %artist%)" | cut -c 1-24)..." || artist="$(mpc current -f %artist%)"
+        [ $(echo -n "$(mpc current -f %title%)" | wc -m) -gt 30 ] && title="$(echo "$(mpc current -f %title%)" | cut -c 1-24)..." || title="$(mpc current -f %title%)"
 		prefix=""
-		echo "$status" | grep -q 'playing' && prefix="🎵"
-		echo "$status" | grep -q 'paused' && prefix="⏸"
+		echo "$(mpc status)" | grep -q 'playing' && prefix="🎵"
+		echo "$(mpc status)" | grep -q 'paused' && prefix="⏸"
 		[ -z "$prefix" ] && return
-
-		output_prefix=$([ -n "$indicators" ] && echo "$indicators")
-
-        [ $(echo -n "$track" | wc -m) -gt 30 ] && track="$(echo "$track" | cut -c 1-29)..."
-        echo "$prefix$artist - $track $pos_dur$output_prefix"
+		indicators=""
+		echo "$(mpc status)" | grep -q 'random: on' && indicators="${indicators}🔀"
+		echo "$(mpc status)" | grep -q 'repeat: on' && indicators="${indicators}🔁"
+		echo "$(mpc status)" | grep -q 'single: on' && indicators="${indicators}🔂"
+        echo "$prefix$artist - $title $(echo "$(mpc status)" | grep -o '[0-9]\+:[0-9]\+/[0-9]\+:[0-9]\+')$([ -n "$indicators" ] && echo "$indicators")"
     fi
 }
 

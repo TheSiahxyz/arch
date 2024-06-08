@@ -312,6 +312,9 @@ cmd zi ${{
 	result="$(zoxide query -i | sed 's/\\/\\\\/g;s/"/\\"/g')"
 	lf -remote "send $id cd \"$result\""
 }}
+cmd on-cd &{{
+        zoxide add "$PWD"
+}}
 cmd follow_link %{{
     lf -remote "send ${id} select '$(readlink $f)'"
 }}

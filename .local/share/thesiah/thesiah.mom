@@ -105,13 +105,13 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .HEADING 5 "Audio Controls"
 .LI
 .ITEM
-\f(CWMOD+m\fP \(en mpc random on; mpc load entire; mpc play; sleep 1 && mpc volume 35
+\f(CWMOD+m\fP \(en mpc random on; mpc load entire; mpc play; sleep 1 && mpc volume 50
 .ITEM
 \f(CWMOD+Shift+m\fP \(en mpdmenu  
 .ITEM
 \f(CWMOD+Ctrl+m\fP \(en mpc stop; sleep 1 && mpc clear
 .ITEM
-\f(CWMOD+Ctrl+Shift+m\fP \(en delmusic  
+\f(CWMOD2+m\fP \(en delmusic  
 .ITEM
 \f(CWMOD+p\fP \(en mpc toggle
 .ITEM
@@ -782,6 +782,8 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 I've mapped those extra buttons that some keyboards have (play and pause
 buttons, screen brightness, email, web browsing buttons, etc.) to what you
 would expect.
+.PP
+Check files under .config/shell, .config/zsh, and .local/share/thesiah. There are also files under .config.
 .HEADING 1 "Configuration"
 .PP
 Dotfiles/settings files are located in \f(CW~/.config/\fP.
