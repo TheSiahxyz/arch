@@ -27,24 +27,29 @@ bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
 
-# edit line in vim with ctrl-e:
-bindkey '^v' edit-command-line          # ctrl-e
+# edit line in vim with ctrl-v in viins and ctrl-e in vicmd
+bindkey '^v' edit-command-line          # ctrl-v
 bindkey -M vicmd '^[[P' vi-delete-char  # delete
 bindkey -M vicmd '^e' edit-command-line # ctrl-e
 bindkey -M visual '^[[P' vi-delete      # delete
 bindkey -M viins 'jk' vi-cmd-mode       # normal mode
 
 # programs
-bindkey -s '^a' '^ulfub\n'
 bindkey -s '^b' '^ubc -lq\n'
-bindkey -s '^d' '^ufdot\n'
-bindkey -s '^e' '^use\n'
-bindkey -s '^f' '^ucdi\n'
-bindkey -s '^g' '^ulfcd\n'
-bindkey -s '^x^a' '^usudo lf\n'
+bindkey -s '^d' '^ucdi\n'
+bindkey -s '^f' '^uff\n'
+bindkey -s '^g' '^ufdot\n'
+bindkey -s '^k' '^uhtop\n'
+bindkey -s '^n' '^unv .\n'
+bindkey -s '^o' '^ulf\n'
+bindkey -s '^p' '^upd\n'
+bindkey -s '^t' '^utm\n'
+bindkey -s '^y' '^ulfcd\n'
+bindkey -s '^z' '^ucdo\n'
+bindkey -s '^_' '^use\n'
 bindkey -s '^x^b' '^urbackup\n'
 bindkey -s '^x^d' '^ufD\n'
-bindkey -s '^x^r' '^uhtop\n'
+bindkey -s '^x^o' '^usudo lf\n'
 bindkey -s '^x^s' '^usshadd\n'
 bindkey '^[[P' delete-char
 

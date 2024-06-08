@@ -260,7 +260,7 @@ bm() {
 # files in root
 ff() {
     local file
-    file=$(find "$HOME" -type f | fzf) && cd "$(dirname "$file")"
+    file=$(find "$HOME" -type f 2>/dev/null | fzf) && cd "$(dirname "$file")"
 }
 
 # files in sub
@@ -271,7 +271,7 @@ fF() {
 
 # directory
 fD() {
-    cd $(find * -type d | fzf)
+    cd $(find "$HOME" -type d 2>/dev/null | fzf)
 }
 
 # search bin
