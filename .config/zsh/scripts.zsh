@@ -299,7 +299,7 @@ fdot() {
         search_dirs+=("$selected_git")
     done
     selected_git=$(printf "%s\n" "${search_dirs[@]}" | fzf --prompt="  " --height=~50% --layout=reverse --border --exit-0)
-    selected_git=${selected_git%!}
+    selected_git=${selected_git#! }
     [ -d "$selected_git" ] && cd "$selected_git"
 }
 
