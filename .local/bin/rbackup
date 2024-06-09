@@ -108,18 +108,18 @@ sync_nextcloud() {
     tmpdir="$(mktemp -d)"
     pw="$(pass show server/nextcloud)"
     cd "$tmpdir"
-    tar -C "$parent" -zcf "$base".tar.gz "$base" 2>/dev/null
-    rsync -vrazPlu --delete "$tmpdir/$base".tar.gz "$THESIAH_SERVER:/var/www/nextcloud/data/si@thesiah.xyz/files/backup/" 2>/dev/null
-    ssh "$THESIAH_SERVER" "chown -R www-data:www-data /var/www/nextcloud/data/si@thesiah.xyz/files/backup" 2>/dev/null
-    ssh "$THESIAH_SERVER" "cd /var/www/nextcloud && sudo -u www-data ./occ files:scan --path="/si@thesiah.xyz/files""
+    tar -C "$parent" -zcf "$base".tar.gz "$base" >/dev/null 2>&1
+    rsync -vrazPlu --delete "$tmpdir/$base".tar.gz "$THESIAH_SERVER:/var/www/nextcloud/data/si@thesiah.xyz/files/backup/" >/dev/null 2>&1
+    ssh "$THESIAH_SERVER" "chown -R www-data:www-data /var/www/nextcloud/data/si@thesiah.xyz/files/backup" >/dev/null 2>&1
+    ssh "$THESIAH_SERVER" "cd /var/www/nextcloud && sudo -u www-data ./occ files:scan --path="/si@thesiah.xyz/files"" >/dev/null 2>&1
     rm -r "$tmpdir"
 }
 
-mount_luks && echo "Success to sync mount_luks" || error "Failed to mount $backup_path"
 echo "Backup starts to $backup_path..."
+mount_luks && echo "Mount backup drive.. " && echo "Success to mount luks drive" || error "Failed to mount $backup_path"
 [ -d "$backup_path" ] || mkdir -p "$backup_path"
-sync_files && echo "Success to sync sync_files" || error "Failed back up files"
-sync_root && echo "Success to sync sync_root" || error "Failed back up root"
-sync_server && echo "Success to sync sync_server" || error "Failed back up server"
-sync_nextcloud && echo "Success to sync sync_nextcloud" || error "Failed back up nextcloud"
+sync_files && echo "Sync home files..." && echo "Success to sync files" || error "Failed back up files"
+sync_root && echo "Sync root files..." && echo "Success to sync root" || error "Failed back up root"
+sync_server && echo "Sync server files..." && echo "Success to sync server" || error "Failed back up server"
+sync_nextcloud && echo "Sync files to nextcloud" && echo "Success to sync nextcloud" || error "Failed back up nextcloud"
 echo "Done!"
