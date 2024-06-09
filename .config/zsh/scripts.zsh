@@ -260,7 +260,7 @@ bm() {
 # files in root
 ff() {
     local file
-    file=$(find "$HOME" -type f 2>/dev/null | fzf) && cd "$(dirname "$file")"
+    file=$(find "$HOME" -type f 2>/dev/null | fzf) && nvim "$file"
 }
 
 # files in sub
