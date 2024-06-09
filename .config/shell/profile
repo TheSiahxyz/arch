@@ -3,7 +3,7 @@
 ###################################################
 ### --- PROFILE --- ###
 ###################################################
-set -e # Exit immediately if a command exits with a non-zero status.
+[ "$(tty)" = "/dev/tty1" ] && set -e # Exit immediately if a command exits with a non-zero status.
 
 ###################################################
 ### --- ENV PATH --- ###

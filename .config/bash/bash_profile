@@ -1,10 +1,10 @@
 #!/bin/sh
 
+umask 022
+
 #######################################################
 # EXPORTS
 #######################################################
-
-umask 022
 
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
