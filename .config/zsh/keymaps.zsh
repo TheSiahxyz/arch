@@ -26,6 +26,7 @@ bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
+bindkey '^[[P' delete-char
 
 # edit line in vim with ctrl-v in viins and ctrl-e in vicmd
 bindkey '^v' edit-command-line          # ctrl-v
@@ -52,7 +53,6 @@ bindkey -s '^x^d' '^ufD\n'
 bindkey -s '^x^f' '^ufF\n'
 bindkey -s '^x^o' '^usudo lf\n'
 bindkey -s '^x^s' '^usshadd\n'
-bindkey '^[[P' delete-char
 
 # man
 man-command-line() {

@@ -46,7 +46,7 @@ nmap <localleader>gti :Explore /home/si/Torrents/incomplete<cr>
 nmap <localleader>gtt :Explore /home/si/Torrents<cr>
 nmap <localleader>gvv :Explore /home/si/Videos<cr>
 nmap <localleader>gvy :Explore /home/si/Videos/Youtube<cr>
-nmap <localleader>gwo :Explore /home/si/Work<cr>
+nmap <localleader>gwo :Explore /home/si/Desktop/Work<cr>
 nmap <localleader>Hbk :Explore /mnt/extra/backup<cr>
 nmap <localleader>Hex :Explore /mnt/extra<cr>
 nmap <localleader>Hme :Explore /media<cr>

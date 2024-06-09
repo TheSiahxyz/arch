@@ -1,7 +1,7 @@
 # /Users/si/.config/tmuxinator/work.yml
 
 name: work
-root: ~/Work
+root: ~/Desktop/Work
 
 # Optional tmux socket
 # socket_name: foo
