@@ -74,7 +74,8 @@ bindkey -M viins '^s' sudo-command-line
 
 # last command output
 zle -N insert-last-command-output
-bindkey "^o" insert-last-command-output
+bindkey -M viins '^\' insert-last-command-output
 
-# bind Y to yank until end of line
-bindkey -M vicmd Y zsh-system-clipboard-vicmd-vi-yank-eol
+# bind y/Y to yank until end of line/yank whole line
+bindkey -M vicmd y zsh-system-clipboard-vicmd-vi-yank-eol
+bindkey -M vicmd Y zsh-system-clipboard-vicmd-vi-yank-whole-line
