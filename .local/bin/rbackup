@@ -74,12 +74,12 @@ sync_root() {
 
 sync_server() {
     # Sync operations with explicit error checking
-    rsync -vrazPlu --delete "$thesiah_path/" "$THESIAH_SERVER:/var/www/thesiah/" 2>/dev/null
-    rsync -vrazPlu --delete "$vim_path/vimrc" "$THESIAH_SERVER:/root/.config/vim/" 2>/dev/null
-    rsync -vrazPlu --delete "$shell_path/inputrc" "$THESIAH_SERVER:/root/.config/shell/" 2>/dev/null
+    rsync -vrazPlu --delete "$thesiah_path/" "$THESIAH_SERVER:/var/www/thesiah/" >/dev/null 2>&1
+    rsync -vrazPlu --delete "$vim_path/vimrc" "$THESIAH_SERVER:/root/.config/vim/" >/dev/null 2>&1
+    rsync -vrazPlu --delete "$shell_path/inputrc" "$THESIAH_SERVER:/root/.config/shell/" >/dev/null 2>&1
     sudo cp /root/.config/shell/rootshortcutrc ~/.cache/
     sudo chown -R "$USER":wheel ~/.cache/rootshortcutrc
-    rsync -vrazPlu --remove-source-files "$HOME/.cache/rootshortcutrc" "$THESIAH_SERVER:/root/.config/shell/" 2>/dev/null
+    rsync -vrazPlu --remove-source-files "$HOME/.cache/rootshortcutrc" "$THESIAH_SERVER:/root/.config/shell/" >/dev/null 2>&1
 
     # Adding custom shortcuts to root's shell configuration on the remote system
     ssh "$THESIAH_SERVER" "echo 'web=\"cd /var/www && ls -A\" \\' >> /root/.config/shell/rootshortcutrc"
@@ -89,7 +89,7 @@ sync_server() {
     ssh "$THESIAH_SERVER" "echo 'gng=\"cd /etc/nginx/sites-available && ls -A\" \\' >> /root/.config/shell/rootshortcutrc"
 
     # Sync Bash configuration
-    rsync -vrazPlu --delete "$bash_path" "$THESIAH_SERVER:/root/.config/" 2>/dev/null
+    rsync -vrazPlu --delete "$bash_path" "$THESIAH_SERVER:/root/.config/" >/dev/null 2>&1
     ssh "$THESIAH_SERVER" "chown -R root:root /var/www/thesiah"
     ssh "$THESIAH_SERVER" "chown -R root:root /root/.config/"
     ssh "$THESIAH_SERVER" "ln -sf /root/.config/bash/bash_profile /root/.profile"
@@ -108,18 +108,18 @@ sync_nextcloud() {
     tmpdir="$(mktemp -d)"
     pw="$(pass show server/nextcloud)"
     cd "$tmpdir"
-    tar -C "$parent" -zcf "$base".tar.gz "$base"
+    tar -C "$parent" -zcf "$base".tar.gz "$base" 2>/dev/null
     rsync -vrazPlu --delete "$tmpdir/$base".tar.gz "$THESIAH_SERVER:/var/www/nextcloud/data/si@thesiah.xyz/files/backup/" 2>/dev/null
-    ssh "$THESIAH_SERVER" "chown -R www-date:www-data /var/www/nextcloud/data/si@thesiah.xyz/files/backup"
+    ssh "$THESIAH_SERVER" "chown -R www-data:www-data /var/www/nextcloud/data/si@thesiah.xyz/files/backup" 2>/dev/null
     ssh "$THESIAH_SERVER" "cd /var/www/nextcloud && sudo -u www-data ./occ files:scan --path="/si@thesiah.xyz/files""
     rm -r "$tmpdir"
 }
 
-mount_luks || error "Failed to mount $backup_path"
+mount_luks && echo "Success to sync mount_luks" || error "Failed to mount $backup_path"
 echo "Backup starts to $backup_path..."
 [ -d "$backup_path" ] || mkdir -p "$backup_path"
-sync_files || error "Failed back up files"
-sync_root || error "Failed back up root"
-sync_server || error "Failed back up server"
-sync_nextcloud || error "Failed back up nextcloud"
+sync_files && echo "Success to sync sync_files" || error "Failed back up files"
+sync_root && echo "Success to sync sync_root" || error "Failed back up root"
+sync_server && echo "Success to sync sync_server" || error "Failed back up server"
+sync_nextcloud && echo "Success to sync sync_nextcloud" || error "Failed back up nextcloud"
 echo "Done!"
