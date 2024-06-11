@@ -1,3 +1,5 @@
 #!/bin/sh
 
-notify-send "✅ Transmission-daemon" "$TR_TORRENT_NAME has completely downloaded."
+transmission-remote -n "$USER" -l | grep 100% | awk '{print $1}'| paste -d, -s | xargs -i transmission-remote -t {} -r &&
+    notify-send "✅ Transmission-daemon" "$TR_TORRENT_NAME has completely downloaded.
+     Delete $TR_TORRENT_NAME torrent file."
