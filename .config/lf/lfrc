@@ -455,7 +455,7 @@ map ff $lf -remote "send $id select \"$(find . -type f | fzf)\""
 map J zi
 map <c-f> :fzf_search
 map gl follow_link
-map pv z
+map zz z
 
 # Wallpaper
 map bg $setbg "$f"

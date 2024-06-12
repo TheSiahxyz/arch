@@ -280,73 +280,37 @@ se() {
     [ -f "$HOME/.local/bin/$choice" ] && $EDITOR "$HOME/.local/bin/$choice"
 }
 
-# git directory
 fdot() {
     search_dirs=()
     initial_dirs=("$HOME/.dotfiles" "$HOME/.local/share/.password-store" "$HOME/.local/src/suckless")
     git_dirs=("$HOME/Private/git" "$HOME/Public/git")
 
-    # Function to check if a directory is a Git repository
-    is_git_repo() {
-        local dir="$1"
-        [ -d "$dir/.git" ] && git -C "$dir" rev-parse --is-inside-work-tree &>/dev/null
-    }
-
-    # Function to check git status and pull if necessary
-    find_git_status() {
-        local dir="$1"
-        if is_git_repo "$dir"; then
-            if [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ]; then
-                echo "! $dir"
-            else
-                git -C "$dir" fetch --quiet
-                local LOCAL=$(git -C "$dir" rev-parse @)
-                local REMOTE=$(git -C "$dir" rev-parse @{u})
-                local BASE=$(git -C "$dir" merge-base @ @{u})
-
-                if [ "$LOCAL" != "$REMOTE" ] && [ "$LOCAL" = "$BASE" ]; then
-                    echo "? $dir"
-                else
-                    echo "$dir"
-                fi
-            fi
-        fi
-    }
-
-    # Check initial directories
     for dir in "${initial_dirs[@]}"; do
-        if [ -d "$dir" ]; then
-            search_dirs+=("$(find_git_status "$dir")")
-        fi
+        # [ -d "$dir" ] && [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ] && search_dirs+=("! $dir") || search_dirs+=("$dir")
+        [ -d "$dir" ] &&
+            {
+                [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ] && search_dirs+=("! $dir") || search_dirs+=("$dir")
+                git -C "$dir" fetch --quiet
+                [ "$(git -C "$dir" rev-parse @)" != "$(git -C "$dir" rev-parse @{u})" ] && [ "$(git -C "$dir" rev-parse @)" = "$(git -C "$dir" merge-base @ @{u})" ] && search_dirs+=("? $dir") || search_dirs+=("$dir")
+            }
     done
-
-    # Check git directories
     for git_dir in "${git_dirs[@]}"; do
         if [ -d "$git_dir" ]; then
-            if is_git_repo "$git_dir"; then
-                find "$git_dir" -mindepth 1 -maxdepth 1 -type d -print0 | xargs -0 -n1 -P4 zsh -c '
-                    for dir; do
-                        find_git_status "$dir"
-                    done' _ |
-                while IFS= read -r selected_git; do
-                    search_dirs+=("$selected_git")
-                done
-            fi
+            find "$git_dir" -mindepth 1 -maxdepth 1 -type d -exec bash -c '
+                for dir; do
+                    [ -d "$dir" ] && [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ] && echo "! $dir" || echo "$dir"
+                    git -C "$dir" fetch --quiet
+                    [ "$(git -C "$dir" rev-parse @)" != "$(git -C "$dir" rev-parse @{u})" ] && [ "$(git -C "$dir" rev-parse @)" = "$(git -C "$dir" merge-base @ @{u})" ] && search_dirs+=("? $dir") || search_dirs+=("$dir")
+                done' _ {} +
         fi
+    done | while IFS= read -r selected_git; do
+        search_dirs+=("$selected_git")
     done
-
-    selected_git=$(printf "%s\n" "${search_dirs[@]}" | grep -v "^$" | fzf --prompt="  " --height=~50% --layout=reverse --border --exit-0)
+    selected_git=$(printf "%s\n" "${search_dirs[@]}" | fzf --prompt="  " --height=~50% --layout=reverse --border --exit-0)
     selected_git=${selected_git#! }
     selected_git=${selected_git#? }
-
-    if [ -d "$selected_git" ]; then
-        if [[ $selected_git == *"? "* ]]; then
-            git -C "$selected_git" pull
-        fi
-        cd "$selected_git"
-    fi
+    [ -d "$selected_git" ] && cd "$selected_git"
 }
-
 
 ###########################################################################################
 ###########################################################################################
