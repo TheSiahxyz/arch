@@ -281,8 +281,6 @@ se() {
 }
 
 # git directory
-#!/bin/zsh
-
 fdot() {
     search_dirs=()
     initial_dirs=("$HOME/.dotfiles" "$HOME/.local/share/.password-store" "$HOME/.local/src/suckless")
