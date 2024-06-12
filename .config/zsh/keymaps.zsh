@@ -12,6 +12,7 @@ zle-line-init() {
     zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
     echo -ne "\e[5 q"
 }
+zle -N zle-line-init
 preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
 ### --- Key Bindings --- ###
@@ -67,7 +68,7 @@ bindkey -M viins '^x^m' man-command-line
 sudo-command-line() {
     command_line "sudo"
 }
-zle -N command-line
+zle -N sudo-command-line
 bindkey -M emacs '^s' sudo-command-line
 bindkey -M vicmd '^s' sudo-command-line
 bindkey -M viins '^s' sudo-command-line
@@ -77,5 +78,5 @@ zle -N insert-last-command-output
 bindkey -M viins '^\' insert-last-command-output
 
 # bind y/Y to yank until end of line/yank whole line
-bindkey -M vicmd y zsh-system-clipboard-vicmd-vi-yank-eol
-bindkey -M vicmd Y zsh-system-clipboard-vicmd-vi-yank-whole-line
+# bindkey -M vicmd y zsh-system-clipboard-vicmd-vi-yank-eol
+# bindkey -M vicmd Y zsh-system-clipboard-vicmd-vi-yank-whole-line

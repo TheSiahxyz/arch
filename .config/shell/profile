@@ -153,7 +153,7 @@ export PASSWORD_STORE_CLIP_TIME=180 # Specifies the number of seconds to wait be
 # export PASSWORD_STORE_CHARACTER_SET="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*=[]{}|:,.?/"
 export PASSWORD_STORE_ENABLE_EXTENSIONS="true"                         # This environment variable must be set to "true" for extensions to be enabled.
 export PASSWORD_STORE_EXTENSIONS_DIR="$PASSWORD_STORE_DIR/.extensions" # The location to look for executable extension files, by default PASSWORD_STORE_DIR/.extensions.
-export BASH_COMPLETION_USER_DIR=$XDG_DATA_HOME/bash-completion/completions
+# export BASH_COMPLETION_USER_DIR=$XDG_DATA_HOME/bash-completion/completions
 
 ### --- POWERLEVEL10K --- ###
 export POWERLEVEL9K_INSTALLATION_DIR="/usr/share/zsh-theme-powerlevel10k"

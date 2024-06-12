@@ -32,6 +32,7 @@ nmap <localleader>czc :Explore /home/si/.config/zsh<cr>
 nmap <localleader>dot :Explore /home/si/.dotfiles<cr>
 nmap <localleader>gbk :Explore /home/si/.backup<cr>
 nmap <localleader>gdc :Explore /home/si/Documents<cr>
+nmap <localleader>gdk :Explore /home/si/Desktop<cr>
 nmap <localleader>gdn :Explore /home/si/Downloads<cr>
 nmap <localleader>gmu :Explore /home/si/Music<cr>
 nmap <localleader>gmx :Explore /home/si/.mozilla/firefox/si.default<cr>
@@ -62,6 +63,8 @@ nmap <localleader>Hvv :Explore /mnt/extra/videos<cr>
 nmap <localleader>pae :Explore /home/si/.local/share/.password-store/exported_keys<cr>
 nmap <localleader>pah :Explore /home/si/.local/share/.password-store/ssh<cr>
 nmap <localleader>pas :Explore /home/si/.local/share/.password-store<cr>
+nmap <localleader>pbg :Explore /home/si/Public/git<cr>
+nmap <localleader>pvg :Explore /home/si/Private/git<cr>
 nmap <localleader>shr :Explore /home/si/.local/share<cr>
 nmap <localleader>shz :Explore /home/si/.local/share/zsh<cr>
 nmap <localleader>sl :Explore /home/si/.local/src/suckless<cr>

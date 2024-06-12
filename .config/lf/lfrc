@@ -210,7 +210,6 @@ cmd open ${{
         image/vnd.djvu|application/pdf|application/postscript) setsid -f zathura $fx >/dev/null 2>&1 ;;
         text/csv) sc-im $fx;;
         text/xml) lynx $fx;;
-        text/plain) libreoffice $fx;;
         text/troff) groff -mom $fx -Tpdf | zathura - ;;
         text/*|application/json|inode/x-empty|application/x-subrip) $EDITOR $fx;;
         image/x-xcf) setsid -f gimp $f >/dev/null 2>&1 ;;

@@ -8,7 +8,7 @@ plugins=(
     "MichaelAquilina/zsh-you-should-use"
     # "marlonrichert/zsh-autocomplete"
     "ohmyzsh/command-not-found"
-    "ohmyzsh/sudo"
+    #"ohmyzsh/sudo"
     # "romkatv/powerlevel10k"
     "wfxr/forgit"
     "zdharma-continuum/fast-syntax-highlighting"

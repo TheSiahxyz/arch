@@ -34,7 +34,7 @@ xinput list | grep 'id=' | while read -r line; do
                 ;;
         esac
     }
-    id=$(echo "$line" | grep -vi '.*keyboard.*' | grep -i '.*id.*pointer' | sed 's/.*id=\([0-9]\+\).*/\1/')
+    id=$(echo "$line" | grep -i '.*id.*pointer' | sed 's/.*id=\([0-9]\+\).*/\1/')
     [ -z "$id" ] || {
         case "$(echo "$line" | grep -oE '.*id=' | sed 's/ id=.*//')" in
             *"Logitech USB Receiver"*)

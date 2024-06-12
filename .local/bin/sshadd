@@ -20,7 +20,7 @@ if [ -n "$selected_key_name" ]; then
 	selected_key_path=$(awk -v name="$selected_key_name" '$0 == name { getline; print }' "$temp_private_keys_list")
 
 	if [ -n "$selected_key_path" ]; then
-		export SSH_ASKPASS='/usr/lib/ssh/ssh-askpass'
+		export SSH_ASKPASS="$HOME/.local/bin/demupass"
 		setsid ssh-add "$selected_key_path" </dev/null
 		ln -sf "$selected_key_path" "$HOME/.ssh/$(basename "$selected_key_path")"
 		ln -sf "${selected_key_path}.pub" "$HOME/.ssh/$(basename "$selected_key_path").pub"

@@ -33,6 +33,7 @@ czc             ${XDG_CONFIG_HOME:-${HOME}/.config}/zsh
 dot             ${XDG_DOTFILES_DIR:-${HOME}/.dotfiles}
 gbk             $HOME/.backup
 gdc             ${XDG_DOCUMENTS_DIR:-${HOME}/Documents}
+gdk             ${XDG_DESKTOP_DIR:-${HOME}/Desktop}
 gdn             ${XDG_DOWNLOAD_DIR:-${HOME}/Downloads}
 gmu             ${XDG_MUSIC_DIR:-${HOME}/Music}
 gmx             $HOME/.mozilla/firefox/si.default
@@ -63,6 +64,8 @@ Hvv             /mnt/extra/videos
 pae             ${PASSWORD_STORE_DIR:-$XDG_DATA_HOME/.password-store}/exported_keys
 pah             ${PASSWORD_STORE_DIR:-$XDG_DATA_HOME/.password-store}/ssh
 pas             ${PASSWORD_STORE_DIR:-$XDG_DATA_HOME/.password-store}
+pbg             ${XDG_PUBLICSHARE_DIR:-${HOME}/Public}/git
+pvg             $HOME/Private/git
 shr             ${XDG_DATA_HOME:-${HOME}/.local/share}
 shz             ${XDG_DATA_HOME:-${HOME}/.local/share}/zsh
 sl              ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless

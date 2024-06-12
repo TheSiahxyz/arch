@@ -24,7 +24,7 @@ mountedphones="$(grep "simple-mtpfs" /etc/mtab)"
 done)"
 
 # Check for drives.
-lsblkoutput="$(sudo lsblk -rpo "uuid,name,type,size,label,mountpoint,fstype")"
+lsblkoutput="$(lsblk -rpo "uuid,name,type,size,label,mountpoint,fstype")"
 # Get all LUKS drives
 allluks="$(echo "$lsblkoutput" | grep crypto_LUKS)"
 # Get a list of the LUKS drive UUIDs already decrypted.
@@ -70,7 +70,7 @@ getmount() {
 
 attemptmount() {
 	# Attempt to mount without a mountpoint, to see if drive is in fstab.
-    mplabel=$(sudo lsblk -no "label" $chosen)
+    mplabel=$(lsblk -no "label" $chosen)
     if [ ! -d "/media/$mplabel" ] && [ ! -d "/mnt/$mplabel" ]; then
         getmount "/media/$mplabel" && sudo -A mount "$chosen" "/media/$mplabel" || return 1
     elif [ -d "/media/$mplabel" ] && [ ! -d "/mnt/$mplabel" ]; then
