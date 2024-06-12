@@ -281,15 +281,22 @@ se() {
 }
 
 # git directory
+
 fdot() {
     search_dirs=()
     initial_dirs=("$HOME/.dotfiles" "$HOME/.local/share/.password-store" "$HOME/.local/src/suckless")
     git_dirs=("$HOME/Private/git" "$HOME/Public/git")
 
+    # Function to check if a directory is a Git repository
+    is_git_repo() {
+        local dir="$1"
+        [ -d "$dir/.git" ] && git -C "$dir" rev-parse --is-inside-work-tree &>/dev/null
+    }
+
     # Function to check git status and pull if necessary
     find_git_status() {
         local dir="$1"
-        if [ -d "$dir" ]; then
+        if is_git_repo "$dir"; then
             if [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ]; then
                 echo "! $dir"
             else
@@ -314,8 +321,8 @@ fdot() {
 
     # Check git directories
     for git_dir in "${git_dirs[@]}"; do
-        if [ -d "$git_dir" ]; then
-            find "$git_dir" -mindepth 1 -maxdepth 1 -type d -print0 | xargs -0 -n1 -P4 bash -c '
+        if is_git_repo "$git_dir"; then
+            find "$git_dir" -mindepth 1 -maxdepth 1 -type d -print0 | xargs -0 -n1 -P4 zsh -c '
                 for dir; do
                     find_git_status "$dir"
                 done' _ |
@@ -337,9 +344,6 @@ fdot() {
         cd "$selected_git"
     fi
 }
-
-# The function is defined, but not called here.
-
 
 
 ###########################################################################################
