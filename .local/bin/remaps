@@ -13,6 +13,10 @@ xinput list | grep 'id=' | while read -r line; do
                 setxkbmap -device "$id" -option 
                 setxkbmap -device "$id" -option caps:ctrl_modifier,altwin:menu_win,altwin:swap_lalt_lwin
                 ;;
+            *"AT Translated Set 2 keyboard"*)
+                setxkbmap -device "$id" -option 
+                setxkbmap -device "$id" -option caps:ctrl_modifier,altwin:menu_win,altwin:swap_lalt_lwin
+                ;;
             *"Soomin Im’s Keyboard"*)
                 setxkbmap -device "$id" -option
                 setxkbmap -device "$id" -option caps:ctrl_modifier
