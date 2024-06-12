@@ -281,37 +281,42 @@ se() {
 }
 
 # git directory
+
 fdot() {
     search_dirs=()
     initial_dirs=("$HOME/.dotfiles" "$HOME/.local/share/.password-store" "$HOME/.local/src/suckless")
     git_dirs=("$HOME/Private/git" "$HOME/Public/git")
 
-    # Check initial directories
-    for dir in "${initial_dirs[@]}"; do
+    # Function to check git status and pull if necessary
+    find_git_status() {
+        local dir="$1"
         if [ -d "$dir" ]; then
             if [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ]; then
-                search_dirs+=("! $dir")
+                echo "! $dir"
             else
-                search_dirs+=("$dir")
+                git -C "$dir" fetch --quiet
+                local LOCAL=$(git -C "$dir" rev-parse @)
+                local REMOTE=$(git -C "$dir" rev-parse @{u})
+                local BASE=$(git -C "$dir" merge-base @ @{u})
+
+                if [ "$LOCAL" != "$REMOTE" ] && [ "$LOCAL" = "$BASE" ]; then
+                    echo "? $dir"
+                else
+                    echo "$dir"
+                fi
             fi
         fi
+    }
+
+    # Check initial directories
+    for dir in "${initial_dirs[@]}"; do
+        search_dirs+=("$(find_git_status "$dir")")
     done
 
     # Check git directories
     for git_dir in "${git_dirs[@]}"; do
         if [ -d "$git_dir" ]; then
             find "$git_dir" -mindepth 1 -maxdepth 1 -type d -print0 | xargs -0 -n1 -P4 bash -c '
-                find_git_status() {
-                    local dir="$1"
-                    if [ -d "$dir" ]; then
-                        if [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ]; then
-                            echo "! $dir"
-                        else
-                            echo "$dir"
-                        fi
-                    fi
-                }
-
                 for dir; do
                     find_git_status "$dir"
                 done' _ |
@@ -326,8 +331,16 @@ fdot() {
     selected_git=${selected_git#! }
     selected_git=${selected_git#? }
 
-    [ -d "$selected_git" ] && cd "$selected_git"
+    if [ -d "$selected_git" ]; then
+        if [[ $selected_git == *"? "* ]]; then
+            git -C "$selected_git" pull
+        fi
+        cd "$selected_git"
+    fi
 }
+
+# The function is defined, but not called here.
+
 
 
 ###########################################################################################
