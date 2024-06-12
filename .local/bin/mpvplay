@@ -22,7 +22,11 @@ play_url() {
 }
 
 play_media() {
-    mpv "$@" && check_unmount || exit
+    if echo "$1" | grep -q "/home/$USER/Private"; then
+        mpv "$@" && check_unmount || exit
+    else
+        check_unmount && mpv "$@" || exit
+    fi
 }
 
 play_playlist() {
