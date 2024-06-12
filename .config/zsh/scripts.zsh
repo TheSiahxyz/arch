@@ -335,8 +335,6 @@ fdot() {
         fi
     done
 
-    # Remove empty lines and display options in fzf
-    search_dirs=("${search_dirs[@]// /}")
     selected_git=$(printf "%s\n" "${search_dirs[@]}" | grep -v "^$" | fzf --prompt="  " --height=~50% --layout=reverse --border --exit-0)
     selected_git=${selected_git#! }
     selected_git=${selected_git#? }
