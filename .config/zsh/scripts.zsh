@@ -280,6 +280,7 @@ se() {
     [ -f "$HOME/.local/bin/$choice" ] && $EDITOR "$HOME/.local/bin/$choice"
 }
 
+
 # git directory
 fdot() {
     search_dirs=()
