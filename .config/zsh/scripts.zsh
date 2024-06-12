@@ -281,6 +281,8 @@ se() {
 }
 
 # git directory
+#!/bin/zsh
+
 fdot() {
     search_dirs=()
     initial_dirs=("$HOME/.dotfiles" "$HOME/.local/share/.password-store" "$HOME/.local/src/suckless")
@@ -322,14 +324,16 @@ fdot() {
 
     # Check git directories
     for git_dir in "${git_dirs[@]}"; do
-        if is_git_repo "$git_dir"; then
-            find "$git_dir" -mindepth 1 -maxdepth 1 -type d -print0 | xargs -0 -n1 -P4 zsh -c '
-                for dir; do
-                    find_git_status "$dir"
-                done' _ |
-            while IFS= read -r selected_git; do
-                search_dirs+=("$selected_git")
-            done
+        if [ -d "$git_dir" ]; then
+            if is_git_repo "$git_dir"; then
+                find "$git_dir" -mindepth 1 -maxdepth 1 -type d -print0 | xargs -0 -n1 -P4 zsh -c '
+                    for dir; do
+                        find_git_status "$dir"
+                    done' _ |
+                while IFS= read -r selected_git; do
+                    search_dirs+=("$selected_git")
+                done
+            fi
         fi
     done
 
