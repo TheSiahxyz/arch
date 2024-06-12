@@ -281,6 +281,8 @@ se() {
 }
 
 # git directory
+#!/bin/zsh
+
 fdot() {
     search_dirs=()
     initial_dirs=("$HOME/.dotfiles" "$HOME/.local/share/.password-store" "$HOME/.local/src/suckless")
@@ -330,6 +332,9 @@ fdot() {
             done
         fi
     done
+
+    # Filter out empty lines
+    search_dirs=("${search_dirs[@]// /}")
 
     # Display options in fzf
     selected_git=$(printf "%s\n" "${search_dirs[@]}" | fzf --prompt="  " --height=~50% --layout=reverse --border --exit-0)
