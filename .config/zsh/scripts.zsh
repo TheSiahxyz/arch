@@ -280,8 +280,30 @@ se() {
     [ -f "$HOME/.local/bin/$choice" ] && $EDITOR "$HOME/.local/bin/$choice"
 }
 
+ffdot() {
+    search_dirs=()
+    initial_dirs=("$HOME/.dotfiles" "$HOME/.local/share/.password-store" "$HOME/.local/src/suckless")
+    git_dirs=("$HOME/Private/git" "$HOME/Public/git")
 
-# git directory
+    for dir in "${initial_dirs[@]}"; do
+        [ -d "$dir" ] && [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ] && search_dirs+=("! $dir") || search_dirs+=("$dir")
+    done
+    for git_dir in "${git_dirs[@]}"; do
+        if [ -d "$git_dir" ]; then
+            find "$git_dir" -mindepth 1 -maxdepth 1 -type d -exec bash -c '
+                for dir; do
+                    [ -d "$dir" ] && [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ] && echo "! $dir" || echo "$dir"
+                done' _ {} +
+        fi
+    done | while IFS= read -r selected_git; do
+        search_dirs+=("$selected_git")
+    done
+    selected_git=$(printf "%s\n" "${search_dirs[@]}" | fzf --prompt="  " --height=~50% --layout=reverse --border --exit-0)
+    selected_git=${selected_git#! }
+    [ -d "$selected_git" ] && cd "$selected_git"
+}
+#!/bin/bash
+
 fdot() {
     search_dirs=()
     initial_dirs=("$HOME/.dotfiles" "$HOME/.local/share/.password-store" "$HOME/.local/src/suckless")
@@ -302,7 +324,8 @@ fdot() {
     for git_dir in "${git_dirs[@]}"; do
         if [ -d "$git_dir" ]; then
             find "$git_dir" -mindepth 1 -maxdepth 1 -type d -print0 | xargs -0 -n1 -P4 bash -c '
-                for dir; do
+                find_git_status() {
+                    local dir="$1"
                     if [ -d "$dir" ]; then
                         if [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ]; then
                             echo "! $dir"
@@ -310,6 +333,10 @@ fdot() {
                             echo "$dir"
                         fi
                     fi
+                }
+
+                for dir; do
+                    find_git_status "$dir"
                 done' _ |
             while IFS= read -r selected_git; do
                 search_dirs+=("$selected_git")
@@ -320,6 +347,8 @@ fdot() {
     # Display options in fzf
     selected_git=$(printf "%s\n" "${search_dirs[@]}" | fzf --prompt="  " --height=~50% --layout=reverse --border --exit-0)
     selected_git=${selected_git#! }
+    selected_git=${selected_git#? }
+
     [ -d "$selected_git" ] && cd "$selected_git"
 }
 
