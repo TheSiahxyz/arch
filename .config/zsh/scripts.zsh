@@ -280,24 +280,43 @@ se() {
     [ -f "$HOME/.local/bin/$choice" ] && $EDITOR "$HOME/.local/bin/$choice"
 }
 
+# git directory
 fdot() {
     search_dirs=()
     initial_dirs=("$HOME/.dotfiles" "$HOME/.local/share/.password-store" "$HOME/.local/src/suckless")
     git_dirs=("$HOME/Private/git" "$HOME/Public/git")
 
+    # Check initial directories
     for dir in "${initial_dirs[@]}"; do
-        [ -d "$dir" ] && [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ] && search_dirs+=("! $dir") || search_dirs+=("$dir")
+        if [ -d "$dir" ]; then
+            if [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ]; then
+                search_dirs+=("! $dir")
+            else
+                search_dirs+=("$dir")
+            fi
+        fi
     done
+
+    # Check git directories
     for git_dir in "${git_dirs[@]}"; do
         if [ -d "$git_dir" ]; then
-            find "$git_dir" -mindepth 1 -maxdepth 1 -type d -exec bash -c '
+            find "$git_dir" -mindepth 1 -maxdepth 1 -type d -print0 | xargs -0 -n1 -P4 bash -c '
                 for dir; do
-                    [ -d "$dir" ] && [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ] && echo "! $dir" || echo "$dir"
-                done' _ {} +
+                    if [ -d "$dir" ]; then
+                        if [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ]; then
+                            echo "! $dir"
+                        else
+                            echo "$dir"
+                        fi
+                    fi
+                done' _ |
+            while IFS= read -r selected_git; do
+                search_dirs+=("$selected_git")
+            done
         fi
-    done | while IFS= read -r selected_git; do
-        search_dirs+=("$selected_git")
     done
+
+    # Display options in fzf
     selected_git=$(printf "%s\n" "${search_dirs[@]}" | fzf --prompt="  " --height=~50% --layout=reverse --border --exit-0)
     selected_git=${selected_git#! }
     [ -d "$selected_git" ] && cd "$selected_git"
