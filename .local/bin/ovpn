@@ -4,7 +4,7 @@
     nmcli connection down "$THESIAH_VPN" >/dev/null 2>&1
     notify-send "📡 THESIAH_VPN: OFF"
 } || {
-    nmcli connection up "$THESIAH_VPN" >/dev/null 2>&1
+    nmcli connection up "$THESIAH_VPN" >/dev/null 2>&1 || nmcli connection import type openvpn file ~/.config/openvpn/thesiah.ovpn
     notify-send "📡 THESIAH_VPN: ON"   
 }
 kill -38 "$(pidof "${STATUSBAR:-dwmblocks}")"

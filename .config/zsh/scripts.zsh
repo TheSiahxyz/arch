@@ -31,7 +31,8 @@ emt() {
 ###########################################################################################
 ### --- Git --- ###
 gcgts() {
-    git clone "${THESIAH_GIT:-git@git.${THESIAH:-thesiah.xyz}}":"{$1}".git
+    choice=$(ssh "$THESIAH_GIT" "ls | grep -i \".*\\.git$\"" | fzf --prompt="  " --height=50% --layout=reverse --border --exit-0)
+    [ -n "$choice" ] && [ -n "$1" ] && git clone "${THESIAH_GIT:-git@git.${THESIAH:-thesiah.xyz}}":"$choice" "$1" || [ -n "$choice" ] && git clone "${THESIAH_GIT:-git@git.${THESIAH:-thesiah.xyz}}":"$choice"
 }
 
 gp() {
