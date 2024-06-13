@@ -1,6 +1,6 @@
 #!/bin/sh
 
-monitor=$(xrandr --query | grep -i 'connected' | grep -i 'primary' | cut -d ' ' -f1)
+monitor=$(xrandr --query | grep -i '\sconnected' | grep -i '[0-9]x[0-9]' | cut -d ' ' -f1)
 [ -z "$monitor" ] && monitor=$(xrandr --query | grep -i ' connected' | head -n 1 | cut -d ' ' -f1)
 [ -z "$monitor" ] && exit 1
 current_brightness=$(xrandr --verbose | grep -i "^$monitor connected" -A5 | grep -i "Brightness:" | cut -d ' ' -f2)
@@ -18,4 +18,8 @@ if [ "$#" -eq 2 ]; then
 else
     current_brightness=$(echo "$current_brightness * 100" | bc -l)
 fi
-printf "🔆%.0f%%\n" "$current_brightness"
+
+case "$monitor" in
+    *eDP*|*LVDS*|*LFP*) printf "🪟%.0f%%\n" "$(xbacklight -get)" ;;
+    *) printf "🪟%.0f%%\n" "$current_brightness" ;;
+esac

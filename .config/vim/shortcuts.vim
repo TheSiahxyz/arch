@@ -11,12 +11,12 @@ nmap <localleader>cdw :Explore /home/si/.local/src/suckless/dwm<cr>
 nmap <localleader>cf :Explore /home/si/.config<cr>
 nmap <localleader>clf :Explore /home/si/.config/lf<cr>
 nmap <localleader>clv :Explore /home/si/.config/LazyVim<cr>
-nmap <localleader>cmc :Explore /home/si/.config/ncmpcpp<cr>
 nmap <localleader>cmd :Explore /home/si/.config/mpd<cr>
 nmap <localleader>cmv :Explore /home/si/.config/mpv<cr>
 nmap <localleader>cmw :Explore /home/si/.config/mutt<cr>
 nmap <localleader>cmx :Explore /home/si/.config/firefox<cr>
 nmap <localleader>cnc :Explore /home/si/.config/NvChad<cr>
+nmap <localleader>cnp :Explore /home/si/.config/ncmpcpp<cr>
 nmap <localleader>cns :Explore /home/si/.config/newsboat<cr>
 nmap <localleader>cnv :Explore /home/si/.config/nvim<cr>
 nmap <localleader>csh :Explore /home/si/.config/shell<cr>

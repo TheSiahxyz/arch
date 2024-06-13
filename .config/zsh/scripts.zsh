@@ -289,18 +289,28 @@ fdot() {
         # [ -d "$dir" ] && [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ] && search_dirs+=("! $dir") || search_dirs+=("$dir")
         [ -d "$dir" ] &&
             {
-                [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ] && search_dirs+=("! $dir") || search_dirs+=("$dir")
                 git -C "$dir" fetch --quiet
-                [ "$(git -C "$dir" rev-parse @)" != "$(git -C "$dir" rev-parse @{u})" ] && [ "$(git -C "$dir" rev-parse @)" = "$(git -C "$dir" merge-base @ @{u})" ] && search_dirs+=("? $dir") || search_dirs+=("$dir")
+                if [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ]; then
+                    search_dirs+=("! $dir")
+                elif [ "$(git -C "$dir" rev-parse @)" != "$(git -C "$dir" rev-parse @{u})" ] && [ "$(git -C "$dir" rev-parse @)" = "$(git -C "$dir" merge-base @ @{u})" ]; then
+                    search_dirs+=("? $dir")
+                else
+                    search_dirs+=("$dir")
+                fi
             }
     done
     for git_dir in "${git_dirs[@]}"; do
         if [ -d "$git_dir" ]; then
             find "$git_dir" -mindepth 1 -maxdepth 1 -type d -exec bash -c '
                 for dir; do
-                    [ -d "$dir" ] && [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ] && echo "! $dir" || echo "$dir"
                     git -C "$dir" fetch --quiet
-                    [ "$(git -C "$dir" rev-parse @)" != "$(git -C "$dir" rev-parse @{u})" ] && [ "$(git -C "$dir" rev-parse @)" = "$(git -C "$dir" merge-base @ @{u})" ] && search_dirs+=("? $dir") || search_dirs+=("$dir")
+                    if [ -d "$dir" ] && [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ]; then
+                        echo "! $dir"
+                    elif [ "$(git -C "$dir" rev-parse @)" != "$(git -C "$dir" rev-parse @{u})" ] && [ "$(git -C "$dir" rev-parse @)" = "$(git -C "$dir" merge-base @ @{u})" ]; then
+                        echo "? $dir"
+                    else
+                        echo "$dir"
+                    fi
                 done' _ {} +
         fi
     done | while IFS= read -r selected_git; do

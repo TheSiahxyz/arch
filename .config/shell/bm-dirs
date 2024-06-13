@@ -12,12 +12,12 @@ cdw             ${XDG_SOURCES_HOME:-${HOME}/.local/src}/suckless/dwm
 cf              ${XDG_CONFIG_HOME:-${HOME}/.config}
 clf             ${XDG_CONFIG_HOME:-${HOME}/.config}/lf
 clv             ${XDG_CONFIG_HOME:-${HOME}/.config}/LazyVim
-cmc             ${XDG_CONFIG_HOME:-${HOME}/.config}/ncmpcpp
 cmd             ${XDG_CONFIG_HOME:-${HOME}/.config}/mpd
 cmv             ${XDG_CONFIG_HOME:-${HOME}/.config}/mpv
 cmw             ${XDG_CONFIG_HOME:-${HOME}/.config}/mutt
 cmx             ${XDG_CONFIG_HOME:-${HOME}/.config}/firefox
 cnc             ${XDG_CONFIG_HOME:-${HOME}/.config}/NvChad
+cnp             ${XDG_CONFIG_HOME:-${HOME}/.config}/ncmpcpp
 cns             ${XDG_CONFIG_HOME:-${HOME}/.config}/newsboat
 cnv             ${XDG_CONFIG_HOME:-${HOME}/.config}/nvim
 csh             ${XDG_CONFIG_HOME:-${HOME}/.config}/shell
