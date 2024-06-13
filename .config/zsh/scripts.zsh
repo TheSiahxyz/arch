@@ -275,9 +275,9 @@ fD() {
 }
 
 # search bin
-se() {
-    choice="$(find ~/.local/bin -mindepth 1 -not -name '*.md' -printf '%P\n' | fzf)"
-    [ -f "$HOME/.local/bin/$choice" ] && $EDITOR "$HOME/.local/bin/$choice"
+sscs() {
+    choice="$(find ~/.local/bin -mindepth 1 \( -type f -o -type l \) -not -name '*.md' -printf '%P\n' | fzf)"
+    ([ -n "$choice" ] && [ -f "$HOME/.local/bin/$choice" ]) && $EDITOR "$HOME/.local/bin/$choice"
 }
 
 fdot() {
@@ -286,19 +286,18 @@ fdot() {
     git_dirs=("$HOME/Private/git" "$HOME/Public/git")
 
     for dir in "${initial_dirs[@]}"; do
-        # [ -d "$dir" ] && [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ] && search_dirs+=("! $dir") || search_dirs+=("$dir")
-        [ -d "$dir" ] &&
-            {
-                git -C "$dir" fetch --quiet
-                if [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ]; then
-                    search_dirs+=("! $dir")
-                elif [ "$(git -C "$dir" rev-parse @)" != "$(git -C "$dir" rev-parse @{u})" ] && [ "$(git -C "$dir" rev-parse @)" = "$(git -C "$dir" merge-base @ @{u})" ]; then
-                    search_dirs+=("? $dir")
-                else
-                    search_dirs+=("$dir")
-                fi
-            }
+        [ -d "$dir" ] && {
+            git -C "$dir" fetch --quiet
+            if [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ]; then
+                search_dirs+=("! $dir")
+            elif [ "$(git -C "$dir" rev-parse @)" != "$(git -C "$dir" rev-parse @{u})" ] && [ "$(git -C "$dir" rev-parse @)" = "$(git -C "$dir" merge-base @ @{u})" ]; then
+                search_dirs+=("? $dir")
+            else
+                search_dirs+=("$dir")
+            fi
+        }
     done
+
     for git_dir in "${git_dirs[@]}"; do
         if [ -d "$git_dir" ]; then
             find "$git_dir" -mindepth 1 -maxdepth 1 -type d -exec bash -c '
@@ -316,11 +315,14 @@ fdot() {
     done | while IFS= read -r selected_git; do
         search_dirs+=("$selected_git")
     done
+
     selected_git=$(printf "%s\n" "${search_dirs[@]}" | fzf --prompt="  " --height=~50% --layout=reverse --border --exit-0)
     selected_git=${selected_git#! }
     selected_git=${selected_git#? }
+    selected_git=${selected_git# }
     [ -d "$selected_git" ] && cd "$selected_git"
 }
+
 
 ###########################################################################################
 ###########################################################################################
