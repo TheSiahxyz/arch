@@ -9,7 +9,7 @@ PROMPT='%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[mag
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' unstagedstr '*'
 zstyle ':vcs_info:*' stagedstr '+'
-zstyle ':vcs_info:git:*' formats       "%{$fg[blue]%}(%{$fg[grey]%}%b%{$fg[blue]%}:%r%{$fg[yellow]%}%m%u%{$fg[green]%}%c%{$fg[blue]%})"
+zstyle ':vcs_info:git:*' formats       "%{$fg[blue]%}(%{$fg[grey]%}%b%{$fg[blue]%}:%r%{$fg[yellow]%}%m%u%{$fg[magenta]%}%c%{$fg[blue]%})"
 zstyle ':vcs_info:git:*' actionformats "%{$fg[blue]%}(%{$fg[grey]%}%b%{$fg[blue]%}:%r%{$reset_color%}|%{$fg[red]%}%a%u%c%{$fg[blue]%})"
 
 ### --- ZSH --- ###
