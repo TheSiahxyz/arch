@@ -325,8 +325,7 @@ mvg() {
 
 # Create and go to the directory
 mc() {
-	mkdir -p $1
-	cd $1
+	mkdir -p $1 && cd $1
 }
 
 # Goes up a specified number of directories  (i.e. up 4)
@@ -344,8 +343,7 @@ up() {
 }
 
 #Automatically do an ls after each cd
-# cd ()
-# {
+# cd () {
 # 	if [ -n "$1" ]; then
 # 		builtin cd "$@" && ls
 # 	else
