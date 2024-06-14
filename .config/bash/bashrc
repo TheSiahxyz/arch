@@ -16,10 +16,11 @@ PROMPT_COMMAND="history -a"
 unset GREP_OPTIONS
 
 set -o vi
-shopt -s autocd       # goto without cd
-shopt -s direxpand    # expend directory name
-shopt -s checkwinsize # Check the window size after each command and, if necessary, update the values of LINES and COLUMNS
-shopt -s histappend   # Causes bash to append to history instead of overwriting it so if you start a new terminal, you have old session history
+shopt -s autocd         # goto without cd
+shopt -s direxpand      # expend directory name
+shopt -s cdspell        # ignore case cd
+shopt -s checkwinsize   # Check the window size after each command and, if necessary, update the values of LINES and COLUMNS
+shopt -s histappend     # Causes bash to append to history instead of overwriting it so if you start a new terminal, you have old session history
 
 # Completion settings
 # Ignore case on auto-completion
