@@ -3,7 +3,6 @@
 ### --- Plugins --- ###
 plugins=(
     "Aloxaf/fzf-tab"
-    "kazhala/dotbare"
     "kutsan/zsh-system-clipboard"
     "MichaelAquilina/zsh-you-should-use"
     # "marlonrichert/zsh-autocomplete"

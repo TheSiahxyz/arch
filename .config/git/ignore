@@ -7,14 +7,38 @@ credentials
 *.swp
 
 # Compiled files
+*.class
+*.com
+*.dll
+*.exe
 *.o
 *.out
+*.so
+
+# Compressed
+*.7z
+*.dmg
+*.gz
+*.iso
+*.rar
+*.tar
+*.zip
 
 # Cookie
 cookie
 
-# Error
-error.log
+# Database
+*.sql
+*.sqlite
+
+# Env
+.direnv/
+.envrc
+.env
+.local.application.conf
+
+# Git
+*.orig
 
 # GTK
 gtkfilechooser.ini
@@ -28,6 +52,22 @@ gtkfilechooser.ini
 
 # Lock
 *lock*.json
+
+# Log
+*.log
+
+# Mac
+**/.DS_Store
+**/._.DS_Store
+.DS_Store
+._.DS_Store
+
+# OS
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
 # Private
 *personal*
@@ -49,6 +89,9 @@ thesiah.mom
 
 # Vim
 */vim/*/
+
+# VS code
+.vscode/
 
 # thesiah.mom
 */thesiah/thesiah.mom
