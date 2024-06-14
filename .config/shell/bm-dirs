@@ -74,6 +74,7 @@ sr              ${XDG_SOURCES_HOME:-${HOME}/.local/src}
 shm             ${XDG_DATA_HOME:-${HOME}/.local/share}/mail
 tr              ${XDG_DATA_HOME:-${HOME}/.local/share}/Trash/files
 ts              ${XDG_DATA_HOME:-${HOME}/.local/share}/thesiah
+tsk             ${XDG_DATA_HOME:-${HOME}/.local/share}/thesiah/keys
 tt              ${XDG_STATE_HOME:-${HOME}/.local/state}
 vwk             ${XDG_DATA_HOME:-${HOME}/.local/share}/vimwiki
 web             ${THESIAH_WWW:-${HOME}/Private/git/THESIAH}
