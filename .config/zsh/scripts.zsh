@@ -318,7 +318,7 @@ fdot() {
                 fi
             ' {} | while IFS= read -r selected_git; do
                 search_dirs+=("$selected_git")
-            done
+            done 2>/dev/null
         fi
     done
 
