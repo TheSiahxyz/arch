@@ -1,10 +1,23 @@
 #!/bin/sh
 
-[ -n "$(cat /sys/class/net/tun*/operstate 2>/dev/null)" ] && {
-    nmcli connection down "$THESIAH_VPN" >/dev/null 2>&1
-    notify-send "📡 THESIAH_VPN: OFF"
-} || {
-    nmcli connection up "$THESIAH_VPN" >/dev/null 2>&1 || nmcli connection import type openvpn file ~/.config/openvpn/thesiah.ovpn
-    notify-send "📡 THESIAH_VPN: ON"   
+turnonoffvpn() {
+    case "$1" in
+        *on*)
+            nmcli connection up "$THESIAH_VPN" >/dev/null 2>&1
+            notify-send "📡 THESIAH_VPN: ON" 
+            ;;
+        *off*)
+            nmcli connection down "$THESIAH_VPN" >/dev/null 2>&1
+            notify-send "📡 THESIAH_VPN: OFF"
+            ;;
+    esac
 }
-kill -38 "$(pidof "${STATUSBAR:-dwmblocks}")"
+
+[ -n "$(cat /sys/class/net/tun*/operstate 2>/dev/null)" ] && {
+    turnonoffvpn off
+} || {
+    nmcli connection show | grep "$THESIAH_VPN" >/dev/null 2>&1 && turnonoffvpn on || { 
+        nmcli connection import type openvpn file ~/.config/openvpn/thesiah.ovpn >/dev/null 2>&1
+        turnonoffvpn on
+    }
+}

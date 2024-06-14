@@ -323,7 +323,7 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWMOD+v\fP \(en mpvplay  
 .ITEM
-\f(CWMOD+Ctrl+v\fP \(en ovpn  
+\f(CWMOD+Ctrl+v\fP \(en ovpn; kill -38 $(pidof dwmblocks)
 .ITEM
 \f(CWMOD+Insert\fP \(en xdotool type $(grep -v '^#' ~/.local/share/thesiah/snippets | dmenu -i -l 50 | cut -d' ' -f1)
 .ITEM
