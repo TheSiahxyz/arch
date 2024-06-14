@@ -57,8 +57,9 @@ nmap <localleader>Hms :Explore /media/ssd<cr>
 nmap <localleader>Hmt :Explore /mnt<cr>
 nmap <localleader>Hmv :Explore /media/win10/Videos<cr>
 nmap <localleader>Hmw :Explore /usr/share/mutt-wizard<cr>
-nmap <localleader>Hrr :Explore /etc/runit/sv<cr>
+nmap <localleader>Hrr :Explore /run/runit/service<cr>
 nmap <localleader>Hsm :Explore /etc/samba<cr>
+nmap <localleader>Hsv :Explore /etc/runit/sv<cr>
 nmap <localleader>Hvv :Explore /mnt/extra/videos<cr>
 nmap <localleader>pae :Explore /home/si/.local/share/.password-store/exported_keys<cr>
 nmap <localleader>pah :Explore /home/si/.local/share/.password-store/ssh<cr>
