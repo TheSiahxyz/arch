@@ -24,6 +24,9 @@ credentials
 *.tar
 *.zip
 
+# Cookie
+cookie
+
 # Database
 *.sql
 *.sqlite
@@ -37,8 +40,12 @@ credentials
 # Git
 *.orig
 
+# GTK
+gtkfilechooser.ini
+
 # History
 *history*
+.zcompdump
 
 # IDE directories
 .idea/
@@ -65,8 +72,27 @@ Thumbs.db
 # Private
 *personal*
 
+# Shortcuts
+shortcutrc
+zshnameddirrc
+
+# Tmux
+*/tmux/plugins/
+
+# Transmission
+*/transmission-daemon/*/
+*/transmission-daemon/bandwidth-groups.json
+*/transmission-daemon/stats.json
+dht.dat
+
+# TheSiahxyz
+thesiah.mom
+
 # Vim
 */vim/*/
 
 # VS code
 .vscode/
+
+# thesiah.mom
+*/thesiah/thesiah.mom
