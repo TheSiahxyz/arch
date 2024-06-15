@@ -1,4 +1,5 @@
 # Keys                      Filename
+bak             /mnt/extra/backup
 bb              ${XDG_SCRIPTS_HOME:-${HOME}/.local/bin}
 bs              ${XDG_SCRIPTS_HOME:-${HOME}/.local/bin}/statusbar
 cab             ${XDG_CONFIG_HOME:-${HOME}/.config}/abook
@@ -31,7 +32,6 @@ cxc             ${XDG_CONFIG_HOME:-${HOME}/.config}/x11
 cyv             ${XDG_CONFIG_HOME:-${HOME}/.config}/youtube-viewer
 czc             ${XDG_CONFIG_HOME:-${HOME}/.config}/zsh
 dot             ${XDG_DOTFILES_DIR:-${HOME}/.dotfiles}
-gbk             $HOME/.backup
 gdc             ${XDG_DOCUMENTS_DIR:-${HOME}/Documents}
 gdk             ${XDG_DESKTOP_DIR:-${HOME}/Desktop}
 gdn             ${XDG_DOWNLOAD_DIR:-${HOME}/Downloads}
