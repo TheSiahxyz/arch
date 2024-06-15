@@ -22,10 +22,7 @@ zstyle ':vcs_info:git*+set-message:*' hooks git-untracked git-incoming-commits
 }
 +vi-git-incoming-commits() {
     git fetch > /dev/null 2>&1
-    local branch
-    branch=$(git rev-parse --abbrev-ref HEAD)
-    local incoming_commits
-    incoming_commits=$(git rev-list HEAD..origin/$branch --count)
+    incoming_commits=$(git rev-list HEAD..origin/$(git rev-parse --abbrev-ref HEAD) --count)
     if [[ $incoming_commits -gt 0 ]]; then
         hook_com[misc]+="%{$fg[red]%}!"
     fi
