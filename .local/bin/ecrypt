@@ -4,9 +4,11 @@ mount_luks() {
     if ! mount | grep -q " /mnt/extra "; then
         SIZE_NVME0=$(sudo blockdev --getsize64 /dev/nvme0n1p1)
         SIZE_NVME1=$(sudo blockdev --getsize64 /dev/nvme1n1p1)
-        [ "$SIZE_NVME1" -lt "$SIZE_NVME0" ] && TARGET_DEVICE="/dev/nvme0n1p1" || TARGET_DEVICE="/dev/nvme1n1p1"
-        ${TERMINAL:-st} -n floatterm -g 60x1 -e sudo cryptsetup open "$TARGET_DEVICE" "extra"
-        sudo -A mount "/dev/mapper/extra" "/mnt/extra" -o uid="$(id -u)",gid="$(id -g)" || sudo -A mount "/dev/mapper/extra" "/mnt/extra"
+        if [ ! -z "$SIZE_NVME0" ] && [ ! -z "$SIZE_NVME1" ]; then
+            [ "$SIZE_NVME1" -lt "$SIZE_NVME0" ] && TARGET_DEVICE="/dev/nvme0n1p1" || TARGET_DEVICE="/dev/nvme1n1p1"
+            ${TERMINAL:-st} -n floatterm -g 60x1 -e sudo cryptsetup open "$TARGET_DEVICE" "extra"
+            sudo -A mount "/dev/mapper/extra" "/mnt/extra" -o uid="$(id -u)",gid="$(id -g)" || sudo -A mount "/dev/mapper/extra" "/mnt/extra"
+        fi
     fi
 }
 
@@ -21,7 +23,7 @@ attempt_mount() {
     elif mount | grep -q " $2 " && mount | grep -q " $(dirname $2) "; then
         sudo umount "$2" && notify-send "📁 Locked: $3" || notify-send "❗ Unable to lock" "Mounted: $3"
     else
-        ECRYPTFS_SIG=$(pass show encryption/ecryptfs-sig)
+        ECRYPTFS_SIG=$(sudo cat /root/.ecryptfs/sig-cache.txt)
         FNEK_SIG=$ECRYPTFS_SIG
         PASSPHRASE=$(pass show encryption/ecryptfs)
         [ -z "$PASSPHRASE" ] && { notify-send "❌ Failed to retrieve passphrase."; exit 1; }
