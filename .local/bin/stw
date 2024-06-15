@@ -37,7 +37,7 @@ stow_package() {
 		done
 
 		# Retry stowing after conflict resolution
-		output=$(stow . 2>&1)
+		output=$(stow --no-folding . 2>&1)
 		status=$?
 	fi
 
