@@ -6,11 +6,21 @@ autoload -Uz add-zsh-hook vcs_info
 setopt prompt_subst
 add-zsh-hook precmd vcs_info
 PROMPT='%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%F{green}${vcs_info_msg_0_}%{$reset_color%}$%b '
+zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' unstagedstr '*'
 zstyle ':vcs_info:*' stagedstr '+'
 zstyle ':vcs_info:git:*' formats       "%{$fg[blue]%}(%{$fg[grey]%}%b%{$fg[blue]%}:%r%{$fg[yellow]%}%m%u%{$fg[magenta]%}%c%{$fg[blue]%})"
 zstyle ':vcs_info:git:*' actionformats "%{$fg[blue]%}(%{$fg[grey]%}%b%{$fg[blue]%}:%r%{$reset_color%}|%{$fg[red]%}%a%u%c%{$fg[blue]%})"
+zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
++vi-git-untracked() {
+  if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] && \
+     git status --porcelain | grep -m 1 '^??' &>/dev/null
+  then
+    hook_com[misc]='?'
+  fi
+}
+
 
 ### --- ZSH --- ###
 # GnuPG
