@@ -22,6 +22,7 @@ zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
 }
 
 
+
 ### --- ZSH --- ###
 # GnuPG
 unset SSH_AGENT_PID
