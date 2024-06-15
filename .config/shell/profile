@@ -199,7 +199,7 @@ export WINEPREFIX="$XDG_DATA_HOME/wine"
 export THESIAH="thesiah.xyz"
 export THESIAH_GIT="git@$THESIAH"
 export THESIAH_SERVER="root@$THESIAH"
-export THESIAH_VPN="thesiah"
+export THESIAH_VPN="${THESIAH%%.*}"
 export THESIAH_WWW="$HOME/Private/git/THESIAH"
 
 ### --- WGET --- ###
