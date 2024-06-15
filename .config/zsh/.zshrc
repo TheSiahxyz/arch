@@ -21,10 +21,10 @@ zstyle ':vcs_info:git*+set-message:*' hooks git-untracked git-incoming-commits
     fi
 }
 +vi-git-incoming-commits() {
-    git fetch > /dev/null 2>&1
-    incoming_commits=$(git rev-list HEAD..origin/$(git rev-parse --abbrev-ref HEAD) --count)
-    if [[ $incoming_commits -gt 0 ]]; then
-        hook_com[misc]+="%{$fg[red]%}!"
+    if [[ -n $(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)) ]]; then
+        if [[ $(git rev-list HEAD..origin/$(git rev-parse --abbrev-ref HEAD) --count) -gt 0 ]]; then
+            hook_com[misc]+="%{$fg[red]%}!"
+        fi
     fi
 }
 
