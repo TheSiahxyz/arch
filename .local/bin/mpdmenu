@@ -43,7 +43,8 @@ d_playlist() {
 }
 
 d_saved_playlist() {
-	playlists=$(find "$PLAYLIST_DIR" -type f -name "*.m3u" -exec basename {} .m3u \;)
+    playlists=$(find "$PLAYLIST_DIR" \( -type f -o -type l \) -name "*.m3u" -exec basename {} .m3u \;)
+
 	selected_playlist=$(echo "$playlists" | dmenu -i -p "Select Playlist:" "${dmenu_args[@]}")
 
 	printf '%s' "$selected_playlist"
