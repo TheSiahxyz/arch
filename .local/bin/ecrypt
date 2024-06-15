@@ -21,7 +21,7 @@ attempt_mount() {
     elif mount | grep -q " $2 " && mount | grep -q " $(dirname $2) "; then
         sudo umount "$2" && notify-send "📁 Locked: $3" || notify-send "❗ Unable to lock" "Mounted: $3"
     else
-        ECRYPTFS_SIG=$(sudo cat /root/.ecryptfs/sig-cache.txt)
+        ECRYPTFS_SIG=$(pass show encryption/ecryptfs-sig)
         FNEK_SIG=$ECRYPTFS_SIG
         PASSPHRASE=$(pass show encryption/ecryptfs)
         [ -z "$PASSPHRASE" ] && { notify-send "❌ Failed to retrieve passphrase."; exit 1; }
