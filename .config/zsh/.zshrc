@@ -14,13 +14,22 @@ zstyle ':vcs_info:git:*' formats       "%{$fg[blue]%}(%{$fg[grey]%}%b%{$fg[blue]
 zstyle ':vcs_info:git:*' actionformats "%{$fg[blue]%}(%{$fg[grey]%}%b%{$fg[blue]%}:%r%{$reset_color%}|%{$fg[red]%}%a%u%c%{$fg[blue]%})"
 zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
 +vi-git-untracked() {
-  if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] && \
-     git status --porcelain | grep -m 1 '^??' &>/dev/null
+  if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == "true" ]] && \
+     git status --porcelain | grep -m 1 "^??" &>/dev/null
   then
-    hook_com[misc]='?'
+    hook_com[misc]="?"
   fi
 }
-
++vi-git-incoming-commits() {
+  git fetch > /dev/null 2>&1
+  local branch
+  branch=$(git rev-parse --abbrev-ref HEAD)
+  local incoming_commits
+  incoming_commits=$(git rev-list HEAD..origin/$branch --count)
+  if [[ $incoming_commits -gt 0 ]]; then
+    hook_com[misc]="?"
+  fi
+}
 
 
 ### --- ZSH --- ###
