@@ -10,14 +10,14 @@ zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' unstagedstr '*'
 zstyle ':vcs_info:*' stagedstr '+'
-zstyle ':vcs_info:git:*' formats       "%{$fg[blue]%}(%{$fg[black]%}%b%{$fg[blue]%}:%r%{$fg[yellow]%}%m%u%{$fg[magenta]%}%c%{$fg[blue]%})"
+zstyle ':vcs_info:git:*' formats       "%{$fg[blue]%}(%{$fg[black]%}%b%{$fg[blue]%}:%r%{$fg[yellow]%}%u%m%{$fg[magenta]%}%c%{$fg[blue]%})"
 zstyle ':vcs_info:git:*' actionformats "%{$fg[blue]%}(%{$fg[black]%}%b%{$fg[blue]%}:%r%{$reset_color%}|%{$fg[red]%}%a%u%c%{$fg[blue]%})"
 zstyle ':vcs_info:git*+set-message:*' hooks git-untracked git-incoming-commits
 +vi-git-untracked() {
     if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == "true" ]] && \
         git status --porcelain | grep -m 1 "^??" &>/dev/null
     then
-        hook_com[misc]+="%{$fg[blue]%}?"
+        hook_com[misc]+="%{$fg[magenta]%}?"
     fi
 }
 +vi-git-incoming-commits() {
