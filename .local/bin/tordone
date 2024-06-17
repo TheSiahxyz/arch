@@ -1,5 +1,8 @@
 #!/bin/sh
 
-transmission-remote -n "$USER" -l | grep 100% | awk '{print $1}'| paste -d, -s | xargs -i transmission-remote -t {} -r &&
-    notify-send "✅ Transmission-daemon" "$TR_TORRENT_NAME has completely downloaded.
-     Delete $TR_TORRENT_NAME torrent file."
+completed_torrent=$(transmission-remote -n "$USER" -l | awk '$6 == "100%" {print $1}')
+if [ -n "$completed_torrent" ]; then
+    transmission-remote -n "$USER" -t "$completed_torrent" -r
+    notify-send "✅ Transmission-daemon" "Torrent(s) ${completed_torrent} has completed downloading. Deleting torrent files."
+    [ -z "$(transmission-remote -n "$USER" -l | grep -v "Sum:" | grep -v "100%")" ] && killall transmission-daemon && notify-send "❌ transmission-daemon disabled."
+fi
