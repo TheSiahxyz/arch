@@ -117,9 +117,8 @@ export LYNX_CFG="$XDG_CONFIG_HOME/lynx/config"
 
 ### --- MANPAGER --- ###
 [ -x "$(command -v batman)" ] && {
-    export MANPAGER="sh -c 'col -bx | batman -l man -p'"
+    export MANPAGER="sh -c 'col -bx | bat -l man -p'"
     export MANROFFOPT="-c"
-    eval "$(batman --export-env)"
 } || {
     export MANPAGER='less -s'
     export LESS="R"

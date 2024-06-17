@@ -37,9 +37,8 @@ weath() {
     }
     less -S ${XDG_CACHE_HOME:-${HOME}/.cache}/weatherreport
     [ "$pager" = "false" ] || {
-        export MANPAGER="sh -c 'col -bx | batman -l man -p'"
+        export MANPAGER="sh -c 'col -bx | bat -l man -p'"
         export MANROFFOPT="-c"
-        eval "$(batman --export-env)"
     }
 }
 
