@@ -62,6 +62,9 @@ gtkfilechooser.ini
 .DS_Store
 ._.DS_Store
 
+# Nvim
+*vim/*.json
+
 # OS
 ._*
 .Spotlight-V100

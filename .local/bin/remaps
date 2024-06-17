@@ -43,7 +43,7 @@ xinput list | grep 'id=' | while read -r line; do
     [ -z "$id" ] || {
         case "$(echo "$line" | grep -oE '.*id=' | sed 's/ id=.*//')" in
             *"Lite-On Tech Lenovo USB Travel Keyboard with Ultra Nav Mouse"*)
-                [ -z "$1" ] && xinput set-prop "$id" "Coordinate Transformation Matrix" 3, 0, 0, 0, 3, 0, 0, 0, 1 || xinput set-prop "$id" "Coordinate Transformation Matrix" $1, 0, 0, 0, $1, 0, 0, 0, 1
+                [ -z "$1" ] && xinput set-prop "$id" "Coordinate Transformation Matrix" 1, 0, 0, 0, 1, 0, 0, 0, 1 || xinput set-prop "$id" "Coordinate Transformation Matrix" $1, 0, 0, 0, $1, 0, 0, 0, 1
                 ;;
             *"Logitech USB Receiver"*)
                 [ -z "$1" ] && xinput set-prop "$id" "Coordinate Transformation Matrix" 1, 0, 0, 0, 1, 0, 0, 0, 1 || xinput set-prop "$id" "Coordinate Transformation Matrix" $1, 0, 0, 0, $1, 0, 0, 0, 1
