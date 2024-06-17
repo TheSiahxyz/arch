@@ -268,9 +268,9 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWTouchpadOn\fP \(en synclient TouchpadOff=0  
 .ITEM
-\f(CWMonBrightnessUp\fP \(en brillo -A 5 -q; kill -56 $(pidof dwmblocks)
+\f(CWMonBrightnessUp\fP \(en pkexec -A 5 -q; kill -56 $(pidof dwmblocks)
 .ITEM
-\f(CWMonBrightnessDown\fP \(en brillo -U 5 -q; kill -56 $(pidof dwmblocks)
+\f(CWMonBrightnessDown\fP \(en pkexec -U 5 -q; kill -56 $(pidof dwmblocks)
 .LIST OFF
 .HEADING 5 "Mode"
 .LI
@@ -398,9 +398,9 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWMOD+equal\fP \(en wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; kill -44 $(pidof dwmblocks)
 .ITEM
-\f(CWMOD+Shift+minus\fP \(en brillo -U 5 -q; kill -56 $(pidof dwmblocks)
+\f(CWMOD+Shift+minus\fP \(en pkexec brillo -U 5 -q; kill -56 $(pidof dwmblocks)
 .ITEM
-\f(CWMOD+Shift+equal\fP \(en brillo -A 5 -q; kill -56 $(pidof dwmblocks)
+\f(CWMOD+Shift+equal\fP \(en pkexec brillo -A 5 -q; kill -56 $(pidof dwmblocks)
 .ITEM
 \f(CWMOD+Ctrl+minus\fP \(en monbright -dec 5; kill -56 $(pidof dwmblocks)
 .ITEM

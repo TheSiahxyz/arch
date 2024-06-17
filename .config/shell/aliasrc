@@ -302,9 +302,6 @@ alias trr="trash-restore"
 # vim
 alias vi="vim"
 
-# weather
-alias weath="less -S ${XDG_CACHE_HOME:-${HOME}/.cache}/weatherreport"
-
 # wget
 alias wget=wget --hsts-file="${XDG_CACHE_HOME:-${HOME}/.cache}/wget-hsts"
 
