@@ -71,6 +71,7 @@ getmount() {
 attemptmount() {
 	# Attempt to mount without a mountpoint, to see if drive is in fstab.
     mplabel=$(sudo lsblk -no "label" $chosen)
+    [ -n "$mplabel" ] || return
     if [ ! -d "/media/$mplabel" ] && [ ! -d "/mnt/$mplabel" ]; then
         getmount "/media/$mplabel" && sudo -A mount "$chosen" "/media/$mplabel" || return 1
     elif [ -d "/media/$mplabel" ] && [ ! -d "/mnt/$mplabel" ]; then

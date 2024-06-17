@@ -15,6 +15,7 @@ restartinit() {
     esac
 }
 
+[ -f "$samba_conf" ] || { sudo touch "$samba_conf" && smbpasswd -a "$name" ;}
 if [ "$#" -eq 1 ]; then
 	folder_path="$1"
 	folder_name=$(basename "$folder_path" | tr '[:upper:]' '[:lower:]')

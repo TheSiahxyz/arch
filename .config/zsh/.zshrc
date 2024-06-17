@@ -26,6 +26,19 @@ zstyle ':vcs_info:git*+set-message:*' hooks git-untracked git-incoming-commits
         hook_com[misc]+="%{$fg[red]%}!"
     fi
 }
++vi-git-untracked() {
+    if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == "true" ]] && \
+        git status --porcelain | grep -m 1 "^??" &>/dev/null
+    then
+        hook_com[misc]+="%{$fg[magenta]%}?"
+    fi
+}
++vi-git-incoming-commits() {
+    # git fetch > /dev/null 2>&1
+    if [[ $(git rev-list HEAD..origin/$(git rev-parse --abbrev-ref HEAD) --count) -gt 0 ]]; then
+        hook_com[misc]+="%{$fg[green]%}="
+    fi
+}
 
 
 ### --- ZSH --- ###
