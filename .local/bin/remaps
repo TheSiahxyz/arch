@@ -9,10 +9,9 @@ xinput list | grep 'id=' | while read -r line; do
     [ -z "$id" ] || {
         case "$(echo "$line" | grep -oE '.*id=' | sed 's/ id=.*//')" in
             *"Lite-On Tech Lenovo USB Travel Keyboard with Ultra Nav"*)
-                if echo "$line" | grep -qE 'Nav\s+id'; then
-                    setxkbmap -device "$id" -option 
-                    setxkbmap -device "$id" -option caps:ctrl_modifier,ctrl:swap_lwin_lctl
-                fi
+                setxkbmap -device "$id" -option 
+                setxkbmap -device "$id" -option caps:ctrl_modifier,ctrl:swap_lwin_lctl
+                # fi
                 ;;
             *"Lite-On Technology Corp. ThinkPad USB Keyboard with TrackPoint"*)
                 setxkbmap -device "$id" -option 

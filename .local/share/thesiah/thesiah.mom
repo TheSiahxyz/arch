@@ -268,9 +268,9 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWTouchpadOn\fP \(en synclient TouchpadOff=0  
 .ITEM
-\f(CWMonBrightnessUp\fP \(en pkexec -A 5 -q; kill -56 $(pidof dwmblocks)
+\f(CWMonBrightnessDown\fP \(en pkexec brillo -U 5 -q; kill -56 $(pidof dwmblocks)
 .ITEM
-\f(CWMonBrightnessDown\fP \(en pkexec -U 5 -q; kill -56 $(pidof dwmblocks)
+\f(CWMonBrightnessUp\fP \(en pkexec brillo -A 5 -q; kill -56 $(pidof dwmblocks)
 .LIST OFF
 .HEADING 5 "Mode"
 .LI

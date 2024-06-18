@@ -1,17 +1,18 @@
 #!/bin/sh
 
 select_timezone() {
-	local initial_path="/usr/share/zoneinfo"
-	local tz_selection=$initial_path
+	initial_path="/usr/share/zoneinfo"
+	tz_selection=$initial_path
 
 	while [ -d "$tz_selection" ]; do
-		local selection=$(find "$tz_selection" -mindepth 1 -maxdepth 1 | sed "s|^$initial_path/||" | dmenu -i -l 20 -p "Select Time Zone:") || exit 1
+		selection=$(find "$tz_selection" -mindepth 1 -maxdepth 1 | sed "s|^$initial_path/||" | dmenu -i -l 20 -p "Select Time Zone:") || exit 1
 		tz_selection="$initial_path/$selection"
 	done
 
 	echo "${tz_selection#$initial_path/}"
 }
 
+current_zone=$(select_timezone) || exit 1
 sudo ln -sf /usr/share/zoneinfo/$current_zone /etc/localtime || exit 1
 sudo hwclock --systohc
 

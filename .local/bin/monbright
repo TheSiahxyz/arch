@@ -1,7 +1,7 @@
 #!/bin/sh
 
-monitor=$(xrandr --query | grep -i '\sconnected' | grep -i '[0-9]x[0-9]' | grep -i 'primary' | head -n 1 | cut -d ' ' -f1)
-[ -z "$monitor" ] || monitor=$(xrandr --query | grep -i '\sconnected' | grep -i '[0-9]x[0-9]' | cut -d ' ' -f1)
+monitor=$(xrandr --query | grep -i '\sconnected' | grep '[0-9]x[0-9]' | grep -i 'primary' | cut -d ' ' -f1)
+[ -z "$monitor" ] && monitor=$(xrandr --query | grep -i '\sconnected' | grep '[0-9]x[0-9]' | cut -d ' ' -f1)
 case "$monitor" in
     *eDP*|*LVDS*|*LFP*) printf "🪟%.0f%%\n" "$(brillo)" ;;
     *) 
