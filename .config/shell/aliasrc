@@ -240,6 +240,9 @@ alias scim="sc-im"
 # scp
 alias scp="scp -r"
 
+# setxkbmap 
+alias RM="setxkbmap -option"
+
 # sha1
 alias sha1="openssl sha1"
 
