@@ -349,7 +349,7 @@ map z
 map ,
 
 # Chmod
-map cx chmods
+map zx chmods
 
 # Clear && Unselect
 map <c-l> :clear; unselect
