@@ -14,8 +14,8 @@ echo 'Installing AfreecaTV Streamer...'
 curl -s "$SRC_URL" -o "$DST_FILE"
 
 wineboot
-[ -x "$(winetricks)" ] && winetricks dlls mfc42 || {
-    pacman --noconfirm --needed -S winetricks
+command -v winetricks >/dev/null && winetricks dlls mfc42 || {
+    sudo pacman --noconfirm --needed -S winetricks
     winetricks dlls mfc42
 }
 wine "$DST_FILE" /S

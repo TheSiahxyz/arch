@@ -375,6 +375,8 @@ To type capital letters, hold down the \f(CWShift\fP key\(emthat might sound lik
 .ITEM
 \f(CWMOD+F12\fP \(en remaps
 .ITEM
+\f(CWMOD2+F12\fP \(en remaps
+.ITEM
 \f(CWMOD+Shift+F12\fP \(en fcitx5-configtool  
 .LIST OFF
 .HEADING 5 "Systems"
