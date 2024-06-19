@@ -263,15 +263,14 @@ vim.api.nvim_create_autocmd("BufWritePost", {
     group = config_group,
     callback = function()
         -- Execute the 'shortcuts' shell command
-        vim.fn.system("shortcuts")
-
+        local result = vim.fn.system("shortcuts")
         -- Check if the 'shortcuts' command was successful
         if vim.v.shell_error == 0 then
-            -- Display a message in Neovim
+            -- Display a success message in Neovim
             vim.api.nvim_echo({ { "shortcuts updated", "None" } }, true, {})
         else
-            -- Optional: Display an error message if the 'shortcuts' command fails
-            vim.api.nvim_echo({ { "failed to update shortcuts", "ErrorMsg" } }, true, {})
+            -- Display an error message if the 'shortcuts' command fails
+            vim.api.nvim_echo({ { "failed to update shortcuts: " .. result, "ErrorMsg" } }, true, {})
         end
     end,
 })
