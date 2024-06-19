@@ -40,15 +40,15 @@ gmx             $HOME/.mozilla/firefox/si.default
 gob             $HOME/Private/git/Obsidian/SI
 gpb             ${XDG_PUBLICSHARE_DIR:-${HOME}/Public}
 gpp             ${XDG_PICTURES_DIR:-${HOME}/Pictures}
-gpr             ${XDG_PICTURES_DIR:-${HOME}/Pictures}/resources
 gpv             $HOME/Private
-gpw             ${XDG_PICTURES_DIR:-${HOME}/Pictures}/wallpaper
+grr             ${XDG_PICTURES_DIR:-${HOME}/Pictures}/resources
 gtc             $HOME/Torrents/complete
 gti             $HOME/Torrents/incomplete
 gtt             $HOME/Torrents
 gvv             ${XDG_VIDEOS_DIR:-${HOME}/Videos}
 gvy             ${XDG_VIDEOS_DIR:-${HOME}/Videos}/Youtube
 gwo             ${XDG_DESKTOP_DIR:-${HOME}/Desktop}/Work
+gww             ${XDG_PICTURES_DIR:-${HOME}/Pictures}/wallpaper
 Hbk             /mnt/extra/backup
 Hex             /mnt/extra
 Hme             /media
