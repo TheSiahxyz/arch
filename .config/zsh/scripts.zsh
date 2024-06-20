@@ -23,7 +23,7 @@ insert-last-command-output() {
 ### --- Weather --- ###
 weath() {
     [ "$MANPAGER" = "less -s" ] && pager=true || pager=false
-    [ "$pager" = "false" ] || {
+    [ "$pager" = "false" ] && {
         export MANPAGER='less -s'
         export LESS="R"
         export LESS_TERMCAP_mb="$(printf '%b' '[1;31m')"
@@ -36,7 +36,7 @@ weath() {
         export LESSOPEN="| /usr/bin/highlight -O ansi %s 2>/dev/null"
     }
     less -S ${XDG_CACHE_HOME:-${HOME}/.cache}/weatherreport
-    [ "$pager" = "false" ] || {
+    [ "$pager" = "false" ] && {
         export MANPAGER="sh -c 'col -bx | bat -l man -p'"
         export MANROFFOPT="-c"
     }

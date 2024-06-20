@@ -50,7 +50,26 @@ showweather() {
 }
 
 case $BLOCK_BUTTON in
-    1) setsid -f "$TERMINAL" -e less -Sf "$weatherreport" ;;
+    1)  
+        [ "$MANPAGER" = "less -s" ] && pager=true || pager=false
+        [ "$pager" = "false" ] && {
+            export MANPAGER='less -s'
+            export LESS="R"
+            export LESS_TERMCAP_mb="$(printf '%b' '[1;31m')"
+            export LESS_TERMCAP_md="$(printf '%b' '[1;36m')"
+            export LESS_TERMCAP_me="$(printf '%b' '[0m')"
+            export LESS_TERMCAP_so="$(printf '%b' '[01;44;33m')"
+            export LESS_TERMCAP_se="$(printf '%b' '[0m')"
+            export LESS_TERMCAP_us="$(printf '%b' '[1;32m')"
+            export LESS_TERMCAP_ue="$(printf '%b' '[0m')"
+            export LESSOPEN="| /usr/bin/highlight -O ansi %s 2>/dev/null"
+        }
+        setsid -f "$TERMINAL" -e less -Sf "$weatherreport"
+        [ "$pager" = "false" ] && {
+            export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+            export MANROFFOPT="-c"
+        }
+        ;;
     2) getforecast && showweather ;;
     3) notify-send "🌈 Weather module" "\- Left click for full forecast
 - Middle click to update forecast
