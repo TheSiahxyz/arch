@@ -3,14 +3,14 @@
 MOUNT_SCRIPT="${XDG_SCRIPTS_HOME:-${HOME}/.local/bin}/ecrypt"
 
 check_mount() {
-    mount | grep -q " $HOME/Private " && mount | grep -q " /mnt/extra/videos " || $MOUNT_SCRIPT
+    mount | grep -q " $HOME/Private " && mount | grep -q " /mnt/second/videos " || $MOUNT_SCRIPT
 }
 
 check_unmount() {
-    if lsof +D "$HOME/Private" || lsof +D "/mnt/extra/videos"; then
+    if lsof +D "$HOME/Private" || lsof +D "/mnt/second/videos"; then
         return
     else
-        mount | grep -q " $HOME/Private " && mount | grep -q " /mnt/extra/videos " && $MOUNT_SCRIPT
+        mount | grep -q " $HOME/Private " && mount | grep -q " /mnt/second/videos " && $MOUNT_SCRIPT
     fi
 }
 
@@ -83,7 +83,7 @@ case "$CONTENT_CHOICE" in
 	;;
 "Local Files")
 	check_mount
-    printf "%s\n%s\n%s\n%s\n%s\n%s\n" "$HOME/Downloads" "$HOME/Private" "$HOME/Torrents/complete" "$HOME/Videos" "/media" "/mnt/extra" | dmenu -i -p "Choose your initial directory:" | {
+    printf "%s\n%s\n%s\n%s\n%s\n%s\n" "$HOME/Downloads" "$HOME/Private" "$HOME/Torrents/complete" "$HOME/Videos" "/media" "/mnt/second" | dmenu -i -p "Choose your initial directory:" | {
 		read -r initial_directory
 		[ -z "$initial_directory" ] && exit
 		SELECTED_FOLDER="$initial_directory"

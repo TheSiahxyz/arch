@@ -1,13 +1,13 @@
 #!/bin/sh
 
 mount_luks() {
-    if ! mount | grep -q " /mnt/extra "; then
+    if ! mount | grep -q " /mnt/second "; then
         SIZE_NVME0=$(sudo blockdev --getsize64 /dev/nvme0n1p1)
         SIZE_NVME1=$(sudo blockdev --getsize64 /dev/nvme1n1p1)
         if [ ! -z "$SIZE_NVME0" ] && [ ! -z "$SIZE_NVME1" ]; then
             [ "$SIZE_NVME1" -lt "$SIZE_NVME0" ] && TARGET_DEVICE="/dev/nvme0n1p1" || TARGET_DEVICE="/dev/nvme1n1p1"
-            ${TERMINAL:-st} -n floatterm -g 60x1 -e sudo cryptsetup open "$TARGET_DEVICE" "extra"
-            sudo -A mount "/dev/mapper/extra" "/mnt/extra" -o uid="$(id -u)",gid="$(id -g)" || sudo -A mount "/dev/mapper/extra" "/mnt/extra"
+            ${TERMINAL:-st} -n floatterm -g 60x1 -e sudo cryptsetup open "$TARGET_DEVICE" "second"
+            sudo -A mount "/dev/mapper/second" "/mnt/second" -o uid="$(id -u)",gid="$(id -g)" || sudo -A mount "/dev/mapper/second" "/mnt/second"
         fi
     fi
 }
@@ -31,8 +31,8 @@ attempt_mount() {
     fi
 }
 
-targets="$HOME/.secret /mnt/extra/videos"
-mounts="$HOME/Private /mnt/extra/videos"
+targets="$HOME/.secret /mnt/second/videos"
+mounts="$HOME/Private /mnt/second/videos"
 
 set -- $mounts  # Set positional parameters to mounts
 i=1
