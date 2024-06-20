@@ -41,6 +41,9 @@ xinput list | grep 'id=' | while read -r line; do
     id=$(echo "$line" | grep -i '.*id.*pointer' | sed 's/.*id=\([0-9]\+\).*/\1/')
     [ -z "$id" ] || {
         case "$(echo "$line" | grep -oE '.*id=' | sed 's/ id=.*//')" in
+            *"SynPS/2 Synaptics TouchPad"*)
+                xinput set-prop "$id" "libinput Tapping Enabled" 0
+                ;;
             *"Lite-On Tech Lenovo USB Travel Keyboard with Ultra Nav Mouse"*)
                 [ -z "$1" ] && xinput set-prop "$id" "Coordinate Transformation Matrix" 1, 0, 0, 0, 1, 0, 0, 0, 1 || xinput set-prop "$id" "Coordinate Transformation Matrix" $1, 0, 0, 0, $1, 0, 0, 0, 1
                 xinput set-prop "$id" "libinput Scroll Method Enabled" 0, 0, 1
