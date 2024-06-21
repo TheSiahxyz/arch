@@ -56,7 +56,7 @@ emt() {
 ###########################################################################################
 ### --- Git --- ###
 gcgts() {
-    choice=$(ssh "$THESIAH_GIT" "ls -a | grep -i \".*\\.git$\"" | fzf --prompt="  " --height=50% --layout=reverse --border --exit-0)
+    choice=$(ssh "$THESIAH_GIT" "ls -a | grep -i \".*\\.git$\"" | fzf --cycle --prompt="  " --height=50% --layout=reverse --border --exit-0)
     [ -n "$choice" ] && [ -n "$1" ] && git clone "${THESIAH_GIT:-git@${THESIAH:-thesiah.xyz}}":"$choice" "$1" || [ -n "$choice" ] && git clone "${THESIAH_GIT:-git@${THESIAH:-thesiah.xyz}}":"$choice"
 }
 
@@ -181,7 +181,7 @@ printf "\n";
 fcf() {
     [ $# -gt 0 ] && zoxide query -i "$1" | xargs "${EDITOR}" && return
     local file
-    file="$(zoxide query -l | fzf -1 -0 --no-sort +m)" && nvim "${file}" || return 1
+    file="$(zoxide query -l | fzf --cycle -1 -0 --no-sort +m)" && nvim "${file}" || return 1
 }
 
 
@@ -194,7 +194,7 @@ cpf() {
     local file
     clipboard_cmd=("xclip" "-selection" "clipboard")
 
-    file=$(fzf --preview "cat {}")
+    file=$(fzf --cycle --preview "cat {}")
     if [ -n "$file" ]; then
         # Use `sed` to delete only the last newline character
         cat "$file" | sed ':a;N;$!ba;s/\n$//' | "${clipboard_cmd[@]}"
@@ -208,7 +208,7 @@ cpf() {
 # Select a docker container to start and attach to
 doca() {
     local cid
-    cid=$(docker ps -a | sed 1d | fzf -1 -q "$1" | awk '{print $1}')
+    cid=$(docker ps -a | sed 1d | fzf --cycle -1 -q "$1" | awk '{print $1}')
 
     [ -n "$cid" ] && docker start "$cid" && docker attach "$cid"
 }
@@ -216,19 +216,19 @@ doca() {
 # Select a running docker container to stop
 docs() {
     local cid
-    cid=$(docker ps | sed 1d | fzf -q "$1" | awk '{print $1}')
+    cid=$(docker ps | sed 1d | fzf --cycle -q "$1" | awk '{print $1}')
 
     [ -n "$cid" ] && docker stop "$cid"
 }
 
 # Same as above, but allows multi selection:
 docrm() {
-    docker ps -a | sed 1d | fzf -q "$1" --no-sort -m --tac | awk '{ print $1 }' | xargs -r docker rm
+    docker ps -a | sed 1d | fzf --cycle -q "$1" --no-sort -m --tac | awk '{ print $1 }' | xargs -r docker rm
 }
 
 # Select a docker image or images to remove
 docrmi() {
-    docker images | sed 1d | fzf -q "$1" --no-sort -m --tac | awk '{ print $3 }' | xargs -r docker rmi
+    docker images | sed 1d | fzf --cycle -q "$1" --no-sort -m --tac | awk '{ print $3 }' | xargs -r docker rmi
 }
 
 
@@ -254,7 +254,7 @@ bh() {
      JOIN moz_historyvisits hv ON hv.place_id = p.id
     ORDER BY hv.visit_date DESC LIMIT 100" |
     awk -F "$sep" '{printf "%-'$cols's  \x1b[36m%s\x1b[m\n", $1, $2}' |
-    fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs -r $open > /dev/null 2> /dev/null
+    fzf --cycle --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs -r $open > /dev/null 2> /dev/null
 }
 
 bm() {
@@ -272,7 +272,7 @@ bm() {
     # ORDER BY b.dateAdded DESC;
     # "
     choice=$(sqlite3 "$tmp_bookmark_file" "$sqlite_query" \
-            | fzf --ansi --delimiter='|' --with-nth=1..-2 \
+            | fzf --cycle --ansi --delimiter='|' --with-nth=1..-2 \
         | cut -d'|' -f2)
     if [ -n "$choice" ]; then
         xdg-open "$choice"
@@ -292,7 +292,7 @@ ff() {
 # files in sub
 fF() {
     local file
-    file=$(find . -type f | fzf) && nvim "$file"
+    file=$(find . -type f | fzf --cycle) && nvim "$file"
 }
 
 # directory
@@ -302,7 +302,7 @@ fD() {
 
 # search bin
 sscs() {
-    choice="$(find ~/.local/bin -mindepth 1 \( -type f -o -type l \) -not -name '*.md' -printf '%P\n' | fzf)"
+    choice="$(find ~/.local/bin -mindepth 1 \( -type f -o -type l \) -not -name '*.md' -printf '%P\n' | fzf --cycle)"
     ([ -n "$choice" ] && [ -f "$HOME/.local/bin/$choice" ]) && $EDITOR "$HOME/.local/bin/$choice"
 }
 
@@ -347,7 +347,7 @@ fdot() {
         fi
     done
 
-    selected_git=$(printf "%s\n" "${search_dirs[@]}" | fzf --prompt="  " --height=50% --layout=reverse --border --exit-0)
+    selected_git=$(printf "%s\n" "${search_dirs[@]}" | fzf --cycle --prompt="  " --height=50% --layout=reverse --border --exit-0)
     selected_git=${selected_git#+ }
     selected_git=${selected_git#! }
     selected_git=${selected_git# }
@@ -398,7 +398,7 @@ cnf() {
 
     # Explicitly list your configuration options
     local configs=("Default" "TheSiahxyz" "NvChad" "LazyVim")
-    local selected_dir=$(printf "%s\n" "${configs[@]}" | fzf --prompt=" Neovim Config  " --height 50% --layout=reverse --border --exit-0)
+    local selected_dir=$(printf "%s\n" "${configs[@]}" | fzf --cycle --prompt=" Neovim Config  " --height 50% --layout=reverse --border --exit-0)
 
     # Check if a configuration was selected
     [[ -z $selected_dir ]] && return 1
@@ -445,7 +445,7 @@ cnf() {
 # switch
 nvs() {
     items=("Default" "TheSiahxyz" "LazyVim" "NvChad")
-    config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
+    config=$(printf "%s\n" "${items[@]}" | fzf --cycle --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
     [[ -z $config ]] && return 0
     NVIM_APPNAME=$config nvim $@
 }
@@ -463,11 +463,11 @@ pqri() {
 }
 
 pss() {
-    pass show $(find $PASSWORD_STORE_DIR -type f -name '*.gpg' | sed 's|^''$PASSWORD_STORE_DIR/||; s/\.gpg$//' | fzf)
+    pass show $(find $PASSWORD_STORE_DIR -type f -name '*.gpg' | sed 's|^''$PASSWORD_STORE_DIR/||; s/\.gpg$//' | fzf --cycle)
 }
 
 psc() {
-    pass show -c $(find $PASSWORD_STORE_DIR -type f -name '*.gpg' | sed 's|^''$PASSWORD_STORE_DIR/||; s/\.gpg$//' | fzf)
+    pass show -c $(find $PASSWORD_STORE_DIR -type f -name '*.gpg' | sed 's|^''$PASSWORD_STORE_DIR/||; s/\.gpg$//' | fzf --cycle)
 }
 
 gpgqr() {
@@ -530,7 +530,7 @@ command_line() {
 # kill
 tmk() {
     local sessions
-    sessions="$(tmux ls|fzf --exit-0 --multi)"  || return $?
+    sessions="$(tmux ls|fzf --cycle --exit-0 --multi)"  || return $?
     local i
     for i in "${(f@)sessions}"
     do
@@ -547,14 +547,14 @@ tmn() {
     if [ $1 ]; then
         tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
     fi
-    session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
+    session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --cycle --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
 }
 
 # select
 tms() {
     local session
     session=$(tmux list-sessions -F "#{session_name}" \
-        | fzf --query="$1" --select-1 --exit-0) &&
+        | fzf --cycle --query="$1" --select-1 --exit-0) &&
     tmux switch-client -t "$session"
 }
 
@@ -590,7 +590,7 @@ deletev() {
     options+=("Delete All")
 
     # Prompt user to select a virtual environment or choose an option to delete all
-    local selected_env=$(printf "%s\n" "${options[@]}" | fzf --prompt="venvs  " --height=~50% --layout=reverse --border --exit-0)
+    local selected_env=$(printf "%s\n" "${options[@]}" | fzf --cycle --prompt="venvs  " --height=~50% --layout=reverse --border --exit-0)
 
     if [[ -z $selected_env ]]; then
         echo "No venvs selected"
