@@ -316,9 +316,9 @@ fdot() {
         local dir="$1"
         git -C "$dir" fetch --quiet
         if [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ]; then
-            search_dirs+=("! $dir")
+            search_dirs+=("+ $dir")
         elif [ "$(git -C "$dir" rev-parse @)" != "$(git -C "$dir" rev-parse @{u})" ] && [ "$(git -C "$dir" rev-parse @)" = "$(git -C "$dir" merge-base @ @{u})" ]; then
-            search_dirs+=("? $dir")
+            search_dirs+=("! $dir")
         else
             search_dirs+=("$dir")
         fi
@@ -335,9 +335,9 @@ fdot() {
             find "$git_dir" -mindepth 1 -maxdepth 1 -type d -print0 | xargs -0 -I{} -P 8 zsh -c '
                 git -C "$0" fetch --quiet
                 if [ -n "$(git -C "$0" status --porcelain 2>/dev/null)" ]; then
-                    echo "! $0"
+                    echo "+ $0"
                 elif [ "$(git -C "$0" rev-parse @)" != "$(git -C "$0" rev-parse @{u})" ] && [ "$(git -C "$0" rev-parse @)" = "$(git -C "$0" merge-base @ @{u})" ]; then
-                    echo "? $0"
+                    echo "! $0"
                 else
                     echo "$0"
                 fi
@@ -348,8 +348,8 @@ fdot() {
     done
 
     selected_git=$(printf "%s\n" "${search_dirs[@]}" | fzf --prompt="  " --height=50% --layout=reverse --border --exit-0)
+    selected_git=${selected_git#+ }
     selected_git=${selected_git#! }
-    selected_git=${selected_git#? }
     selected_git=${selected_git# }
     [ -d "$selected_git" ] && cd "$selected_git"
 }
