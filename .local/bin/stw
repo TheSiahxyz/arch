@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Directory where your stow packages are located, adjust as necessary
-STOW_DIR="${XDG_DOTFILES_DIR:-${HOME}/.dotfiles}"
+stowdir="${XDG_DOTFILES_DIR:-${HOME}/.dotfiles}"
 
 # Function to ask user for resolution strategy using dmenu
 ask_resolution_strategy() {
@@ -23,7 +23,7 @@ stow_package() {
 			if [ "$resolve_strategy" = "delete" ]; then
 				rm -rf "$full_path"
 			elif [ "$resolve_strategy" = "move" ]; then
-				mv "$full_path" "${full_path}.bak"
+				mv "$full_path" "${full_path}.dotbak"
 			fi
 		done
 		echo "$output" | grep "over existing target" | while IFS= read -r line; do
@@ -32,7 +32,7 @@ stow_package() {
 			if [ "$resolve_strategy" = "delete" ]; then
 				rm -rf "$full_path"
 			elif [ "$resolve_strategy" = "move" ]; then
-				mv "$full_path" "${full_path}.bak"
+				mv "$full_path" "${full_path}.dotbak"
 			fi
 		done
 
@@ -46,18 +46,21 @@ stow_package() {
 }
 
 # Ensure running from the correct directory
-cd "$STOW_DIR" || exit 1
+cd "$stowdir" || exit 1
 
 # Ask the user for the resolution strategy
-RESOLVE_STRATEGY=$(ask_resolution_strategy)
+resolve=$(ask_resolution_strategy)
 
 # Attempt to stow the package and resolve any conflicts
-stow_package "$RESOLVE_STRATEGY"
-ln -sf "$STOW_DIR/.config/shell/profile" "$HOME/.zprofile"
+stow_package "$resolve"
+ln -sf "$stowdir/.config/shell/profile" "$HOME/.zprofile"
 
 # Link for bash
-ln -sf "$STOW_DIR/.config/bash/bash_profile" "$HOME/.bash_profile"
-ln -sf "$STOW_DIR/.config/bash/bashrc" "$HOME/.bashrc"
+ln -sf "$stowdir/.config/bash/bash_profile" "$HOME/.bash_profile"
+ln -sf "$stowdir/.config/bash/bashrc" "$HOME/.bashrc"
+
+# Link for gtk 2.0
+ln -sf "$stowdir/.config/gtk-2.0/gtkrc-2.0" "$HOME/.gtkrc-2.0"
 
 # Reload shortcuts (assumes this functionality is defined elsewhere and works as expected)
 shortcuts >/dev/null 2>&1 || exit 1
