@@ -11,7 +11,34 @@ verify_label() { sudo lsblk -o NAME,LABEL ;}
 
 echo "Partition Labeling Script"
 for cmd in blkid e2label fatlabel ntfslabel btrfs parted lsblk; do
-    ! command_exists "$cmd" && { echo "Error: $cmd is not installed or not in PATH." ; exit 1 ;}
+    if ! command_exists "$cmd"; then
+        echo "Error: $cmd is not installed or not in PATH."
+        echo "Installing necessary package for $cmd..."
+        case $cmd in
+            blkid|lsblk)
+                sudo pacman -S --noconfirm util-linux
+                ;;
+            e2label)
+                sudo pacman -S --noconfirm e2fsprogs
+                ;;
+            fatlabel)
+                sudo pacman -S --noconfirm dosfstools
+                ;;
+            ntfslabel)
+                sudo pacman -S --noconfirm ntfs-3g
+                ;;
+            btrfs)
+                sudo pacman -S --noconfirm btrfs-progs
+                ;;
+            parted)
+                sudo pacman -S --noconfirm parted
+                ;;
+            *)
+                echo "Unknown command: $cmd"
+                exit 1
+                ;;
+        esac
+    fi
 done
 
 lsblk
@@ -48,4 +75,3 @@ esac
 echo "Partition labeled successfully. Verifying..."
 verify_label
 echo "Done."
-

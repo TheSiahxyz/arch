@@ -49,10 +49,23 @@ cmd tar ${{
         printf "%s\n\t" "$fx"
         printf "file name: "
         read ans
-        mkdir $ans
-        cp -r $fx $ans
-        tar czf $ans.tar.gz $ans
-        rm -rf $ans
+        mkdir $ans && {
+            cp -r $fx $ans
+            tar czf $ans.tar.gz $ans
+            rm -rf $ans
+        } || {
+            printf "%s\n\t" "$fx"
+            printf "Permissions needs.\n"
+            printf "Continue in root?[y/N]"
+            read root
+            [ $root = "y" ] && {
+                printf "Compressing $ans...\n"
+                sudo mkdir $ans
+                sudo cp -r $fx $ans
+                sudo tar czf $ans.tar.gz $ans
+                sudo rm -rf $ans
+            }
+        }
     }
 }}
 
