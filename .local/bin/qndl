@@ -16,10 +16,10 @@ while getopts "mvr" opt; do
             DOWNLOAD_TYPE="video"
             OUTPUT_DIR="${XDG_VIDEOS_DIR:-${HOME}/Videos}"
             YTDL_OUTPUT_FORMAT="${OUTPUT_DIR}/%(title)s [%(id)s].%(ext)s"
-            VIDEO_EXT=$(printf "default\nmp4\nmkv" | dmenu -i -p "Choose an encoding for the video")
+            VIDEO_EXT=$(printf "default\nmp4\nmkv" | dmenu -i -p "Choose an encoding for the video") || exit
             case $VIDEO_EXT in
-            "default") VIDEO_OPTIONS="" ;;
-            *) VIDEO_OPTIONS="--recode-video $VIDEO_EXT" ;;
+                "default") VIDEO_OPTIONS="" ;;
+                *) VIDEO_OPTIONS="--recode-video $VIDEO_EXT" ;;
             esac
             YTDL_CMD_BASE="$YTDL_CMD_BASE --buffer-size 1M --embed-thumbnail --format bestvideo+bestaudio/best --no-sponsorblock $VIDEO_OPTIONS"
             ;;
