@@ -39,6 +39,7 @@ sync_files() {
             echo "Failed to sync $(basename "$source")"
         }
     done
+    sudo rm -rf "$backup_path/Music/.music.txt"
 }
 
 sync_root() {
